@@ -1,5 +1,6 @@
-package com.malenydairysystem;
+package controller;
 
+import com.malenydairysystem.App;
 import java.io.IOException;
 import javafx.fxml.FXML;
 

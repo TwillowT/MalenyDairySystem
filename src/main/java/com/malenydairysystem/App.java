@@ -22,7 +22,7 @@ public class App extends Application {
         stage.show();
     }
 
-    static void setRoot(String fxml) throws IOException {
+    public static void setRoot(String fxml) throws IOException { // changed to public to allow controllers to access method from controller package
         scene.setRoot(loadFXML(fxml));
     }
 
