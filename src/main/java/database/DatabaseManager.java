@@ -6,10 +6,6 @@
 
 package database;
 
-/**
- *
- * @author User
- */
 public class DatabaseManager {
     
 }
