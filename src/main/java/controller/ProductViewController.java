@@ -9,6 +9,6 @@ package controller;
  *
  * @author User
  */
-public class ProductSelectionViewController {
+public class ProductViewController {
     
 }
