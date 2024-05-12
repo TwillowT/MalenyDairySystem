@@ -5,7 +5,7 @@
     
     
  */
-package server;
+package com.malenydairysystem.server;
 
 public class Server {
     

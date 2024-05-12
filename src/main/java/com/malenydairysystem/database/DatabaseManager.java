@@ -4,7 +4,7 @@
                  and order details. Ensures data consistency during concurrent access by multiple clients.
  */
 
-package database;
+package com.malenydairysystem.database;
 
 public class DatabaseManager {
     

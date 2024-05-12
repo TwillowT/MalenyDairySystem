@@ -5,7 +5,7 @@
 
  */
 
-package controller;
+package com.malenydairysystem.controller;
 
 public class ProductViewController {
     

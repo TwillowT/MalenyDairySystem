@@ -3,7 +3,7 @@
     Description: Handles user authentication processes, such as verifying credentials and managing session data.
  */
 
-package controller;
+package com.malenydairysystem.controller;
 
 
 public class LoginViewController {

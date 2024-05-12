@@ -3,7 +3,7 @@
     Description: Provides functionalities needed by administrators, such as managing product listings, updating order statuses, and overseeing user accounts.
  */
 
-package controller;
+package com.malenydairysystem.controller;
 
 public class AdminViewController {
     
