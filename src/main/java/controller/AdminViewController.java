@@ -5,10 +5,6 @@
 
 package controller;
 
-/**
- *
- * @author User
- */
 public class AdminViewController {
     
 }
