@@ -7,6 +7,21 @@
  */
 package com.malenydairysystem.server;
 
-public class Server {
-    
+import com.malenydairysystem.database.DatabaseManager;
+import java.sql.SQLException;
+
+public class Server
+{
+
+    public static void main(String[] args) throws SQLException
+    {
+        // Create the DatabaseUtility Object
+        DatabaseManager database = new DatabaseManager();
+
+        // Create the Database
+        database.createDatabase();
+
+        // Create the Database Tables
+        database.createTables();
+    }
 }
