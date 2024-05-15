@@ -4,11 +4,14 @@
  */
 package com.malenydairysystem.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -44,21 +47,23 @@ public class InitialViewController
         
     } 
     
-    // not functioning correctly - I will fix this tomorrow
-    @FXML
-    private void handleRegisterLink() throws IOException {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("RegistrationView.fxml"));
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-}
-    
-    
+    // Method to switch between the InitialView and the RegistrationView 
+    @FXML 
+    private void handleRegisterLink(ActionEvent event) throws IOException { 
+        URL fxmlLocation = getClass().getClassLoader().getResource("com/malenydairysystem/RegistrationView.fxml");  // Load file using ClassLoader 
+            
+        FXMLLoader loader = new FXMLLoader(fxmlLocation); // Create FXMLLoader instance 
+        Parent root = loader.load(); // Load file into Parent object
+        
+        // Get the current stage and close it   
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); 
+        currentStage.close();        
+        
+        Stage stage = new Stage(); // Open a new stage for the new scene
+        stage.setScene(new Scene(root)); // Set scene with the loaded Parent object
+        stage.show(); // Show new stage      
+    }   
+     
     @FXML
     private void handleEmailInput(){
         
