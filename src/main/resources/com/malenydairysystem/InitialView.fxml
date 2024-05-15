@@ -21,7 +21,7 @@
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
       </VBox>
-      <Text layoutX="160.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome back!">
+      <Text layoutX="142.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign in to Account">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
