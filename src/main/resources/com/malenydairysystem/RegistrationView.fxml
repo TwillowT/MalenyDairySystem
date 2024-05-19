@@ -10,10 +10,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="585.0" prefWidth="506.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.malenydairysystem.controller.RegistrationViewController">
+<AnchorPane id="AnchorPane" prefHeight="585.0" prefWidth="433.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.malenydairysystem.controller.RegistrationViewController">
    <children>
-      <GridPane layoutX="112.0" layoutY="76.0" prefHeight="418.0" prefWidth="283.0">
+      <GridPane layoutX="75.0" layoutY="84.0" prefHeight="418.0" prefWidth="283.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="279.0" minWidth="10.0" prefWidth="279.0" />
         </columnConstraints>
@@ -75,12 +74,11 @@
             <Hyperlink fx:id="signinLink" onAction="#handleSigninLink" text="Have an account? Sign in" GridPane.rowIndex="12" />
          </children>
       </GridPane>
-      <Button fx:id="clickExit" layoutX="114.0" layoutY="509.0" mnemonicParsing="false" onAction="#clickExit" prefHeight="25.0" prefWidth="279.0" text="Exit" />
-      <Text layoutX="144.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register Account" textAlignment="CENTER" wrappingWidth="199.0">
+      <Button fx:id="clickExit" layoutX="77.0" layoutY="509.0" mnemonicParsing="false" onAction="#clickExit" prefHeight="25.0" prefWidth="279.0" text="Exit" />
+      <Text layoutX="104.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register Account" textAlignment="CENTER" wrappingWidth="199.0">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Text>
-      <Text layoutX="24.0" layoutY="592.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Developed By: Joshua W | Joshua G | Tina L | Ashley H" />
    </children>
 </AnchorPane>

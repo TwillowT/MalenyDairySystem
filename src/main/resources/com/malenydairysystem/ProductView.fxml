@@ -1,8 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="750.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="com.malenydairysystem.controller.ProductViewController">
-    
+<AnchorPane id="AnchorPane" prefHeight="679.0" prefWidth="733.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="327.0" layoutY="29.0" text="Products">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <TableView layoutX="47.0" layoutY="487.0" prefHeight="114.0" prefWidth="240.0">
+         <columns>
+            <TableColumn prefWidth="68.0" text="Post Code " />
+            <TableColumn prefWidth="52.0" text="Cost" />
+            <TableColumn prefWidth="119.0" text="Delivery Day" />
+         </columns>
+      </TableView>
+      <TextField layoutX="47.0" layoutY="444.0" prefHeight="25.0" prefWidth="141.0" />
+      <Button layoutX="198.0" layoutY="444.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Search" />
+      <TableView layoutX="47.0" layoutY="79.0" prefHeight="270.0" prefWidth="636.0">
+         <columns>
+            <TableColumn prefWidth="106.0" text="Product Name" />
+            <TableColumn prefWidth="56.0" text="Unit" />
+            <TableColumn text="Quantity" />
+            <TableColumn prefWidth="55.0" text="Price" />
+            <TableColumn prefWidth="317.0" text="Ingredients" />
+         </columns>
+      </TableView>
+      <Label layoutX="131.0" layoutY="411.0" text="Delivery Schedule">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="472.0" layoutY="411.0" text="Cart Summary">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TableView layoutX="310.0" layoutY="444.0" prefHeight="160.0" prefWidth="374.0">
+         <columns>
+            <TableColumn prefWidth="123.0" text="Product name" />
+            <TableColumn prefWidth="65.0" text="Quantity" />
+            <TableColumn prefWidth="67.0" text="Unit Price" />
+            <TableColumn prefWidth="48.0" text="GST" />
+            <TableColumn prefWidth="70.0" text="Subtotal" />
+         </columns>
+      </TableView>
+      <GridPane layoutX="503.0" layoutY="613.0" prefHeight="27.0" prefWidth="194.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="245.0" minWidth="10.0" prefWidth="96.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="253.0" minWidth="6.0" prefWidth="11.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="253.0" minWidth="10.0" prefWidth="98.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Checkout" GridPane.columnIndex="2" />
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Remove" />
+         </children>
+      </GridPane>
+      <Button layoutX="594.0" layoutY="358.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Add" />
+   </children>
 </AnchorPane>

@@ -1,69 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="720.0" prefWidth="915.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.malenydairysystem.controller.HomeViewController">
+<AnchorPane id="AnchorPane" prefHeight="679.0" prefWidth="733.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Text layoutX="6.0" layoutY="710.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Developed By: Joshua W | Joshua G | Tina L | Ashley H" />
-      <SplitPane dividerPositions="0.18040089086859687" layoutX="6.0" layoutY="14.0" prefHeight="679.0" prefWidth="900.0">
-        <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="677.0" prefWidth="179.0">
-               <children>
-                  <VBox layoutX="11.0" prefHeight="462.0" prefWidth="139.0">
-                     <children>
-                        <GridPane prefHeight="306.0" prefWidth="137.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                          </columnConstraints>
-                          <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="259.0" text="Home" />
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="254.0" text="View Products" textAlignment="CENTER" GridPane.rowIndex="1" />
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="259.0" text="Place Order" textAlignment="CENTER" GridPane.rowIndex="3" />
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="260.0" text="View Delivery Schedule" textAlignment="CENTER" GridPane.rowIndex="2" />
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="271.0" text="Admin Functions" textAlignment="CENTER" GridPane.rowIndex="4" />
-                           </children>
-                        </GridPane>
-                     </children>
-                  </VBox>
-                  <Button layoutX="15.0" layoutY="638.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="133.0" text="Log Out" />
-               </children>
-            </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="677.0" prefWidth="719.0">
-               <children>
-                  <TabPane prefHeight="679.0" prefWidth="733.0" tabClosingPolicy="UNAVAILABLE">
-                    <tabs>
-                      <Tab text="Create Product">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                        </content>
-                      </Tab>
-                      <Tab text="Create Schedule ">
-                        <content>
-                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                        </content>
-                      </Tab>
-                    </tabs>
-                  </TabPane>
-               </children>
-            </AnchorPane>
-        </items>
-      </SplitPane>
+      <Label layoutX="292.0" layoutY="26.0" text="Home or Account">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

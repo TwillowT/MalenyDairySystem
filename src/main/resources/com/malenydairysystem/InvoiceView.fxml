@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="679.0" prefWidth="733.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="337.0" layoutY="39.0" text="Invoices">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <TableView layoutX="49.0" layoutY="123.0" prefHeight="492.0" prefWidth="636.0">
+         <columns>
+            <TableColumn prefWidth="79.0" text="Invoice ID" />
+            <TableColumn prefWidth="83.0" text="Customer ID" />
+            <TableColumn prefWidth="262.0" text="Items" />
+            <TableColumn prefWidth="66.0" text="Subtotal" />
+            <TableColumn prefWidth="65.0" text="GST" />
+            <TableColumn prefWidth="74.0" text="Total" />
+         </columns>
+      </TableView>
+      <TextField layoutX="49.0" layoutY="85.0" prefHeight="25.0" prefWidth="545.0" />
+      <Button layoutX="600.0" layoutY="85.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Search" />
+   </children>
+</AnchorPane>

@@ -13,20 +13,19 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="585.0" prefWidth="506.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.malenydairysystem.controller.InitialViewController">
+<AnchorPane prefHeight="392.0" prefWidth="372.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.malenydairysystem.controller.InitialViewController">
    <children>
-      <Text layoutX="14.0" layoutY="582.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Developed By: Joshua W | Joshua G | Tina L | Ashley H" />
       <VBox alignment="CENTER" layoutX="246.0" layoutY="172.0" spacing="20.0">
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
       </VBox>
-      <Text layoutX="142.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign in to Account">
+      <Text layoutX="83.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign in to Account">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Text>
-    <Button fx:id="clickExit" layoutX="132.0" layoutY="391.0" mnemonicParsing="false" onAction="#clickExit" prefHeight="25.0" prefWidth="229.0" text="Exit">
+    <Button fx:id="clickExit" layoutX="72.0" layoutY="310.0" mnemonicParsing="false" onAction="#clickExit" prefHeight="25.0" prefWidth="229.0" text="Exit">
          <opaqueInsets>
             <Insets />
          </opaqueInsets>
@@ -34,7 +33,7 @@
             <Cursor fx:constant="DEFAULT" />
          </cursor>
       </Button>
-      <GridPane layoutX="132.0" layoutY="164.0" prefHeight="216.0" prefWidth="229.0">
+      <GridPane layoutX="72.0" layoutY="88.0" prefHeight="216.0" prefWidth="229.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
          </columnConstraints>
@@ -65,5 +64,13 @@
             <Hyperlink fx:id="registerLink" onAction="#handleRegisterLink" text="Don't have an account? Register " GridPane.rowIndex="5" />
          </children>
       </GridPane>
+      <Button layoutX="72.0" layoutY="353.0" mnemonicParsing="false" onAction="#handleTemporaryMainViewButton" prefHeight="25.0" prefWidth="229.0" text="Main View (Temporary)">
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
+      </Button>
    </children>
 </AnchorPane>
