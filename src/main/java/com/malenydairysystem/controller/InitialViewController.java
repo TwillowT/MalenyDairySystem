@@ -1,10 +1,9 @@
 /*
-    Students: Tina Losin (10569238)
-    Description: Handles the intial welcome screen with sign in and sign up options, directing users to the appropriate authentication processes. 
+    Students: Joshua White (12196075), Ashley Hansen (S0213276), Tina Losin (10569238)
+    Description: Manages the intial welcome screen with sign in and sign up options, directing users to the appropriate authentication processes. 
  */
 package com.malenydairysystem.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import javafx.application.Platform;
@@ -46,6 +45,23 @@ public class InitialViewController
     private void handleSignin(){
         
     } 
+    
+    // Temporary method to switch between the InitialView and the MainView
+    @FXML
+    private void handleTemporaryMainViewButton(ActionEvent event) throws IOException{
+        URL fxmlLocation = getClass().getClassLoader().getResource("com/malenydairysystem/MainView.fxml");  // Load file using ClassLoader 
+            
+        FXMLLoader loader = new FXMLLoader(fxmlLocation); // Create FXMLLoader instance 
+        Parent root = loader.load(); // Load file into Parent object
+        
+        // Get the current stage and close it   
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); 
+        currentStage.close();        
+        
+        Stage stage = new Stage(); // Open a new stage for the new scene
+        stage.setScene(new Scene(root)); // Set scene with the loaded Parent object
+        stage.show(); // Show new stage  
+    }
     
     // Method to switch between the InitialView and the RegistrationView 
     @FXML 

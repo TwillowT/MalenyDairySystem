@@ -1,5 +1,5 @@
 /*
-    Students: Tina Losin (10569238)
+    Students: Joshua White (12196075), Ashley Hansen (S0213276), Tina Losin (10569238)
     Description: Manages the registration process, including collecting user data and interacting with the server to register new users.
  */
 
