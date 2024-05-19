@@ -5,19 +5,37 @@
  */
 package com.malenydairysystem.database;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DatabaseManager
 {
 
+    // Database Connection Details
     private final String DB_URL;
     private final String DB_USER;
     private final String DB_PASSWORD;
     private final String DB_NAME;
 
+    // Database Prepared Statements
+    PreparedStatement addCustomer;
+    PreparedStatement addAdmin;
+
+    PreparedStatement addProduct;
+    PreparedStatement updateProduct;
+    PreparedStatement deleteProduct;
+
+    PreparedStatement addDelivery;
+    PreparedStatement updateDelivery;
+    PreparedStatement deleteDelivery;
+
+    // Constructor for the Database Manager
     public DatabaseManager()
     {
         DB_URL = "jdbc:mysql://localhost:3306/";
@@ -178,6 +196,83 @@ public class DatabaseManager
         {
             // Print the Table Creation Error Message
             System.out.println("Tables creation Failed...");
+            e.printStackTrace();
+        }
+        finally
+        {
+            // Close the Database Connection and Statement
+            if (dbStatement != null)
+            {
+                dbStatement.close();
+            }
+            if (dbConnection != null)
+            {
+                dbConnection.close();
+            }
+        }
+    }
+
+    // Insert the Required Product and Delivery Cost Data from the CSV Files
+    public void insertDataFromCSV(String filename) throws SQLException
+    {
+        Connection dbConnection = null;
+        PreparedStatement dbStatement = null;
+
+        try
+        {
+            // Create the Database Connection
+            dbConnection = DriverManager.getConnection(DB_URL + DB_NAME, DB_USER, DB_PASSWORD);
+
+            // Prepare the SQL Statement based on the filename
+            String sql;
+            if (filename.equals("A3-products.csv"))
+            {
+                sql = "INSERT INTO products (product_name, unit, quantity, price, ingredients) VALUES (?, ?, ?, ?, ?)";
+            }
+            else if (filename.equals("A3-delivery-cost.csv"))
+            {
+                sql = "INSERT INTO delivery_costs (postcode, delivery_cost) VALUES (?, ?)";
+            }
+            else
+            {
+                throw new IllegalArgumentException("Unknown Filename: " + filename);
+            }
+
+            dbStatement = dbConnection.prepareStatement(sql);
+
+            // Open the CSV file
+            BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/" + filename));
+
+            // Skip the first line (header)
+            reader.readLine();
+
+            // Read the file line by line
+            String line;
+            while ((line = reader.readLine()) != null)
+            {
+                // Split the line by comma
+                String[] fields = line.split(",");
+
+                // Bind the values to the SQL statement
+                for (int i = 0; i < fields.length; i++)
+                {
+                    dbStatement.setString(i + 1, fields[i]);
+                }
+
+                // Execute the statement
+                dbStatement.executeUpdate();
+            }
+
+            // Close the CSV file
+            reader.close();
+
+            // Print the Data Insertion Success Message
+            System.out.println("Data inserted Successfully from " + filename);
+        }
+        catch (SQLException | IOException e)
+        {
+            // Print the Data Insertion Error Message
+            System.out.println("Data insertion Failed from " + filename);
             e.printStackTrace();
         }
         finally
