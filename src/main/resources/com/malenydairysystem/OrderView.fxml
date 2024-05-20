@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="679.0" prefWidth="733.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="298.0" layoutY="57.0" text="Place an Order">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <TableView layoutX="86.0" layoutY="137.0" prefHeight="205.0" prefWidth="561.0">
+         <columns>
+            <TableColumn prefWidth="195.0" text="Product Name" />
+            <TableColumn prefWidth="86.0" text="Unit" />
+            <TableColumn prefWidth="77.0" text="Quantity" />
+            <TableColumn prefWidth="78.0" text="Price" />
+            <TableColumn prefWidth="124.0" text="Add Item" />
+         </columns>
+      </TableView>
+      <Label layoutX="86.0" layoutY="366.0" text="Order Summary:">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="86.0" layoutY="109.0" text="Product List: ">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <TableView layoutX="86.0" layoutY="393.0" prefHeight="205.0" prefWidth="561.0">
+         <columns>
+            <TableColumn prefWidth="123.0" text="Product Names" />
+            <TableColumn prefWidth="65.0" text="Quantity" />
+            <TableColumn prefWidth="88.0" text="Unit Price" />
+            <TableColumn prefWidth="77.0" text="GST" />
+            <TableColumn prefWidth="81.0" text="Subtotal" />
+            <TableColumn prefWidth="126.0" text="Remove Item" />
+         </columns>
+      </TableView>
+      <Button layoutX="569.0" layoutY="616.0" mnemonicParsing="false" text="Place Order" />
+   </children>
+</AnchorPane>

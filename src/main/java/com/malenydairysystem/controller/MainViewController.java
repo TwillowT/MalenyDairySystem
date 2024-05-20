@@ -6,8 +6,6 @@
 package com.malenydairysystem.controller;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,15 +19,7 @@ public class MainViewController {
     
     @FXML
     private BorderPane contentArea; 
-    
- 
-    
-    @FXML
-    private void loadHomeView(ActionEvent event) throws IOException{
-        Pane homeView = FXMLLoader.load(getClass().getClassLoader().getResource("com/malenydairysystem/HomeView.fxml"));
-        contentArea.getChildren().setAll(homeView);
-    }
-    
+           
     @FXML
     private void loadProductView(ActionEvent event) throws IOException{
         Pane homeView = FXMLLoader.load(getClass().getClassLoader().getResource("com/malenydairysystem/ProductView.fxml"));
@@ -37,14 +27,14 @@ public class MainViewController {
     }
     
     @FXML
-    private void loadCartView(ActionEvent event) throws IOException{
-        Pane homeView = FXMLLoader.load(getClass().getClassLoader().getResource("com/malenydairysystem/CartView.fxml"));
+    private void loadScheduleView(ActionEvent event) throws IOException{
+        Pane homeView = FXMLLoader.load(getClass().getClassLoader().getResource("com/malenydairysystem/ScheduleView.fxml"));
         contentArea.getChildren().setAll(homeView);
     }
     
     @FXML
-    private void loadInvoiceView(ActionEvent event) throws IOException{
-        Pane homeView = FXMLLoader.load(getClass().getClassLoader().getResource("com/malenydairysystem/InvoiceView.fxml"));
+    private void loadOrderView(ActionEvent event) throws IOException{
+        Pane homeView = FXMLLoader.load(getClass().getClassLoader().getResource("com/malenydairysystem/OrderView.fxml"));
         contentArea.getChildren().setAll(homeView);
     }
     
