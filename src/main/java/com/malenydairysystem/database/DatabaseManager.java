@@ -1,9 +1,6 @@
-/*
-    Students: Tina Losin (10569238)
-    Description: Handles database interactions for reading and saving data related to customer details, products, product receipt options, 
-                 and order details. Ensures data consistency during concurrent access by multiple clients.
- */
 package com.malenydairysystem.database;
+
+import com.malenydairysystem.model.Product;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -11,9 +8,17 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
+/*
+    Students:       Joshua White (12196075), Joshua Gibson (S0263435), Ashley Hansen (S0213276), Tina Losin (10569238)
+    Description:    Handles database interactions for reading and saving data related to customer details, products, product 
+                    receipt options, and order details. Ensures data consistency during concurrent access by multiple clients.
+ */
 public class DatabaseManager
 {
 
@@ -30,6 +35,7 @@ public class DatabaseManager
     PreparedStatement addProduct;
     PreparedStatement updateProduct;
     PreparedStatement deleteProduct;
+    PreparedStatement getAllProducts;
 
     PreparedStatement addDelivery;
     PreparedStatement updateDelivery;
@@ -42,6 +48,26 @@ public class DatabaseManager
         DB_USER = "root";
         DB_PASSWORD = "password";
         DB_NAME = "maleny";
+    }
+
+    public void connectDatabase()
+    {
+        Connection dbConnection = null;
+        try
+        {
+            dbConnection = DriverManager.getConnection(DB_URL + DB_NAME, DB_USER, DB_PASSWORD);
+
+            // Product Table Prepared Statements
+            addProduct = dbConnection.prepareStatement("INSERT INTO products (product_name, unit, quantity, price, ingredients) VALUES (?, ?, ?, ?, ?)");
+            updateProduct = dbConnection.prepareStatement("UPDATE products SET product_name = ?, unit = ?, quantity = ?, price = ?, ingredients = ? WHERE product_id = ?");
+            deleteProduct = dbConnection.prepareStatement("DELETE FROM products WHERE product_id = ?");
+            getAllProducts = dbConnection.prepareStatement("SELECT * FROM products");
+        }
+        catch (SQLException e)
+        {
+            System.out.println("Database connection failed...");
+            e.printStackTrace();
+        }
     }
 
     // Create the Database
@@ -287,5 +313,24 @@ public class DatabaseManager
                 dbConnection.close();
             }
         }
+    }
+
+    public List<Product> getAllProducts()
+    {
+        List<Product> products = new ArrayList<>();
+        try
+        {
+            ResultSet rs = getAllProducts.executeQuery();
+            while (rs.next())
+            {
+                Product product = new Product(rs.getInt("product_id"), rs.getString("product_name"), rs.getString("unit"), rs.getInt("quantity"), rs.getDouble("price"), rs.getString("ingredients"));
+                products.add(product);
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return products;
     }
 }

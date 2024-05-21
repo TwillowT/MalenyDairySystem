@@ -1,46 +1,59 @@
-/*
-    Students: Joshua White (12196075), Ashley Hansen (S0213276), Tina Losin (10569238)
-    Description: Manages the registration process, including collecting user data and interacting with the server to register new users.
- */
-
 package com.malenydairysystem.controller;
 
+import com.malenydairysystem.Utilities;
+import com.malenydairysystem.client.Client;
 import java.io.IOException;
-import java.net.URL;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
-public class RegistrationViewController {
-    
+/*
+    Students:       Joshua White (12196075), Joshua Gibson (S0263435), Ashley Hansen (S0213276), Tina Losin (10569238)
+    Description:    Manages the registration process, including collecting user data and interacting with the server to 
+                    register new users.
+ */
+public class RegistrationViewController
+{
+
+    // Declaration of Client object
+    private Client client;
+
     @FXML
     private TextField nameInput;
-     
     @FXML
     private TextField addressInput;
-            
     @FXML
     private TextField phoneInput;
-    
     @FXML
     private TextField emailInput;
-    
     @FXML
     private TextField passwordInput;
-            
     @FXML
     private TextField reEnteredPasswordInput;
-    
-    
-    
+
+    // Constructor for the RegistrationViewController
+    public RegistrationViewController(Client client)
+    {
+        this.client = client;
+    }
+
+    @FXML
+    private void handleRegistration(ActionEvent event)
+    {
+
+    }
+
+    // Method to switch between the RegistrationView and the InitialView
+    @FXML
+    private void handleSigninLink(ActionEvent event) throws IOException
+    {
+        InitialViewController controller = new InitialViewController(client);
+        Utilities.switchScene(event, "com/malenydairysystem/InitialView.fxml", controller);
+    }
+
     @FXML
     private void clickExit()
     {
@@ -53,59 +66,4 @@ public class RegistrationViewController {
             }
         });
     }
-    
-    
-   @FXML
-    private void handleRegistration(ActionEvent event){
-        
-    }
-    
-    // Method to switch between the RegistrationView and the InitialView
-    @FXML
-    private void handleSigninLink(ActionEvent event) throws IOException{
-        URL fxmlLocation = getClass().getClassLoader().getResource("com/malenydairysystem/InitialView.fxml");  // Load file using ClassLoader 
-            
-        FXMLLoader loader = new FXMLLoader(fxmlLocation); // Create FXMLLoader instance 
-        Parent root = loader.load(); // Load file into Parent object
-        
-        // Get the current stage and close it   
-        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow(); 
-        currentStage.close();        
-        
-        Stage stage = new Stage(); // Open a new stage for the new scene
-        stage.setScene(new Scene(root)); // Set scene with the loaded Parent object
-        stage.show(); // Show new stage  
-    }
-          
-    @FXML
-    private void handleNameInput(){
-        
-    }
-    
-    @FXML
-    private void handleAddressInput(){
-        
-    }
-    
-    @FXML
-    private void handlePhoneInput(){
-        
-    }
-    
-    @FXML
-    private void handleEmailInput(){
-        
-    }
-    
-    @FXML
-    private void handlePasswordInput(){
-        
-    }
-    
-    @FXML
-    private void handleReEnteredPasswordInput(){
-        
-    }
-    
- 
 }

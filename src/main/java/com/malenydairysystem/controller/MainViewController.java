@@ -1,68 +1,71 @@
-/*
-    Students: Joshua White (12196075), Ashley Hansen (S0213276), Tina Losin (10569238)
-    Description: Manages the main application window, serving as the primary interface for navigation between different sections of the system.
- */
-
 package com.malenydairysystem.controller;
+
+import com.malenydairysystem.Utilities;
+import com.malenydairysystem.client.Client;
 
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
-public class MainViewController {
-    
+/*
+    Students:       Joshua White (12196075), Joshua Gibson (S0263435), Ashley Hansen (S0213276), Tina Losin (10569238)
+    Description:    Manages the main application window, serving as the primary interface for navigation between different 
+                    sections of the system.
+ */
+public class MainViewController
+{
+
+    // Declaration for Client object
+    private Client client;
+
     @FXML
-    private BorderPane contentArea; 
-           
-    @FXML
-    private void loadProductView(ActionEvent event) throws IOException{
-        Pane homeView = FXMLLoader.load(getClass().getClassLoader().getResource("com/malenydairysystem/ProductView.fxml"));
-         contentArea.getChildren().setAll(homeView);
+    private BorderPane contentArea;
+
+    // Constructor for MainViewController
+    public MainViewController(Client client)
+    {
+        this.client = client;
     }
-    
+
     @FXML
-    private void loadScheduleView(ActionEvent event) throws IOException{
-        Pane homeView = FXMLLoader.load(getClass().getClassLoader().getResource("com/malenydairysystem/ScheduleView.fxml"));
-        contentArea.getChildren().setAll(homeView);
+    private void loadProductView(ActionEvent event) throws IOException
+    {
+        ProductViewController controller = new ProductViewController(client);
+        Utilities.switchPane(contentArea, "com/malenydairysystem/ProductView.fxml", controller);
     }
-    
+
     @FXML
-    private void loadOrderView(ActionEvent event) throws IOException{
-        Pane homeView = FXMLLoader.load(getClass().getClassLoader().getResource("com/malenydairysystem/OrderView.fxml"));
-        contentArea.getChildren().setAll(homeView);
+    private void loadScheduleView(ActionEvent event) throws IOException
+    {
+        ScheduleViewController controller = new ScheduleViewController(client);
+        Utilities.switchPane(contentArea, "com/malenydairysystem/ScheduleView.fxml", controller);
     }
-    
+
     @FXML
-    private void loadAdminView(ActionEvent event) throws IOException{
-        Pane homeView = FXMLLoader.load(getClass().getClassLoader().getResource("com/malenydairysystem/AdminView.fxml"));
-        contentArea.getChildren().setAll(homeView);
+    private void loadOrderView(ActionEvent event) throws IOException
+    {
+        OrderViewController controller = new OrderViewController(client);
+        Utilities.switchPane(contentArea, "com/malenydairysystem/OrderView.fxml", controller);
     }
-    
+
     @FXML
-    private void handleLogoutButton(ActionEvent event) throws IOException{
-        // Load the Initial View
-        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("com/malenydairysystem/InitialView.fxml"));
-        Pane initialView = loader.load();
-        
-        // Get the current stage
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-      
-        // Set the new scene
-        Scene scene = new Scene(initialView);
-        stage.setScene(scene);
-        stage.show();
+    private void loadAdminView(ActionEvent event) throws IOException
+    {
+        AdminViewController controller = new AdminViewController(client);
+        Utilities.switchPane(contentArea, "com/malenydairysystem/AdminView.fxml", controller);
     }
-    
+
     @FXML
-    private void handleContentArea(ActionEvent event)throws IOException{
-        
+    private void handleLogoutButton(ActionEvent event) throws IOException
+    {
+        InitialViewController controller = new InitialViewController(client);
+        Utilities.switchScene(event, "com/malenydairysystem/InitialView.fxml", controller);
     }
-    
-    
+
+    @FXML
+    private void handleContentArea(ActionEvent event) throws IOException
+    {
+
+    }
 }

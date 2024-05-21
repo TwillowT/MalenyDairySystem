@@ -36,14 +36,14 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <TableView prefHeight="328.0" prefWidth="641.0" GridPane.rowIndex="1">
+                              <TableView fx:id="productsTable" prefHeight="328.0" prefWidth="641.0" GridPane.rowIndex="1">
                                  <columns>
-                                    <TableColumn prefWidth="59.0" text="ID" />
-                                    <TableColumn prefWidth="188.0" text="Name" />
-                                    <TableColumn prefWidth="72.0" text="Quantity" />
-                                    <TableColumn prefWidth="81.0" text="Unit" />
-                                    <TableColumn prefWidth="87.0" text="Unit Price" />
-                                    <TableColumn prefWidth="205.0" text="Ingredients" />
+                                    <TableColumn fx:id="idColumn" prefWidth="59.0" text="ID" />
+                                    <TableColumn fx:id="nameColumn" prefWidth="188.0" text="Name" />
+                                    <TableColumn fx:id="quantityColumn" prefWidth="72.0" text="Quantity" />
+                                    <TableColumn fx:id="unitColumn" prefWidth="81.0" text="Unit" />
+                                    <TableColumn fx:id="unitPriceColumn" prefWidth="87.0" text="Unit Price" />
+                                    <TableColumn fx:id="ingredientsColumn" prefWidth="222.0" text="Ingredients" />
                                  </columns>
                                  <GridPane.margin>
                                     <Insets />
@@ -90,8 +90,8 @@
                                                 <Insets />
                                              </GridPane.margin>
                                           </Button>
-                                          <Button alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="View" GridPane.halignment="LEFT" />
-                                          <Button alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Remove" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                          <Button fx:id="viewProduct" alignment="CENTER" mnemonicParsing="false" onAction="#handleViewAllProductsButtonAction" prefHeight="30.0" prefWidth="100.0" text="View" GridPane.halignment="LEFT" />
+                                          <Button fx:id="removeProduct" alignment="CENTER" mnemonicParsing="false" onAction="#clearTable" prefHeight="30.0" prefWidth="100.0" text="Remove" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                                           <Button alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Update" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
                                        </children>
                                        <GridPane.margin>

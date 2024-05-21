@@ -1,11 +1,7 @@
-/*
-    Students: Tina Losin (10569238)
-    Description: Manages server operations, including handling multiple client connections simultaneously using a thread-per-connection 
-                 model, and synchronizing access to the database during concurrent operations.  
- */
 package com.malenydairysystem.server;
 
 import com.malenydairysystem.database.DatabaseManager;
+import com.malenydairysystem.model.Product;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -13,7 +9,13 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
+import java.util.List;
 
+/*
+    Students:       Joshua White (12196075), Joshua Gibson (S0263435), Ashley Hansen (S0213276), Tina Losin (10569238)
+    Description:    Handles all Server side operations for the program, receiving requests from the client and processing
+                    them, and returning results to program controllers.
+ */
 public class Server
 {
 
@@ -31,16 +33,14 @@ public class Server
         database.createTables();
 
         // Insert the Product Data from the CSV
-        database.insertDataFromCSV("A3-products.csv");
-
+        //database.insertDataFromCSV("A3-products.csv");
         // Insert the Delivery Cost Data from the CSV
-        database.insertDataFromCSV("A3-delivery-cost.csv");
-
+        //database.insertDataFromCSV("A3-delivery-cost.csv");
         try
         {
             // Create a new Server Socket Object
             ServerSocket serverSocket = new ServerSocket(SERVER_PORT);
-            System.out.println("Server started on Port " + SERVER_PORT);
+            System.out.println("Server Started and Listening on Port " + SERVER_PORT);
 
             while (true)
             {
@@ -62,23 +62,32 @@ class ServerConnection extends Thread
 {
 
     // Client Socket
-    Socket serverSocket;
+    Socket clientSocket;
 
     // Object Input and Output Streams
     ObjectInputStream serverInput;
     ObjectOutputStream serverOutput;
 
+    // DatabaseManager instance
+    DatabaseManager databaseManager;
+
     // Constructor for the Server Connection
-    public ServerConnection(Socket serverSocket)
+    public ServerConnection(Socket clientSocket)
     {
         try
         {
             // Set the Client Socket
-            this.serverSocket = serverSocket;
+            this.clientSocket = clientSocket;
+
+            // Initialize the DatabaseManager
+            this.databaseManager = new DatabaseManager();
+
+            // Connect to the database
+            this.databaseManager.connectDatabase();
 
             // Create the Object Input and Output Streams
-            serverInput = new ObjectInputStream(serverSocket.getInputStream());
-            serverOutput = new ObjectOutputStream(serverSocket.getOutputStream());
+            serverOutput = new ObjectOutputStream(clientSocket.getOutputStream());
+            serverInput = new ObjectInputStream(clientSocket.getInputStream());
 
             // Start the Thread
             this.start();
@@ -92,6 +101,24 @@ class ServerConnection extends Thread
 
     public void run()
     {
-        
+        try
+        {
+            while (true)
+            {
+                String requestType = (String) serverInput.readObject();
+
+                if (requestType.equals("GET_ALL_PRODUCTS"))
+                {
+                    List<Product> products = databaseManager.getAllProducts();
+
+                    serverOutput.writeObject(products);
+                    serverOutput.reset();
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }
