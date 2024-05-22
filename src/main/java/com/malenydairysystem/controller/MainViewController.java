@@ -28,6 +28,7 @@ public class MainViewController
         this.client = client;
     }
 
+    // Method to load the ProductView
     @FXML
     private void loadProductView(ActionEvent event) throws IOException
     {
@@ -35,6 +36,7 @@ public class MainViewController
         Utilities.switchPane(contentArea, "com/malenydairysystem/ProductView.fxml", controller);
     }
 
+    // Method to load the ScheduleView
     @FXML
     private void loadScheduleView(ActionEvent event) throws IOException
     {
@@ -42,6 +44,7 @@ public class MainViewController
         Utilities.switchPane(contentArea, "com/malenydairysystem/ScheduleView.fxml", controller);
     }
 
+    // Method to load the OrderView
     @FXML
     private void loadOrderView(ActionEvent event) throws IOException
     {
@@ -49,6 +52,7 @@ public class MainViewController
         Utilities.switchPane(contentArea, "com/malenydairysystem/OrderView.fxml", controller);
     }
 
+    // Method to load the AdminView
     @FXML
     private void loadAdminView(ActionEvent event) throws IOException
     {
@@ -56,12 +60,14 @@ public class MainViewController
         Utilities.switchPane(contentArea, "com/malenydairysystem/AdminView.fxml", controller);
     }
 
+    // Method to handle logging out
     @FXML
     private void handleLogoutButton(ActionEvent event) throws IOException
     {
         InitialViewController controller = new InitialViewController(client);
         Utilities.switchScene(event, "com/malenydairysystem/InitialView.fxml", controller);
     }
+
 
     @FXML
     private void handleContentArea(ActionEvent event) throws IOException
