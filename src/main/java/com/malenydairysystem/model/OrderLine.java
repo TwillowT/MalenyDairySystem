@@ -4,6 +4,8 @@
  */
 package com.malenydairysystem.model;
 
+import java.text.DecimalFormat;
+
 /**
  *
  * @author ashle
@@ -14,16 +16,19 @@ public class OrderLine {
     int quantity;
     double price;
     double total;
+    
+    String productName;
+    double gst;
 
     public OrderLine() {
     }
 
-    public OrderLine(int orderID, int productID, int quantity, double price, double total) {
+    public OrderLine(int orderID, int productID, int quantity, double price) {
         this.orderID = orderID;
         this.productID = productID;
         this.quantity = quantity;
         this.price = price;
-        this.total = total;
+        calculateTotal();
     }
 
     public int getOrderID() {
@@ -42,12 +47,21 @@ public class OrderLine {
         this.productID = productID;
     }
 
+    public String getProductName() {
+        return productName;
+    }
+    
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
     public int getQuantity() {
         return quantity;
     }
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+        calculateTotal();
     }
 
     public double getPrice() {
@@ -56,14 +70,21 @@ public class OrderLine {
 
     public void setPrice(double price) {
         this.price = price;
+        calculateTotal();
+    }
+
+    public double getGst() {
+        return gst;
+    }
+    
+    public void calculateTotal() {
+        DecimalFormat df = new DecimalFormat("0.00");
+        gst = Double.parseDouble(df.format(price * quantity * 0.1));
+        total = Double.parseDouble(df.format(price * quantity + gst));
     }
 
     public double getTotal() {
         return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
     }
 
     @Override
