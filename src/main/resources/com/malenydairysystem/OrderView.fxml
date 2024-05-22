@@ -20,11 +20,11 @@
       </Label>
       <TableView fx:id="productTable" layoutX="20.0" layoutY="120.0" prefHeight="190.0" prefWidth="710.0">
          <columns>
-            <TableColumn fx:id="nameProductColumn" prefWidth="152.0" resizable="false" reorderable="false" text="Product Name" />
-            <TableColumn fx:id="unitProductColumn" prefWidth="70.0" resizable="false" reorderable="false" text="Unit" />
-            <TableColumn fx:id="quantityProductColumn" prefWidth="98.0" resizable="false" reorderable="false" text="Quantity" />
-            <TableColumn fx:id="unitPriceProductColumn" prefWidth="95.0" resizable="false" reorderable="false" text="Price" />
-            <TableColumn fx:id="ingredientsProductColumn" prefWidth="294.0" resizable="false" reorderable="false" text="Ingredients" />
+            <TableColumn fx:id="nameProductColumn" editable="false" prefWidth="152.0" reorderable="false" resizable="false" text="Product Name" />
+            <TableColumn fx:id="quantityProductColumn" editable="false" prefWidth="98.0" reorderable="false" resizable="false" text="Quantity" />
+            <TableColumn fx:id="unitProductColumn" editable="false" prefWidth="70.0" reorderable="false" resizable="false" text="Unit" />
+            <TableColumn fx:id="unitPriceProductColumn" editable="false" prefWidth="95.0" reorderable="false" resizable="false" text="Price" />
+            <TableColumn fx:id="ingredientsProductColumn" editable="false" prefWidth="294.0" reorderable="false" resizable="false" text="Ingredients" />
          </columns>
       </TableView>
       <Label layoutX="20.0" layoutY="350.0" text="Order:">
@@ -37,13 +37,13 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <TableView fx:id="orderTable" layoutX="20.0" layoutY="370.0" prefHeight="190.0" prefWidth="710.0">
+      <TableView fx:id="orderTable" editable="true" layoutX="20.0" layoutY="370.0" prefHeight="190.0" prefWidth="710.0">
          <columns>
-            <TableColumn fx:id="nameOrderColumn" resizable="false" reorderable="false" prefWidth="195.0" text="Product Name" />
-            <TableColumn fx:id="quantityOrderColumn" resizable="false" reorderable="false" minWidth="3.0" prefWidth="83.0" text="Quantity" />
-            <TableColumn fx:id="unitPriceOrderColumn" resizable="false" reorderable="false" prefWidth="101.0" text="Price" />
-            <TableColumn fx:id="gstOrderColumn" resizable="false" reorderable="false" prefWidth="81.0" text="GST" />
-            <TableColumn fx:id="totalOrderColumn" resizable="false" reorderable="false" prefWidth="117.0" text="Total" />
+            <TableColumn fx:id="nameOrderColumn" editable="false" prefWidth="195.0" reorderable="false" resizable="false" text="Product Name" />
+            <TableColumn fx:id="quantityOrderColumn" minWidth="3.0" prefWidth="83.0" reorderable="false" resizable="false" text="Quantity" />
+            <TableColumn fx:id="unitPriceOrderColumn" editable="false" prefWidth="101.0" reorderable="false" resizable="false" text="Price" />
+            <TableColumn fx:id="gstOrderColumn" editable="false" prefWidth="81.0" reorderable="false" resizable="false" text="GST" />
+            <TableColumn fx:id="totalOrderColumn" editable="false" prefWidth="117.0" reorderable="false" resizable="false" text="Total" />
          </columns>
       </TableView>
       <GridPane layoutX="20.0" layoutY="570.0" prefHeight="30.0" prefWidth="710.0">
