@@ -28,9 +28,9 @@
       </GridPane>
       <TableView layoutX="20.0" layoutY="90.0" prefHeight="490.0" prefWidth="710.0">
          <columns>
-            <TableColumn prefWidth="169.0" text="Post Code " />
-            <TableColumn prefWidth="218.0" text="Cost" />
-            <TableColumn prefWidth="322.0" text="Delivery Day" />
+            <TableColumn prefWidth="169.0" resizable="false" reorderable="false" text="Post Code " />
+            <TableColumn prefWidth="218.0" resizable="false" reorderable="false" text="Cost" />
+            <TableColumn prefWidth="322.0" resizable="false" reorderable="false" text="Delivery Day" />
          </columns>
       </TableView>
       <Label layoutX="104.0" layoutY="586.0" text="Your delivery will arrive between 8am-5pm on the day allocated to your postcode.">

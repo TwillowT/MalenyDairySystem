@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" maxHeight="620.0" maxWidth="750.0" minHeight="620.0" minWidth="750.0" prefHeight="620.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" maxHeight="620.0" maxWidth="750.0" minHeight="620.0" minWidth="750.0" prefHeight="620.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label alignment="CENTER" layoutY="-1.0" prefHeight="90.0" prefWidth="750.0" text="Browse Products">
          <font>
@@ -15,13 +15,12 @@
       </Label>
       <TableView fx:id="productTable" layoutX="20.0" layoutY="90.0" prefHeight="510.0" prefWidth="710.0">
          <columns>
-            <TableColumn fx:id="idColumn" prefWidth="45.0" text="ID" />
-            <TableColumn fx:id="nameColumn" prefWidth="159.0" text="Product Name" />
-            <TableColumn fx:id="quantityColumn" minWidth="6.0" prefWidth="64.0" text="Quantity" />
-            <TableColumn fx:id="unitColumn" minWidth="0.0" prefWidth="64.0" text="Unit" />
-            <TableColumn fx:id="unitPriceColumn" minWidth="0.0" prefWidth="64.0" text="Price" />
-            <TableColumn fx:id="ingredientsColumn" prefWidth="313.0" text="Ingredients" />
-            <TableColumn fx:id="ingredientsColumn1" prefWidth="313.0" text="Ingredients" />
+            <TableColumn fx:id="idColumn" prefWidth="45.0" resizable="false" reorderable="false" text="ID" />
+            <TableColumn fx:id="nameColumn" prefWidth="159.0" resizable="false" reorderable="false" text="Product Name" />
+            <TableColumn fx:id="quantityColumn" minWidth="6.0" prefWidth="64.0" resizable="false" reorderable="false" text="Quantity" />
+            <TableColumn fx:id="unitColumn" minWidth="0.0" prefWidth="64.0" resizable="false" reorderable="false" text="Unit" />
+            <TableColumn fx:id="unitPriceColumn" minWidth="0.0" prefWidth="64.0" resizable="false" reorderable="false" text="Price" />
+            <TableColumn fx:id="ingredientsColumn" prefWidth="313.0" resizable="false" reorderable="false" text="Ingredients" />
          </columns>
       </TableView>
    </children>
