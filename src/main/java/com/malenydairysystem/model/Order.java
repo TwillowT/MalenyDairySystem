@@ -6,7 +6,7 @@
 package com.malenydairysystem.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public class Order implements Serializable

@@ -4,7 +4,9 @@ import com.malenydairysystem.client.Client;
 import com.malenydairysystem.model.Product;
 import com.malenydairysystem.model.Order;
 import com.malenydairysystem.model.OrderLine;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 
 import javafx.event.ActionEvent;
@@ -32,6 +34,7 @@ public class OrderViewController {
     private Order order;
     private List<Product> products;
     private List<OrderLine> orderLines;
+    private List<Integer> deliveryCosts;
 
     // FXML References
     @FXML
@@ -56,9 +59,11 @@ public class OrderViewController {
     @FXML
     private TableColumn<OrderLine, Double> unitPriceOrderColumn;
     @FXML
+    private TableColumn<OrderLine, Double> totalOrderColumn;
+    @FXML
     private TableColumn<OrderLine, Double> gstOrderColumn;
     @FXML
-    private TableColumn<OrderLine, Double> totalOrderColumn;
+    private TableColumn<OrderLine, Double> totalGSTOrderColumn;
 
     @FXML
     private ChoiceBox<String> choicePostcode;
@@ -81,8 +86,10 @@ public class OrderViewController {
         nameOrderColumn.setCellValueFactory(new PropertyValueFactory<>("productName"));
         quantityOrderColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         unitPriceOrderColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-        gstOrderColumn.setCellValueFactory(new PropertyValueFactory<>("gst"));
         totalOrderColumn.setCellValueFactory(new PropertyValueFactory<>("total"));
+        gstOrderColumn.setCellValueFactory(new PropertyValueFactory<>("gst"));
+        totalGSTOrderColumn.setCellValueFactory(new PropertyValueFactory<>("totalGST"));
+        
 
         quantityOrderColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         quantityOrderColumn.setOnEditCommit(new EventHandler<CellEditEvent<OrderLine, Integer>>() {
@@ -103,6 +110,7 @@ public class OrderViewController {
         for (String postcode : postcodes) {
             choicePostcode.getItems().add(postcode);
         }
+        deliveryCosts = client.getAllDeliveryCosts();
         choicePostcode.setValue(postcodes.get(0));
     }
 
@@ -148,6 +156,32 @@ public class OrderViewController {
 
     @FXML
     private void btnPlaceOrderOnClick(ActionEvent event) {
-        
+        if (!orderLines.isEmpty()) {
+            // Determine cost
+            Integer deliveryCost = deliveryCosts.get(choicePostcode.getSelectionModel().getSelectedIndex());
+            double total = deliveryCost;
+            for (OrderLine od : orderLines) {
+                total += od.getTotal();
+            }
+            
+            DecimalFormat df = new DecimalFormat("0.00");
+            total = Double.parseDouble(df.format(total * 1.1)); // Add gst and round to 2 decimal places
+            
+            // Set order values
+            order.setCustomerID(1);
+            order.setTotalPrice(total);
+            
+            // SQL Date Setup
+            long millis=System.currentTimeMillis();  
+            order.setOrderDate(new Date(millis));
+            
+            // Update Order
+            order = client.addOrder(order);
+            
+            for (OrderLine od : orderLines) {
+                od.setOrderID(order.getOrderID());
+                client.addOrderLine(od);
+            }
+        }
     }
 }

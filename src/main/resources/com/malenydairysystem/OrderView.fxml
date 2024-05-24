@@ -42,8 +42,9 @@
             <TableColumn fx:id="nameOrderColumn" editable="false" prefWidth="195.0" reorderable="false" resizable="false" text="Product Name" />
             <TableColumn fx:id="quantityOrderColumn" minWidth="3.0" prefWidth="83.0" reorderable="false" resizable="false" text="Quantity" />
             <TableColumn fx:id="unitPriceOrderColumn" editable="false" prefWidth="101.0" reorderable="false" resizable="false" text="Price" />
-            <TableColumn fx:id="gstOrderColumn" editable="false" prefWidth="81.0" reorderable="false" resizable="false" text="GST" />
             <TableColumn fx:id="totalOrderColumn" editable="false" prefWidth="117.0" reorderable="false" resizable="false" text="Total" />
+            <TableColumn fx:id="gstOrderColumn" editable="false" prefWidth="81.0" reorderable="false" resizable="false" text="GST" />
+            <TableColumn fx:id="totalGSTOrderColumn" editable="false" prefWidth="117.0" reorderable="false" resizable="false" text="TotalWithGST" />
          </columns>
       </TableView>
       <GridPane layoutX="20.0" layoutY="570.0" prefHeight="30.0" prefWidth="710.0">

@@ -4,21 +4,24 @@
  */
 package com.malenydairysystem.model;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 
 /**
  *
  * @author ashle
  */
-public class OrderLine {
+public class OrderLine implements Serializable {
     int orderID;
     int productID;
     int quantity;
     double price;
     double total;
     
+    // Variables to help help with displaying
     String productName;
     double gst;
+    double totalGST;
 
     public OrderLine() {
     }
@@ -72,19 +75,25 @@ public class OrderLine {
         this.price = price;
         calculateTotal();
     }
+    
+    public double getTotal() {
+        return total;
+    }
 
     public double getGst() {
         return gst;
     }
+
+    public double getTotalGST() {
+        return totalGST;
+    }
     
     public void calculateTotal() {
         DecimalFormat df = new DecimalFormat("0.00");
+        total = Double.parseDouble(df.format(price * quantity));
         gst = Double.parseDouble(df.format(price * quantity * 0.1));
-        total = Double.parseDouble(df.format(price * quantity + gst));
-    }
-
-    public double getTotal() {
-        return total;
+        totalGST = Double.parseDouble(df.format(total + gst));
+        
     }
 
     @Override
