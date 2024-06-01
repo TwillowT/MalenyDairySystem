@@ -1,97 +1,74 @@
 package com.malenydairysystem.model;
 
 import java.io.Serializable;
-import java.util.Date;
-/**
- *
- * @author Joshua
+
+/*
+    Students:       Joshua White (12196075), Joshua Gibson (S0263435), Ashley Hansen (S0213276), Tina Losin (10569238)
+    Description:    The Delivery Object class to manage Delivery records in the Program.
  */
 public class Delivery implements Serializable
 {
-    int deliveryID;
-    int postCode;
-    //Can delivery day and time be consolidated into a single DateTime?
-    Date deliveryDay;
-    Date deliveryTime;
-    double deliveryCost;
-    String customerName;
-    Order order;
 
-    public Delivery() {
+    private int deliveryID;
+    private int postCode;
+    private String deliveryDay;
+    private double deliveryCost;
+
+    public Delivery()
+    {
     }
 
-    public Delivery(int deliveryID, int postCode, Date deliveryDay, Date deliveryTime, double deliveryCost, String customerName, Order order) {
+    public Delivery(int deliveryID, int postCode, String deliveryDay, double deliveryCost)
+    {
         this.deliveryID = deliveryID;
         this.postCode = postCode;
         this.deliveryDay = deliveryDay;
-        this.deliveryTime = deliveryTime;
         this.deliveryCost = deliveryCost;
-        this.customerName = customerName;
-        this.order = order;
     }
 
-    public int getDeliveryID() {
+    public int getDeliveryID()
+    {
         return deliveryID;
     }
 
-    public void setDeliveryID(int deliveryID) {
+    public void setDeliveryID(int deliveryID)
+    {
         this.deliveryID = deliveryID;
     }
 
-    public int getPostCode() {
+    public int getPostCode()
+    {
         return postCode;
     }
 
-    public void setPostCode(int postCode) {
+    public void setPostCode(int postCode)
+    {
         this.postCode = postCode;
     }
 
-    public Date getDeliveryDay() {
+    public String getDeliveryDay()
+    {
         return deliveryDay;
     }
 
-    public void setDeliveryDay(Date deliveryDay) {
+    public void setDeliveryDay(String deliveryDay)
+    {
         this.deliveryDay = deliveryDay;
     }
 
-    public Date getDeliveryTime() {
-        return deliveryTime;
-    }
-
-    public void setDeliveryTime(Date deliveryTime) {
-        this.deliveryTime = deliveryTime;
-    }
-
-    public double getDeliveryCost() {
+    public double getDeliveryCost()
+    {
         return deliveryCost;
     }
 
-    public void setDeliveryCost(double deliveryCost) {
+    public void setDeliveryCost(double deliveryCost)
+    {
         this.deliveryCost = deliveryCost;
     }
 
-    public String getCustomerName() {
-        return customerName;
-    }
-
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
     @Override
-    public String toString() {
-        return "Delivery{" + "deliveryID=" + deliveryID + ", postCode=" + postCode + ", deliveryDay=" + deliveryDay + ", deliveryTime=" + deliveryTime + ", deliveryCost=" + deliveryCost + ", customerName=" + customerName + ", order=" + order + '}';
+    public String toString()
+    {
+        return "Delivery{" + "deliveryID=" + deliveryID + ", postCode=" + postCode + ", deliveryDay=" + deliveryDay + ", deliveryCost=" + deliveryCost + '}';
     }
-    
-
-
-    
 }

@@ -1,23 +1,27 @@
-/*
-    Students: Tina Losin (10569238)
-    Description: Represents product details needed for inventory management and order processing.
- */
 package com.malenydairysystem.model;
 
 import java.io.Serializable;
 
-public class Product implements Serializable {
-    int productID;
-    String productName;
-    String unit;
-    int quantity;
-    double price;
-    String ingredients;
+/*
+    Students:       Joshua White (12196075), Joshua Gibson (S0263435), Ashley Hansen (S0213276), Tina Losin (10569238)
+    Description:    The Product Object class to manage Product records in the Program.
+ */
+public class Product implements Serializable
+{
 
-    public Product() {
+    private int productID;
+    private String productName;
+    private String unit;
+    private int quantity;
+    private double price;
+    private String ingredients;
+
+    public Product()
+    {
     }
 
-    public Product(int productID, String productName, String unit, int quantity, double price, String ingredients) {
+    public Product(int productID, String productName, String unit, int quantity, double price, String ingredients)
+    {
         this.productID = productID;
         this.productName = productName;
         this.unit = unit;
@@ -26,59 +30,69 @@ public class Product implements Serializable {
         this.ingredients = ingredients;
     }
 
-    public int getProductID() {
+    public int getProductID()
+    {
         return productID;
     }
 
-    public void setProductID(int productID) {
+    public void setProductID(int productID)
+    {
         this.productID = productID;
     }
 
-    public String getProductName() {
+    public String getProductName()
+    {
         return productName;
     }
 
-    public void setProductName(String productName) {
+    public void setProductName(String productName)
+    {
         this.productName = productName;
     }
 
-    public String getUnit() {
+    public String getUnit()
+    {
         return unit;
     }
 
-    public void setUnit(String unit) {
+    public void setUnit(String unit)
+    {
         this.unit = unit;
     }
 
-    public int getQuantity() {
+    public int getQuantity()
+    {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(int quantity)
+    {
         this.quantity = quantity;
     }
 
-    public double getPrice() {
+    public double getPrice()
+    {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(double price)
+    {
         this.price = price;
     }
 
-    public String getIngredients() {
+    public String getIngredients()
+    {
         return ingredients;
     }
 
-    public void setIngredients(String ingredients) {
+    public void setIngredients(String ingredients)
+    {
         this.ingredients = ingredients;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "Product{" + "productID=" + productID + ", productName=" + productName + ", unit=" + unit + ", quantity=" + quantity + ", price=" + price + ", ingredients=" + ingredients + '}';
     }
-    
-    
-            
 }

@@ -18,28 +18,40 @@ import java.io.IOException;
 public class App extends Application
 {
 
+    // Initialisation of Client
     private Client client;
 
+    // Start Method for JavaFX Application
     @Override
     public void start(Stage stage) throws IOException
     {
+        // Create a new Client Connection
         client = new Client();
 
+        // Load Initial View
         FXMLLoader loader = new FXMLLoader(getClass().getResource("InitialView.fxml"));
         InitialViewController controller = new InitialViewController(client);
+
+        // Set the Controller
         loader.setController(controller);
+
+        // Load the Parent
         Parent root = loader.load();
 
+        // Set the Scene
         Scene scene = new Scene(root);
-        stage.setScene(scene);
 
+        // Set the Stage
+        stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle("Maleny Diary to Home System");
         stage.show();
     }
 
+    // Main Method
     public static void main(String[] args)
     {
+        //
         launch();
     }
 }

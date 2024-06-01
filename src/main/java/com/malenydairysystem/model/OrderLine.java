@@ -1,105 +1,86 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.malenydairysystem.model;
 
 import java.io.Serializable;
-import java.text.DecimalFormat;
 
-/**
- *
- * @author ashle
+/*
+    Students:       Joshua White (12196075), Joshua Gibson (S0263435), Ashley Hansen (S0213276), Tina Losin (10569238)
+    Description:    The OrderLine Object class to manage OrderLine records in the Program.
  */
-public class OrderLine implements Serializable {
-    int orderID;
-    int productID;
-    int quantity;
-    double price;
-    double total;
-    
-    // Variables to help help with displaying
-    String productName;
-    double gst;
-    double totalGST;
+public class OrderLine implements Serializable
+{
 
-    public OrderLine() {
+    private int orderID;
+    private int productID;
+    private int quantity;
+    private double price;
+    private double total;
+
+    public OrderLine()
+    {
     }
 
-    public OrderLine(int orderID, int productID, int quantity, double price) {
+    public OrderLine(int orderID, int productID, int quantity, double price, double total)
+    {
         this.orderID = orderID;
         this.productID = productID;
         this.quantity = quantity;
         this.price = price;
-        calculateTotal();
+        this.total = total;
     }
 
-    public int getOrderID() {
+    public int getOrderID()
+    {
         return orderID;
     }
 
-    public void setOrderID(int orderID) {
+    public void setOrderID(int orderID)
+    {
         this.orderID = orderID;
     }
 
-    public int getProductID() {
+    public int getProductID()
+    {
         return productID;
     }
 
-    public void setProductID(int productID) {
+    public void setProductID(int productID)
+    {
         this.productID = productID;
     }
 
-    public String getProductName() {
-        return productName;
-    }
-    
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public int getQuantity() {
+    public int getQuantity()
+    {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(int quantity)
+    {
         this.quantity = quantity;
-        calculateTotal();
     }
 
-    public double getPrice() {
+    public double getPrice()
+    {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(double price)
+    {
         this.price = price;
-        calculateTotal();
     }
-    
-    public double getTotal() {
+
+    public double getTotal()
+    {
         return total;
     }
 
-    public double getGst() {
-        return gst;
-    }
-
-    public double getTotalGST() {
-        return totalGST;
-    }
-    
-    public void calculateTotal() {
-        DecimalFormat df = new DecimalFormat("0.00");
-        total = Double.parseDouble(df.format(price * quantity));
-        gst = Double.parseDouble(df.format(price * quantity * 0.1));
-        totalGST = Double.parseDouble(df.format(total + gst));
-        
+    public void setTotal(double total)
+    {
+        this.total = total;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "OrderLine{" + "orderID=" + orderID + ", productID=" + productID + ", quantity=" + quantity + ", price=" + price + ", total=" + total + '}';
     }
-    
-    
 }

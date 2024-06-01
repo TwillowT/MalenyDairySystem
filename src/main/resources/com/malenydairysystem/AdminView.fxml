@@ -3,32 +3,29 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="620.0" maxWidth="750.0" minHeight="620.0" minWidth="750.0" prefHeight="620.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TabPane maxHeight="620.0" maxWidth="750.0" minHeight="620.0" minWidth="750.0" prefHeight="620.0" prefWidth="750.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane maxHeight="620.0" maxWidth="750.0" minHeight="620.0" minWidth="750.0" prefHeight="620.0" prefWidth="750.0" tabClosingPolicy="UNAVAILABLE" tabMinWidth="125.0">
         <tabs>
           <Tab text="Products">
             <content>
               <AnchorPane maxHeight="590.0" maxWidth="750.0" minHeight="590.0" minWidth="750.0" prefHeight="590.0" prefWidth="750.0">
                      <children>
-                        <GridPane layoutX="-2.0" maxHeight="590.0" maxWidth="750.0" minHeight="590.0" minWidth="750.0" prefHeight="590.0" prefWidth="750.0">
+                        <GridPane maxHeight="590.0" maxWidth="750.0" minHeight="590.0" minWidth="750.0" prefHeight="590.0" prefWidth="750.0">
                           <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="750.0" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" valignment="CENTER" vgrow="SOMETIMES" />
@@ -36,14 +33,14 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <TableView fx:id="productsTable" prefHeight="328.0" prefWidth="641.0" GridPane.rowIndex="1">
+                              <TableView fx:id="productTable" prefHeight="590.0" prefWidth="750.0" GridPane.rowIndex="1">
                                  <columns>
-                                    <TableColumn fx:id="idColumn" prefWidth="59.0" text="ID" />
-                                    <TableColumn fx:id="nameColumn" prefWidth="188.0" text="Name" />
-                                    <TableColumn fx:id="quantityColumn" prefWidth="72.0" text="Quantity" />
-                                    <TableColumn fx:id="unitColumn" prefWidth="81.0" text="Unit" />
-                                    <TableColumn fx:id="unitPriceColumn" prefWidth="87.0" text="Unit Price" />
-                                    <TableColumn fx:id="ingredientsColumn" prefWidth="222.0" text="Ingredients" />
+                                    <TableColumn fx:id="productIdColumn" prefWidth="59.0" text="ID" />
+                                    <TableColumn fx:id="productNameColumn" prefWidth="188.0" text="Name" />
+                                    <TableColumn fx:id="productQuantityColumn" prefWidth="72.0" text="Quantity" />
+                                    <TableColumn fx:id="productUnitColumn" prefWidth="81.0" text="Unit" />
+                                    <TableColumn fx:id="productPriceColumn" prefWidth="87.0" text="Unit Price" />
+                                    <TableColumn fx:id="productIngredientsColumn" prefWidth="222.0" text="Ingredients" />
                                  </columns>
                                  <GridPane.margin>
                                     <Insets />
@@ -64,15 +61,15 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
-                                    <TextField prefHeight="25.0" prefWidth="261.0" GridPane.columnIndex="1" />
-                                    <TextField prefHeight="25.0" prefWidth="304.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <TextField prefHeight="25.0" prefWidth="304.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <TextField fx:id="productName" prefHeight="25.0" prefWidth="261.0" GridPane.columnIndex="1" />
+                                    <TextField fx:id="productQuantity" prefHeight="25.0" prefWidth="304.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <TextField fx:id="productPrice" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <TextField fx:id="productIngredients" prefHeight="25.0" prefWidth="304.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                     <Label text="Name:" />
                                     <Label text="Unit:" GridPane.rowIndex="2" />
                                     <Label text="Quantity:" GridPane.rowIndex="1" />
                                     <Label text="Unit Price:" GridPane.rowIndex="3" />
-                                    <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <TextField fx:id="productUnit" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                     <Label text="Ingredients:" GridPane.rowIndex="4" />
                                     <GridPane GridPane.columnIndex="1" GridPane.rowIndex="6">
                                       <columnConstraints>
@@ -85,14 +82,14 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <Button alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Add" GridPane.columnIndex="3">
+                                          <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleAddProductButtonAction" prefHeight="30.0" prefWidth="100.0" text="Add" GridPane.columnIndex="3">
                                              <GridPane.margin>
                                                 <Insets />
                                              </GridPane.margin>
                                           </Button>
-                                          <Button fx:id="viewProduct" alignment="CENTER" mnemonicParsing="false" onAction="#handleViewAllProductsButtonAction" prefHeight="30.0" prefWidth="100.0" text="View" GridPane.halignment="LEFT" />
-                                          <Button fx:id="removeProduct" alignment="CENTER" mnemonicParsing="false" onAction="#clearTable" prefHeight="30.0" prefWidth="100.0" text="Remove" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                                          <Button alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Update" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                                          <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleViewAllProductsButtonAction" prefHeight="30.0" prefWidth="100.0" text="View" GridPane.halignment="LEFT" />
+                                          <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleRemoveProductButtonAction" prefHeight="30.0" prefWidth="100.0" text="Remove" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                          <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleUpdateProductButtonAction" prefHeight="30.0" prefWidth="100.0" text="Update" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
                                        </children>
                                        <GridPane.margin>
                                           <Insets />
@@ -103,7 +100,7 @@
                                     <Insets top="20.0" />
                                  </GridPane.margin>
                               </GridPane>
-                              <Label alignment="CENTER" prefHeight="27.0" prefWidth="1075.0" text="Manage Product Records" textAlignment="CENTER">
+                              <Label alignment="CENTER" prefHeight="27.0" prefWidth="1075.0" text="Manage Products" textAlignment="CENTER">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
@@ -119,225 +116,236 @@
           </Tab>
             <Tab text="Delivery Schedule ">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                  <AnchorPane maxHeight="590.0" maxWidth="750.0" minHeight="590.0" minWidth="750.0" prefHeight="590.0" prefWidth="750.0">
                      <children>
-                        <Label layoutX="251.0" layoutY="21.0" text="Manage Delivery Schedules">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <TableView layoutX="46.0" layoutY="67.0" prefHeight="270.0" prefWidth="642.0">
-                           <columns>
-                              <TableColumn prefWidth="59.0" text="ID" />
-                              <TableColumn prefWidth="108.0" text="Delivery Cost" />
-                              <TableColumn prefWidth="108.0" text="Delivery Day" />
-                              <TableColumn prefWidth="68.0" text="Status" />
-                              <TableColumn prefWidth="291.0" text="Notes" />
-                           </columns>
-                        </TableView>
-                        <GridPane layoutX="494.0" layoutY="345.0" prefHeight="27.0" prefWidth="194.0">
+                        <GridPane maxHeight="590.0" maxWidth="750.0" minHeight="590.0" minWidth="750.0" prefHeight="590.0" prefWidth="750.0">
                            <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="245.0" minWidth="10.0" prefWidth="96.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="253.0" minWidth="6.0" prefWidth="11.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="253.0" minWidth="10.0" prefWidth="98.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="750.0" />
                            </columnConstraints>
                            <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" valignment="CENTER" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="340.0" minHeight="10.0" prefHeight="336.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="207.0" minHeight="10.0" prefHeight="154.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Add" GridPane.columnIndex="2" />
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Remove" />
+                              <TableView fx:id="deliveryTable" prefHeight="338.0" prefWidth="710.0" GridPane.rowIndex="1">
+                                 <columns>
+                                    <TableColumn fx:id="deliveryIdColumn" prefWidth="59.0" text="ID" />
+                                    <TableColumn fx:id="deliveryPostcodeColumn" prefWidth="188.0" text="Postcode" />
+                                    <TableColumn fx:id="deliveryDayColumn" minWidth="0.0" prefWidth="256.0" text="Delivery Day" />
+                                    <TableColumn fx:id="deliveryCostColumn" minWidth="0.0" prefWidth="206.0" text="Delivery Cost" />
+                                 </columns>
+                              </TableView>
+                              <GridPane maxHeight="-Infinity" prefHeight="202.0" prefWidth="648.0" GridPane.rowIndex="2">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="211.0" minWidth="10.0" prefWidth="211.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <TextField fx:id="deliveryCost" disable="true" prefHeight="25.0" prefWidth="304.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Label text="Postcode:" />
+                                    <Label text="Delivery Day:" GridPane.rowIndex="1" />
+                                    <Label text="Delivery Cost:" GridPane.rowIndex="2" />
+                                    <GridPane GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleAddDeliveryButtonAction" prefHeight="30.0" prefWidth="100.0" text="Add" GridPane.columnIndex="3">
+                                             <GridPane.margin>
+                                                <Insets />
+                                             </GridPane.margin>
+                                          </Button>
+                                          <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleViewAllDeliveriesButtonAction" prefHeight="30.0" prefWidth="100.0" text="View" GridPane.halignment="LEFT" />
+                                          <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleRemoveDeliveryButtonAction" prefHeight="30.0" prefWidth="100.0" text="Remove" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                          <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleUpdateDeliveryButtonAction" prefHeight="30.0" prefWidth="100.0" text="Update" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                                       </children>
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
+                                    </GridPane>
+                                    <ComboBox fx:id="deliveryPostcode" prefHeight="25.0" prefWidth="519.0" GridPane.columnIndex="1" />
+                                    <ComboBox fx:id="deliveryDay" prefHeight="25.0" prefWidth="523.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                 </children>
+                                 <GridPane.margin>
+                                    <Insets top="20.0" />
+                                 </GridPane.margin>
+                              </GridPane>
+                              <Label alignment="CENTER" prefHeight="27.0" prefWidth="1075.0" text="Manage Delivery Schedule" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
                            </children>
-                        </GridPane>
-                        <GridPane layoutX="39.0" layoutY="391.0" prefHeight="198.0" prefWidth="349.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="211.0" minWidth="10.0" prefWidth="88.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="10.0" prefWidth="261.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="102.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <TextField prefHeight="25.0" prefWidth="304.0" GridPane.columnIndex="1" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Delivery Cost:  " textAlignment="RIGHT" wrappingWidth="87.13671875" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Delivery Day:  " textAlignment="RIGHT" wrappingWidth="89.13671875" GridPane.rowIndex="1" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Status:  " textAlignment="RIGHT" wrappingWidth="90.13671875" GridPane.rowIndex="2" />
-                              <ComboBox prefHeight="25.0" prefWidth="273.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <ComboBox prefHeight="25.0" prefWidth="273.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                           </children>
-                        </GridPane>
-                        <TextArea layoutX="462.0" layoutY="406.0" prefHeight="175.0" prefWidth="226.0" />
-                        <Label layoutX="422.0" layoutY="406.0" prefHeight="17.0" prefWidth="40.0" text="Notes:" />
-                        <GridPane layoutX="494.0" layoutY="589.0" prefHeight="35.0" prefWidth="194.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="245.0" minWidth="10.0" prefWidth="96.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="253.0" minWidth="6.0" prefWidth="11.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="253.0" minWidth="10.0" prefWidth="98.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Save" GridPane.columnIndex="2" />
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Cancel" />
-                           </children>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
                         </GridPane>
                      </children>
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="Orders">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Label layoutX="269.0" layoutY="20.0" text="Manage Order Records">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <TableView layoutX="46.0" layoutY="67.0" prefHeight="270.0" prefWidth="642.0">
-                           <columns>
-                              <TableColumn prefWidth="59.0" text="Order ID" />
-                              <TableColumn prefWidth="120.0" text="Customer Name" />
-                              <TableColumn prefWidth="90.0" text="Delivery Date" />
-                              <TableColumn prefWidth="74.0" text="Order Date" />
-                              <TableColumn prefWidth="70.0" text="Total Price" />
-                              <TableColumn prefWidth="228.0" text="Product Summary" />
-                           </columns>
-                        </TableView>
-                        <GridPane layoutX="494.0" layoutY="346.0" prefHeight="27.0" prefWidth="194.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="245.0" minWidth="10.0" prefWidth="96.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="253.0" minWidth="6.0" prefWidth="11.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="253.0" minWidth="10.0" prefWidth="98.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Update" GridPane.columnIndex="2" />
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Remove" />
-                           </children>
-                        </GridPane>
-                        <GridPane layoutX="14.0" layoutY="422.0" prefHeight="175.0" prefWidth="349.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="211.0" minWidth="10.0" prefWidth="113.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="10.0" prefWidth="236.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints maxHeight="50.0" minHeight="5.0" prefHeight="27.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="102.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <TextField prefHeight="25.0" prefWidth="261.0" GridPane.columnIndex="1" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="    Customer Name:  " textAlignment="RIGHT" wrappingWidth="116.13671875" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Delivery Date: " textAlignment="RIGHT" wrappingWidth="112.13671875" GridPane.rowIndex="2" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Product Summary: " textAlignment="RIGHT" wrappingWidth="111.13671875" GridPane.rowIndex="3" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <TextField prefHeight="25.0" prefWidth="304.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Unit:  " textAlignment="RIGHT" wrappingWidth="90.13671875" GridPane.rowIndex="4" />
-                              <DatePicker prefHeight="25.0" prefWidth="249.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                           </children>
-                        </GridPane>
-                        <TextArea layoutX="484.0" layoutY="422.0" prefHeight="175.0" prefWidth="206.0" />
-                        <Label layoutX="383.0" layoutY="421.0" prefHeight="17.0" prefWidth="101.0" text="Product Summary:" />
-                        <GridPane layoutX="496.0" layoutY="601.0" prefHeight="35.0" prefWidth="194.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="245.0" minWidth="10.0" prefWidth="96.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="253.0" minWidth="6.0" prefWidth="11.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="253.0" minWidth="10.0" prefWidth="98.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Save" GridPane.columnIndex="2" />
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Cancel" />
-                           </children>
-                        </GridPane>
-                     </children></AnchorPane>
-               </content>
-            </Tab>
-          <Tab text="Customer ">
+          <Tab text="Customers">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane maxHeight="590.0" maxWidth="750.0" minHeight="590.0" minWidth="750.0" prefHeight="590.0" prefWidth="750.0">
                      <children>
-                        <TableView layoutX="46.0" layoutY="64.0" prefHeight="270.0" prefWidth="642.0">
-                           <columns>
-                              <TableColumn prefWidth="59.0" text="ID" />
-                              <TableColumn prefWidth="162.0" text="Address" />
-                              <TableColumn prefWidth="108.0" text="Full Name" />
-                              <TableColumn prefWidth="101.0" text="Phone Number" />
-                              <TableColumn prefWidth="61.0" text="Email" />
-                              <TableColumn prefWidth="146.0" text="Notes" />
-                           </columns>
-                        </TableView>
-                        <Label layoutX="253.0" layoutY="21.0" text="Manage Customer Records">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <GridPane layoutX="494.0" layoutY="345.0" prefHeight="27.0" prefWidth="194.0">
+                        <GridPane maxHeight="590.0" maxWidth="750.0" minHeight="590.0" minWidth="750.0" prefHeight="590.0" prefWidth="750.0">
                            <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="245.0" minWidth="10.0" prefWidth="96.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="253.0" minWidth="6.0" prefWidth="11.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="253.0" minWidth="10.0" prefWidth="98.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="750.0" />
                            </columnConstraints>
                            <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" valignment="CENTER" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="460.0" minHeight="10.0" prefHeight="460.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
                            </rowConstraints>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
                            <children>
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Add" GridPane.columnIndex="2" />
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Remove" />
-                           </children>
-                        </GridPane>
-                        <GridPane layoutX="37.0" layoutY="402.0" prefHeight="175.0" prefWidth="349.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="211.0" minWidth="10.0" prefWidth="94.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="10.0" prefWidth="255.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints maxHeight="50.0" minHeight="5.0" prefHeight="27.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="88.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="64.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="102.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <TextField prefHeight="25.0" prefWidth="261.0" GridPane.columnIndex="1" />
-                              <TextField prefHeight="25.0" prefWidth="304.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="     Address: " textAlignment="RIGHT" wrappingWidth="93.13671875" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Full Name: " textAlignment="RIGHT" wrappingWidth="94.13671875" GridPane.rowIndex="2" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Phone Number:  " textAlignment="RIGHT" wrappingWidth="96.13671875" GridPane.rowIndex="3" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email: " textAlignment="RIGHT" wrappingWidth="95.13671875" GridPane.rowIndex="4" />
-                              <TextField prefHeight="25.0" prefWidth="304.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                              <TextField prefHeight="25.0" prefWidth="304.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                           </children>
-                        </GridPane>
-                        <TextArea layoutX="462.0" layoutY="402.0" prefHeight="175.0" prefWidth="226.0" />
-                        <Label layoutX="424.0" layoutY="402.0" prefHeight="17.0" prefWidth="40.0" text="Notes:" />
-                        <GridPane layoutX="494.0" layoutY="583.0" prefHeight="35.0" prefWidth="194.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="245.0" minWidth="10.0" prefWidth="96.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="253.0" minWidth="6.0" prefWidth="11.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="253.0" minWidth="10.0" prefWidth="98.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Save" GridPane.columnIndex="2" />
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="85.0" text="Cancel" />
+                              <TableView fx:id="customerTable" prefHeight="439.0" prefWidth="710.0" GridPane.rowIndex="1">
+                                 <columns>
+                                    <TableColumn fx:id="customerIdColumn" prefWidth="59.0" text="ID" />
+                                    <TableColumn fx:id="customerNameColumn" prefWidth="108.0" text="Name" />
+                                    <TableColumn fx:id="customerPhoneColumn" prefWidth="101.0" text="Phone" />
+                                    <TableColumn fx:id="customerEmailColumn" prefWidth="201.0" text="Email" />
+                                    <TableColumn fx:id="customerAddressColumn" prefWidth="239.0" text="Address" />
+                                 </columns>
+                                 <GridPane.margin>
+                                    <Insets bottom="20.0" />
+                                 </GridPane.margin>
+                              </TableView>
+                              <Label alignment="CENTER" prefHeight="27.0" prefWidth="1075.0" text="View Customers" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <GridPane maxHeight="-Infinity" prefHeight="202.0" prefWidth="648.0" GridPane.rowIndex="2">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="211.0" minWidth="10.0" prefWidth="88.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <GridPane GridPane.columnIndex="1">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleViewAllCustomersButtonAction" prefHeight="30.0" prefWidth="100.0" text="View" GridPane.columnIndex="3" GridPane.halignment="RIGHT" />
+                                          <Button alignment="CENTER" mnemonicParsing="false" onAction="#clearCustomerTable" prefHeight="30.0" prefWidth="100.0" text="Clear" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                                       </children>
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
+                                    </GridPane>
+                                 </children>
+                              </GridPane>
                            </children>
                         </GridPane>
                      </children></AnchorPane>
             </content>
           </Tab>
+            <Tab text="Orders">
+               <content>
+                  <AnchorPane maxHeight="590.0" maxWidth="750.0" minHeight="590.0" minWidth="750.0" prefHeight="590.0" prefWidth="750.0">
+                     <children>
+                        <GridPane maxHeight="590.0" maxWidth="750.0" minHeight="590.0" minWidth="750.0" prefHeight="590.0" prefWidth="750.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="750.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" valignment="CENTER" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="258.0" minHeight="10.0" prefHeight="250.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="216.0" minHeight="10.0" prefHeight="209.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
+                           <children>
+                              <TableView fx:id="orderTable" prefHeight="74.0" prefWidth="710.0" GridPane.rowIndex="1">
+                                 <columns>
+                                    <TableColumn fx:id="orderIdColumn" prefWidth="69.0" text="Order ID" />
+                                    <TableColumn fx:id="orderCustomerColumn" prefWidth="267.0" text="Customer ID" />
+                                    <TableColumn fx:id="orderTotalColumn" prefWidth="201.0" text="Total Price" />
+                                    <TableColumn fx:id="orderDateColumn" prefWidth="172.0" text="Order Date" />
+                                 </columns>
+                                 <GridPane.margin>
+                                    <Insets bottom="20.0" />
+                                 </GridPane.margin>
+                              </TableView>
+                              <Label alignment="CENTER" prefHeight="27.0" prefWidth="1075.0" text="View Orders" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <GridPane maxHeight="-Infinity" prefHeight="202.0" prefWidth="648.0" GridPane.rowIndex="3">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="211.0" minWidth="10.0" prefWidth="88.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <GridPane GridPane.columnIndex="1">
+                                       <columnConstraints>
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                       </columnConstraints>
+                                       <rowConstraints>
+                                          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                       </rowConstraints>
+                                       <children>
+                                          <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleViewAllOrdersButtonAction" prefHeight="30.0" prefWidth="100.0" text="View" GridPane.columnIndex="3" GridPane.halignment="RIGHT" />
+                                          <Button alignment="CENTER" mnemonicParsing="false" onAction="#clearOrderTable" prefHeight="30.0" prefWidth="100.0" text="Clear" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                                       </children>
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
+                                    </GridPane>
+                                 </children>
+                              </GridPane>
+                              <TableView fx:id="orderLineTable" prefHeight="0.0" prefWidth="710.0" GridPane.rowIndex="2">
+                                 <columns>
+                                    <TableColumn fx:id="orderLineIdColumn" prefWidth="69.0" text="Order ID" />
+                                    <TableColumn fx:id="orderLineProductColumn" prefWidth="161.0" text="Product ID" />
+                                    <TableColumn fx:id="orderLineQuantityColumn" prefWidth="150.0" text="Quantity" />
+                                    <TableColumn fx:id="orderLinePriceColumn" prefWidth="160.0" text="Price" />
+                                    <TableColumn fx:id="orderLineTotalColumn" prefWidth="168.0" text="Total" />
+                                 </columns>
+                                 <GridPane.margin>
+                                    <Insets bottom="20.0" />
+                                 </GridPane.margin>
+                              </TableView>
+                           </children>
+                        </GridPane>
+                     </children></AnchorPane>
+               </content>
+            </Tab>
         </tabs>
       </TabPane>
    </children>

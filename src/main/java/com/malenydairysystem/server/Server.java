@@ -1,6 +1,10 @@
 package com.malenydairysystem.server;
 
 import com.malenydairysystem.database.DatabaseManager;
+import com.malenydairysystem.model.Customer;
+import com.malenydairysystem.model.Delivery;
+import com.malenydairysystem.model.Order;
+import com.malenydairysystem.model.OrderLine;
 import com.malenydairysystem.model.Product;
 
 import java.io.IOException;
@@ -33,9 +37,11 @@ public class Server
         database.createTables();
 
         // Insert the Product Data from the CSV
-        //database.insertDataFromCSV("A3-products.csv");
+        database.insertDataFromCSV("A3-products.csv");
+
         // Insert the Delivery Cost Data from the CSV
-        //database.insertDataFromCSV("A3-delivery-cost.csv");
+        database.insertDataFromCSV("A3-delivery-cost.csv");
+
         try
         {
             // Create a new Server Socket Object
@@ -82,7 +88,7 @@ class ServerConnection extends Thread
             // Initialize the DatabaseManager
             this.databaseManager = new DatabaseManager();
 
-            // Connect to the database
+            // Connect to the Database
             this.databaseManager.connectDatabase();
 
             // Create the Object Input and Output Streams
@@ -99,25 +105,117 @@ class ServerConnection extends Thread
         }
     }
 
+    // Run Method
     public void run()
     {
         try
         {
+            // Loop to Receive Requests from the Client
             while (true)
             {
+                // Read the Request Type
                 String requestType = (String) serverInput.readObject();
 
-                if (requestType.equals("GET_ALL_PRODUCTS"))
+                // Switch Statement to Handle the Request
+                switch (requestType)
                 {
-                    List<Product> products = databaseManager.getAllProducts();
+                    // Add Product Request
+                    case "ADD_PRODUCT":
+                        Product product = (Product) serverInput.readObject();
+                        boolean addResult = databaseManager.addProduct(product);
+                        serverOutput.writeObject(addResult);
+                        break;
 
-                    serverOutput.writeObject(products);
-                    serverOutput.reset();
+                    // Update Product Request    
+                    case "UPDATE_PRODUCT":
+                        Product updatedProduct = (Product) serverInput.readObject();
+                        boolean updateResult = databaseManager.updateProduct(updatedProduct);
+                        serverOutput.writeObject(updateResult);
+                        break;
+
+                    // Remove Product Request
+                    case "REMOVE_PRODUCT":
+                        int productId = (int) serverInput.readObject();
+                        boolean removeResult = databaseManager.removeProduct(productId);
+                        serverOutput.writeObject(removeResult);
+                        break;
+
+                    // Get All Products Request
+                    case "GET_ALL_PRODUCTS":
+                        List<Product> products = databaseManager.getAllProducts();
+                        serverOutput.writeObject(products);
+                        serverOutput.reset();
+                        break;
+
+                    // Add Delivery Request
+                    case "ADD_DELIVERY":
+                        Delivery delivery = (Delivery) serverInput.readObject();
+                        boolean addDeliveryResult = databaseManager.addDelivery(delivery);
+                        serverOutput.writeObject(addDeliveryResult);
+                        break;
+
+                    // Update Delivery Request
+                    case "UPDATE_DELIVERY":
+                        Delivery updatedDelivery = (Delivery) serverInput.readObject();
+                        boolean updateDeliveryResult = databaseManager.updateDelivery(updatedDelivery);
+                        serverOutput.writeObject(updateDeliveryResult);
+                        break;
+
+                    // Remove Delivery Request
+                    case "REMOVE_DELIVERY":
+                        int deliveryId = (int) serverInput.readObject();
+                        boolean removeDeliveryResult = databaseManager.removeDelivery(deliveryId);
+                        serverOutput.writeObject(removeDeliveryResult);
+                        break;
+
+                    // Get All Deliveries Request
+                    case "GET_ALL_DELIVERIES":
+                        List<Delivery> deliveries = databaseManager.getAllDeliveries();
+                        serverOutput.writeObject(deliveries);
+                        serverOutput.reset();
+                        break;
+
+                    // Get Delivery Postcodes Request
+                    case "GET_DELIVERY_POSTCODES":
+                        List<Integer> deliveryPostcodes = databaseManager.getDeliveryPostcodes();
+                        serverOutput.writeObject(deliveryPostcodes);
+                        serverOutput.reset();
+                        break;
+
+                    // Get Delivery Cost Request
+                    case "GET_DELIVERY_COST":
+                        int postcode = (int) serverInput.readObject();
+                        double deliveryCost = databaseManager.getDeliveryCost(postcode);
+                        serverOutput.writeObject(deliveryCost);
+                        break;
+
+                    // Get All Customers Request
+                    case "GET_ALL_CUSTOMERS":
+                        List<Customer> customers = databaseManager.getAllCustomers();
+                        serverOutput.writeObject(customers);
+                        serverOutput.reset();
+                        break;
+
+                    // Get All Orders Request
+                    case "GET_ALL_ORDERS":
+                        List<Order> orders = databaseManager.getAllOrders();
+                        serverOutput.writeObject(orders);
+                        serverOutput.reset();
+                        break;
+
+                    // Get Order Lines Request
+                    case "GET_ORDER_LINES":
+                        int orderId = (int) serverInput.readObject();
+                        List<OrderLine> orderLines = databaseManager.getOrderLinesByOrderId(orderId);
+                        serverOutput.writeObject(orderLines);
+                        serverOutput.reset();
+                        break;
                 }
             }
         }
         catch (Exception e)
         {
+            // Print the Stack Trace
             e.printStackTrace();
         }
     }
