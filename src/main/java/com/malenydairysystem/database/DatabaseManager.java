@@ -50,12 +50,22 @@ public class DatabaseManager
 
     // Customer Table Prepared Statements
     PreparedStatement getAllCustomers;
+    PreparedStatement addCustomer;
+    
+    // Admin Table Prepared Statements
+    PreparedStatement getAllAdmins;
+    PreparedStatement addAdmin;
 
     // Order Table Prepared Statements
     PreparedStatement getAllOrders;
+    PreparedStatement addOrder;
 
     // Order Line Table Prepared Statements
     PreparedStatement getAllOrderLines;
+    PreparedStatement addOrderLine;
+    
+    // Misc Prepared Statement
+    PreparedStatement lastIncrement; // Gets the last used auto increment (Used for fetching order id)
 
     // Constructor for the Database Manager
     public DatabaseManager()
@@ -96,12 +106,22 @@ public class DatabaseManager
 
             // Initialize the Prepared Statements for the Customer Database Table
             getAllCustomers = dbConnection.prepareStatement("SELECT * FROM customers");
+            addCustomer = dbConnection.prepareStatement("INSERT INTO admins (full_name, phone, email, password, delivery_address) VALUES (?, ?, ?, ?, ?)");
+            
+            // Initialize the Prepared Statements for the Admin Database Table
+            getAllAdmins = dbConnection.prepareStatement("SELECT * FROM admins");
+            addAdmin = dbConnection.prepareStatement("INSERT INTO admins (full_name, phone, email, password) VALUES (?, ?, ?, ?)");
 
             // Initialize the Prepared Statements for the Order Database Table
             getAllOrders = dbConnection.prepareStatement("SELECT * FROM orders");
+            addOrder = dbConnection.prepareStatement("INSERT INTO orders (customer_id, total_price, order_date) VALUES (?, ?, ?)");
 
             // Initialize the Prepared Statements for the Order Line Database Table
             getAllOrderLines = dbConnection.prepareStatement("SELECT * FROM orders_lines WHERE order_id = ?");
+            addOrderLine = dbConnection.prepareStatement("INSERT INTO orders_lines (order_id, product_id, quantity, price, total) VALUES (?, ?, ?, ?, ?)");
+            
+            // Misc Prepared Statements
+            lastIncrement = dbConnection.prepareStatement("SELECT LAST_INSERT_ID()");
         }
         catch (SQLException e)
         {
@@ -356,6 +376,35 @@ public class DatabaseManager
             if (dbStatement != null)
             {
                 dbStatement.close();
+            }
+            if (dbConnection != null)
+            {
+                dbConnection.close();
+            }
+        }
+    }
+    
+    // Insert the initial customer user for testing the system
+    public void insertCustomer() throws SQLException
+    {
+        Connection dbConnection = null;
+        PreparedStatement addCustomer = null;
+
+        try
+        {
+            // Create the Database Connection
+            dbConnection = DriverManager.getConnection(DB_URL + DB_NAME, DB_USER, DB_PASSWORD);
+            
+            // Create first customer user
+            addCustomer = dbConnection.prepareStatement("INSERT INTO customers (full_name, phone, email, password, delivery_address) VALUES ('admin', '0123456789', 'admin@admin.com', 'admin', '4551')");
+            addCustomer.executeUpdate();
+        }
+        finally
+        {
+            // Close the Database Connection and Statement
+            if (addCustomer != null)
+            {
+                addCustomer.close();
             }
             if (dbConnection != null)
             {
@@ -703,6 +752,33 @@ public class DatabaseManager
         // Return the Order List
         return orders;
     }
+    
+    // Adds an order using an order object, returns the same object witht the orderID set
+    public Order addOrder(Order order)
+    {
+        Order returnOrder = order;
+        try
+        {
+            // Set inputs
+            addOrder.setString(1, Integer.toString(order.getCustomerID()));
+            addOrder.setString(2, Double.toString(order.getTotalPrice()));
+            addOrder.setString(3, order.getOrderDate().toString());
+
+            // Execute the statement
+            addOrder.executeUpdate();
+            
+            // Get customer id
+            ResultSet rs = lastIncrement.executeQuery();
+            rs.next();
+            returnOrder.setOrderID(rs.getInt(1));
+            rs.close();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return returnOrder;
+    }
 
     // Get all Order Lines by Order ID and return a list
     public List<OrderLine> getOrderLinesByOrderId(int orderId)
@@ -740,5 +816,31 @@ public class DatabaseManager
 
         // Return the Order Line List
         return orderLines;
+    }
+    
+    // Add an OrderLine and return a response
+    public boolean addOrderLine(OrderLine orderLine)
+    {
+        try
+        {
+            // Set inputs
+            addOrderLine.setString(1, Integer.toString(orderLine.getOrderID()));
+            addOrderLine.setString(2, Integer.toString(orderLine.getProductID()));
+            addOrderLine.setString(3, Integer.toString(orderLine.getQuantity()));
+            addOrderLine.setString(4, Double.toString(orderLine.getPrice()));
+            addOrderLine.setString(5, Double.toString(orderLine.getTotal()));
+
+            // Execute the statement
+            addOrderLine.executeUpdate();
+            
+            //  Return a Success Response
+            return true;
+        }
+        catch (SQLException e)
+        {
+            // Print the Stack Trace and Return a Failure Response
+            e.printStackTrace();
+            return false;
+        }
     }
 }

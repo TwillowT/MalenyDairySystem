@@ -34,7 +34,6 @@ public class OrderViewController {
     private Order order;
     private List<Product> products;
     private List<OrderLine> orderLines;
-    private List<Integer> deliveryCosts;
 
     // FXML References
     @FXML
@@ -106,12 +105,11 @@ public class OrderViewController {
 
         loadProducts(); // Load products into the system
         
-        List<String> postcodes = client.getAllPostcodes();
-        for (String postcode : postcodes) {
-            choicePostcode.getItems().add(postcode);
+        List<Integer> postcodes = client.getDeliveryPostcodes();
+        for (Integer postcode : postcodes) {
+            choicePostcode.getItems().add(postcode.toString());
         }
-        deliveryCosts = client.getAllDeliveryCosts();
-        choicePostcode.setValue(postcodes.get(0));
+        choicePostcode.setValue(postcodes.get(0).toString());
     }
 
     // Method to fetch Products from the server 
@@ -136,7 +134,7 @@ public class OrderViewController {
 
             // Deny if it contains the product
             if (!contains) {
-                OrderLine od = new OrderLine(0, product.getProductID(), 1, product.getPrice());
+                OrderLine od = new OrderLine(0, product.getProductID(), 1, product.getPrice(), 0);
                 od.setProductName(product.getProductName());
                 orderLines.add(od);
 
@@ -158,7 +156,7 @@ public class OrderViewController {
     private void btnPlaceOrderOnClick(ActionEvent event) {
         if (!orderLines.isEmpty()) {
             // Determine cost
-            Integer deliveryCost = deliveryCosts.get(choicePostcode.getSelectionModel().getSelectedIndex());
+            double deliveryCost = client.getDeliveryCost(Integer.parseInt(choicePostcode.getValue()));
             double total = deliveryCost;
             for (OrderLine od : orderLines) {
                 total += od.getTotal();
@@ -182,6 +180,13 @@ public class OrderViewController {
                 od.setOrderID(order.getOrderID());
                 client.addOrderLine(od);
             }
+            
+            clearData();
         }
+    }
+    
+    private void clearData() {
+        orderLines.clear();
+        orderTable.getItems().setAll(orderLines);
     }
 }

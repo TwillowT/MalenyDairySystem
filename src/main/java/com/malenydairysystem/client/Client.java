@@ -359,4 +359,47 @@ public class Client
         // Return Cost
         return cost;
     }
+    
+    // Send Request to Server to Add an Order
+    public Order addOrder(Order order) {
+        Order returnOrder = null;
+
+        try
+        {
+            // Send Request to Server
+            outputStream.writeObject("ADD_ORDER");
+            outputStream.writeObject(order);
+
+            returnOrder = (Order) inputStream.readObject();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return returnOrder;
+    }
+
+    // Send Request to Server to Add an OrderLine
+    public boolean addOrderLine(OrderLine orderLine) {
+        // Initialise Result as False
+        boolean result = false;
+
+        try
+        {
+            // Send Request to Server
+            outputStream.writeObject("ADD_ORDER_LINE");
+            outputStream.writeObject(orderLine);
+
+            // Retrieve Result from Server
+            result = (boolean) inputStream.readObject();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        // Return Result
+        return result;
+    }
 }

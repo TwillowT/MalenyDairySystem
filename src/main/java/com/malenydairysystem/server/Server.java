@@ -41,6 +41,9 @@ public class Server
 
         // Insert the Delivery Cost Data from the CSV
         database.insertDataFromCSV("A3-delivery-cost.csv");
+        
+        // Insert inital customer into the database
+        database.insertCustomer();
 
         try
         {
@@ -208,6 +211,24 @@ class ServerConnection extends Thread
                         int orderId = (int) serverInput.readObject();
                         List<OrderLine> orderLines = databaseManager.getOrderLinesByOrderId(orderId);
                         serverOutput.writeObject(orderLines);
+                        serverOutput.reset();
+                        break;
+                        
+                    // Get All Orders Request
+                    case "ADD_ORDER":
+                        Order order = (Order) serverInput.readObject();
+                        order = databaseManager.addOrder(order);
+                        
+                        serverOutput.writeObject(order);
+                        serverOutput.reset();
+                        break;
+                        
+                    // Get All Orders Request
+                    case "ADD_ORDER_LINE":
+                        OrderLine orderLine = (OrderLine) serverInput.readObject();
+                        boolean addOrderLineResult = databaseManager.addOrderLine(orderLine);
+                        
+                        serverOutput.writeObject(addOrderLineResult);
                         serverOutput.reset();
                         break;
                 }
