@@ -51,7 +51,7 @@ public class DatabaseManager
     // Customer Table Prepared Statements
     PreparedStatement getAllCustomers;
     PreparedStatement addCustomer;
-    
+
     // Admin Table Prepared Statements
     PreparedStatement getAllAdmins;
     PreparedStatement addAdmin;
@@ -63,7 +63,7 @@ public class DatabaseManager
     // Order Line Table Prepared Statements
     PreparedStatement getAllOrderLines;
     PreparedStatement addOrderLine;
-    
+
     // Misc Prepared Statement
     PreparedStatement lastIncrement; // Gets the last used auto increment (Used for fetching order id)
 
@@ -106,11 +106,11 @@ public class DatabaseManager
 
             // Initialize the Prepared Statements for the Customer Database Table
             getAllCustomers = dbConnection.prepareStatement("SELECT * FROM customers");
-            addCustomer = dbConnection.prepareStatement("INSERT INTO admins (full_name, phone, email, password, delivery_address) VALUES (?, ?, ?, ?, ?)");
-            
+            addCustomer = dbConnection.prepareStatement("INSERT INTO admins (full_name, phone, email, username, password, delivery_address) VALUES (?, ?, ?, ?, ?, ?)");
+
             // Initialize the Prepared Statements for the Admin Database Table
             getAllAdmins = dbConnection.prepareStatement("SELECT * FROM admins");
-            addAdmin = dbConnection.prepareStatement("INSERT INTO admins (full_name, phone, email, password) VALUES (?, ?, ?, ?)");
+            addAdmin = dbConnection.prepareStatement("INSERT INTO admins (full_name, phone, email, username, password) VALUES (?, ?, ?, ?, ?)");
 
             // Initialize the Prepared Statements for the Order Database Table
             getAllOrders = dbConnection.prepareStatement("SELECT * FROM orders");
@@ -119,7 +119,7 @@ public class DatabaseManager
             // Initialize the Prepared Statements for the Order Line Database Table
             getAllOrderLines = dbConnection.prepareStatement("SELECT * FROM orders_lines WHERE order_id = ?");
             addOrderLine = dbConnection.prepareStatement("INSERT INTO orders_lines (order_id, product_id, quantity, price, total) VALUES (?, ?, ?, ?, ?)");
-            
+
             // Misc Prepared Statements
             lastIncrement = dbConnection.prepareStatement("SELECT LAST_INSERT_ID()");
         }
@@ -200,6 +200,7 @@ public class DatabaseManager
                     + "full_name VARCHAR(255) NOT NULL,"
                     + "phone VARCHAR(255) NOT NULL,"
                     + "email VARCHAR(255) NOT NULL UNIQUE,"
+                    + "username CHAR(64) NOT NULL UNIQUE,"
                     + "password CHAR(64) NOT NULL,"
                     + "delivery_address VARCHAR(255) NOT NULL"
                     + ")";
@@ -213,6 +214,7 @@ public class DatabaseManager
                     + "full_name VARCHAR(255) NOT NULL,"
                     + "phone VARCHAR(255) NOT NULL,"
                     + "email VARCHAR(255) NOT NULL UNIQUE,"
+                    + "username CHAR(64) NOT NULL UNIQUE,"
                     + "password CHAR(64) NOT NULL"
                     + ")";
 
@@ -290,6 +292,59 @@ public class DatabaseManager
 
             // Print the Stack Trace
             e.printStackTrace();
+        }
+        finally
+        {
+            // Close the Database Connection and Statement
+            if (dbStatement != null)
+            {
+                dbStatement.close();
+            }
+            if (dbConnection != null)
+            {
+                dbConnection.close();
+            }
+        }
+    }
+
+    // Check if Data Exists in the Table
+    public boolean checkIfDataExists(String tableName) throws SQLException
+    {
+        // Initialize the Database Connection and Statement
+        Connection dbConnection = null;
+        Statement dbStatement = null;
+
+        try
+        {
+            // Create the Database Connection
+            dbConnection = DriverManager.getConnection(DB_URL + DB_NAME, DB_USER, DB_PASSWORD);
+
+            // Create the Database Statement
+            dbStatement = dbConnection.createStatement();
+
+            // Create the SQL Query to Check if Data Exists
+            String sql = "SELECT COUNT(*) FROM " + tableName;
+
+            // Execute the SQL Query
+            ResultSet rs = dbStatement.executeQuery(sql);
+
+            // Get the Count of Rows
+            rs.next();
+            int count = rs.getInt(1);
+
+            // Return the Result
+            return count > 0;
+        }
+        catch (SQLException e)
+        {
+            // Print the Data Check Error Message
+            System.out.println("Data check Failed...");
+
+            // Print the Stack Trace
+            e.printStackTrace();
+
+            // Return a Failure Response
+            return false;
         }
         finally
         {
@@ -383,9 +438,9 @@ public class DatabaseManager
             }
         }
     }
-    
-    // Insert the initial customer user for testing the system
-    public void insertCustomer() throws SQLException
+
+    // Insert the initial Admin User for Testing the System
+    public void insertAdmin() throws SQLException
     {
         Connection dbConnection = null;
         PreparedStatement addCustomer = null;
@@ -394,10 +449,30 @@ public class DatabaseManager
         {
             // Create the Database Connection
             dbConnection = DriverManager.getConnection(DB_URL + DB_NAME, DB_USER, DB_PASSWORD);
-            
-            // Create first customer user
-            addCustomer = dbConnection.prepareStatement("INSERT INTO customers (full_name, phone, email, password, delivery_address) VALUES ('admin', '0123456789', 'admin@admin.com', 'admin', '4551')");
-            addCustomer.executeUpdate();
+
+            // Initialize the PreparedStatement
+            String sql = "INSERT INTO admins (full_name, phone, email, username, password) VALUES (?, ?, ?, ?, ?)";
+            addAdmin = dbConnection.prepareStatement(sql);
+
+            // Create the First Admin User
+            addAdmin.setString(1, "Admin User");
+            addAdmin.setString(2, "0407 123 456");
+            addAdmin.setString(3, "admin@admin.com");
+            addAdmin.setString(4, "admin");
+            addAdmin.setString(5, "admin");
+
+            addAdmin.executeUpdate();
+
+            // Print the Data Insertion Success Message
+            System.out.println("Data inserted Successfully for Admin User");
+        }
+        catch (SQLException e)
+        {
+            // Print the Data Insertion Error Message
+            System.out.println("Data insertion Failed for Admin User");
+
+            // Print the Stack Trace
+            e.printStackTrace();
         }
         finally
         {
@@ -412,6 +487,57 @@ public class DatabaseManager
             }
         }
     }
+
+    // Insert the initial Customer User for Testing the System
+    public void insertCustomer() throws SQLException
+    {
+        Connection dbConnection = null;
+        PreparedStatement addCustomer = null;
+
+        try
+        {
+            // Create the Database Connection
+            dbConnection = DriverManager.getConnection(DB_URL + DB_NAME, DB_USER, DB_PASSWORD);
+
+            // Initialize the PreparedStatement
+            String sql = "INSERT INTO customers (full_name, phone, email, username, password, delivery_address) VALUES (?, ?, ?, ?, ?, ?)";
+            addCustomer = dbConnection.prepareStatement(sql);
+
+            // Create the First Customer User
+            addCustomer.setString(1, "Customer User");
+            addCustomer.setString(2, "0407 123 456");
+            addCustomer.setString(3, "customer@customer.com");
+            addCustomer.setString(4, "customer");
+            addCustomer.setString(5, "customer");
+            addCustomer.setString(6, "123 Customer Street, Brisbane, QLD 4550");
+
+            addCustomer.executeUpdate();
+
+            // Print the Data Insertion Success Message
+            System.out.println("Data inserted Successfully for Customer User");
+        }
+        catch (SQLException e)
+        {
+            // Print the Data Insertion Error Message
+            System.out.println("Data insertion Failed for Customer User");
+
+            // Print the Stack Trace
+            e.printStackTrace();
+        }
+        finally
+        {
+            // Close the Database Connection and Statement
+            if (addCustomer != null)
+            {
+                addCustomer.close();
+            }
+            if (dbConnection != null)
+            {
+                dbConnection.close();
+            }
+        }
+    }
+
 
     // Add a Product and return a response
     public boolean addProduct(Product product)
@@ -752,7 +878,7 @@ public class DatabaseManager
         // Return the Order List
         return orders;
     }
-    
+
     // Adds an order using an order object, returns the same object witht the orderID set
     public Order addOrder(Order order)
     {
@@ -766,7 +892,7 @@ public class DatabaseManager
 
             // Execute the statement
             addOrder.executeUpdate();
-            
+
             // Get customer id
             ResultSet rs = lastIncrement.executeQuery();
             rs.next();
@@ -817,7 +943,7 @@ public class DatabaseManager
         // Return the Order Line List
         return orderLines;
     }
-    
+
     // Add an OrderLine and return a response
     public boolean addOrderLine(OrderLine orderLine)
     {
@@ -832,7 +958,7 @@ public class DatabaseManager
 
             // Execute the statement
             addOrderLine.executeUpdate();
-            
+
             //  Return a Success Response
             return true;
         }

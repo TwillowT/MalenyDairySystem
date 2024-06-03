@@ -36,15 +36,54 @@ public class Server
         // Create the Database Tables
         database.createTables();
 
-        // Insert the Product Data from the CSV
-        database.insertDataFromCSV("A3-products.csv");
+        // Check if the Product Data has already been Inserted
+        if (database.checkIfDataExists("products"))
+        {
+            // Notify that Product Data already exists
+            System.out.println("Data already exists in the Product Table. CSV Data wont be Inserted.");
+        }
+        else
+        {
+            // Insert the Product Data from the CSV
+            database.insertDataFromCSV("A3-products.csv");
+        }
 
-        // Insert the Delivery Cost Data from the CSV
-        database.insertDataFromCSV("A3-delivery-cost.csv");
+        // Check if the Delivery Cost Data has already been Inserted
+        if (database.checkIfDataExists("delivery_costs"))
+        {
+            // Notify that Delivery Cost Data already exists
+            System.out.println("Data already exists in the Delivery Cost Table. CSV Data wont be Inserted.");
+        }
+        else
+        {
+            // Insert the Delivery Cost Data from the CSV
+            database.insertDataFromCSV("A3-delivery-cost.csv");
+        }
+
+        // Check if the Admin User has already been Inserted
+        if (database.checkIfDataExists("admins"))
+        {
+            // Notify that Admin User already exists
+            System.out.println("Data already exists in the Customer Table. Admin User wont be Inserted.");
+        }
+        else
+        {
+            // Insert the Admin User
+            database.insertAdmin();
+        }
+
+        // Check if the Customer Data has already been Inserted
+        if (database.checkIfDataExists("customers"))
+        {
+            // Notify that Customer Data already exists
+            System.out.println("Data already exists in the Customer Table. Customer User wont be Inserted.");
+        }
+        else
+        {
+            // Insert the Customer Data from the CSV
+            database.insertCustomer();
+        }
         
-        // Insert inital customer into the database
-        database.insertCustomer();
-
         try
         {
             // Create a new Server Socket Object
