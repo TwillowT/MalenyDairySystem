@@ -5,11 +5,18 @@ import com.malenydairysystem.model.Delivery;
 import com.malenydairysystem.model.Order;
 import com.malenydairysystem.model.OrderLine;
 import com.malenydairysystem.model.Product;
+import com.malenydairysystem.model.User;
+import java.io.IOException;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.security.KeyFactory;
+import java.security.PublicKey;
+import java.security.spec.X509EncodedKeySpec;
+import java.util.Arrays;
 import java.util.List;
+import javax.crypto.Cipher;
 
 /*
     Students:       Joshua White (12196075), Joshua Gibson (S0263435), Ashley Hansen (S0213276), Tina Losin (10569238)
@@ -27,6 +34,8 @@ public class Client
     private Socket socket;
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
+    
+    private PublicKey serverPublicKey;
 
     // Constructor for Client
     public Client()
@@ -40,6 +49,8 @@ public class Client
             // Initialise Object Input and Output Streams
             outputStream = new ObjectOutputStream(socket.getOutputStream());
             inputStream = new ObjectInputStream(socket.getInputStream());
+            
+            requestServerPublicKey(); // Request the server's public key
 
         }
         catch (Exception e)
@@ -48,6 +59,29 @@ public class Client
             e.printStackTrace();
         }
     }
+    
+    //
+    private void requestServerPublicKey() {
+        try{
+            System.out.println("Requesting server's public key..."); // Debugging statement
+            outputStream.writeObject("GET_PUBLIC_KEY");
+            byte[] keyBytes = (byte[]) inputStream.readObject();
+            X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
+            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+            serverPublicKey = keyFactory.generatePublic(keySpec);
+            System.out.println("Received server's public key.");
+        }catch(Exception e){ // Handle exceptions
+            e.printStackTrace();
+        }
+    }
+    
+    
+    private byte[] encryptPassword(String password) throws Exception{
+        Cipher cipher = Cipher.getInstance("RSA");
+        cipher.init(Cipher.ENCRYPT_MODE, serverPublicKey);
+        return cipher.doFinal(password.getBytes("UTF-8"));
+      
+    }    
 
     // Send Rquest to Server to Add a Product
     public boolean addProduct(Product product)
@@ -401,5 +435,61 @@ public class Client
 
         // Return Result
         return result;
+    }
+    
+    // Method to send registration data to server
+    public boolean registerCustomer(String name, String phone, String email, String password, String address) {
+        try{
+            System.out.println("Registering user with email: " + email); // Debugging statement
+            outputStream.writeObject("REGISTER");
+            outputStream.writeObject(name);            
+            outputStream.writeObject(phone);
+            outputStream.writeObject(email);
+            byte[] encryptedPassword = encryptPassword(password);
+            outputStream.writeObject(encryptedPassword);
+            outputStream.writeObject(address);
+            
+            Object response = inputStream.readObject(); 
+            if (response instanceof Boolean) { 
+                boolean result = (Boolean) response;System.out.println("Registration result: " + result); // Debugging statement
+                return result;
+            }
+            return false;
+            
+        } catch (Exception e) { 
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public ObjectInputStream getInputStream(){
+        return inputStream;
+    }
+    
+    public boolean authenticateCustomer(String email, String password){
+        try{
+            System.out.println("Signing in with customer email: " + email); // Debugging statement
+            byte[] encryptedPassword = encryptPassword(password);
+            System.out.println("Encrypted password: " + Arrays.toString(encryptedPassword)); // Debugging statement
+            outputStream.writeObject("SIGN_IN");
+            outputStream.writeObject(email);
+            outputStream.writeObject(encryptedPassword);
+            
+            Object response = inputStream.readObject(); // 
+            
+            if(response instanceof Boolean){ 
+                boolean authenticated = (boolean) response;
+                System.out.println("Sign in response: " + authenticated); // Debugging statement
+                return authenticated;
+            }else{
+                return false;
+            }
+            
+            //return (String) inputStream.readObject();
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+
     }
 }

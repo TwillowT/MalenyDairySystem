@@ -6,6 +6,7 @@ import com.malenydairysystem.client.Client;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 
 /*
@@ -18,14 +19,32 @@ public class MainViewController
 
     // Declaration for Client object
     private Client client;
+    
+    private String role;
 
     @FXML
     private BorderPane contentArea;
+    
+    @FXML
+    private Button loadOrderView; // Place Order button
+    @FXML
+    private Button loadAdminView; // Admin button
 
     // Constructor for MainViewController
     public MainViewController(Client client)
     {
         this.client = client;
+        //this.role = role;
+    }
+    
+    @FXML
+    private void initialize(){
+        // hide buttons based on user type
+        if("admin".equals(role)){
+            loadOrderView.setVisible(false); // hide Place Order button from admins
+        } else if("customer".equals(role)){
+            loadAdminView.setVisible(false); // hide Admin button from customers
+        }
     }
 
     // Method to load the ProductView

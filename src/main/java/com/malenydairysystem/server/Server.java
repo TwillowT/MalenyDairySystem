@@ -12,8 +12,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.sql.SQLException;
 import java.util.List;
+import javax.crypto.Cipher;
 
 /*
     Students:       Joshua White (12196075), Joshua Gibson (S0263435), Ashley Hansen (S0213276), Tina Losin (10569238)
@@ -118,6 +123,10 @@ class ServerConnection extends Thread
 
     // DatabaseManager instance
     DatabaseManager databaseManager;
+    
+    // RSA Keys
+    private PublicKey publicKey;
+    private PrivateKey privateKey;
 
     // Constructor for the Server Connection
     public ServerConnection(Socket clientSocket)
@@ -132,6 +141,9 @@ class ServerConnection extends Thread
 
             // Connect to the Database
             this.databaseManager.connectDatabase();
+            
+            // Generate RSA keys
+            generateRSAKeys();
 
             // Create the Object Input and Output Streams
             serverOutput = new ObjectOutputStream(clientSocket.getOutputStream());
@@ -145,6 +157,25 @@ class ServerConnection extends Thread
             // Print the Stack Trace
             e.printStackTrace();
         }
+    }
+    
+    private void generateRSAKeys(){
+        try{
+            KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
+            keyGen.initialize(2048);
+            KeyPair keyPair = keyGen.generateKeyPair();
+            this.publicKey = keyPair.getPublic();
+            this.privateKey = keyPair.getPrivate();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    private String decryptPassword(byte[] encryptedPassword) throws Exception{
+        Cipher cipher = Cipher.getInstance("RSA");
+        cipher.init(Cipher.DECRYPT_MODE, privateKey);
+        byte[] decryptedBytes = cipher.doFinal(encryptedPassword);
+        return new String(decryptedBytes, "UTF-8");
     }
 
     // Run Method
@@ -161,91 +192,123 @@ class ServerConnection extends Thread
                 // Switch Statement to Handle the Request
                 switch (requestType)
                 {
-                    // Add Product Request
+                    // Handle public key request
+                    case "GET_PUBLIC_KEY":
+                        // Send the server's public key to the client
+                        byte[] keyBytes = publicKey.getEncoded();
+                        serverOutput.writeObject(keyBytes);
+                        break;
+                        
+                    // Handle sign in request    
+                    case "SIGN_IN":                        
+                        String signInEmail = (String) serverInput.readObject();
+                        byte[] encryptedPassword = (byte[]) serverInput.readObject();
+                        String signInPassword = decryptPassword(encryptedPassword);
+                        boolean loginSuccess = databaseManager.authenticateCustomer(signInEmail, signInPassword);
+                        serverOutput.writeObject(loginSuccess);
+                        System.out.println("Login result for customer " + signInEmail + ": " + loginSuccess);
+                        break;
+                        
+                    // Handle registration request    
+                    case "REGISTER":
+                        String name = (String) serverInput.readObject();
+                        String phone = (String) serverInput.readObject();
+                        String registerEmail = (String) serverInput.readObject();
+                        byte[] registerPasswordBytes = (byte[]) serverInput.readObject();
+                        String registerPassword = decryptPassword(registerPasswordBytes);
+                        String address = (String) serverInput.readObject();
+                        System.out.println("Server Received - Name: " + name + ", Phone: " + phone + ", Email: " + registerEmail + ", Password: " + registerPassword + ", Address: " + address);
+                        boolean isRegistered = databaseManager.registerCustomer(name, phone, registerEmail, registerPassword, address);
+                        serverOutput.writeObject(isRegistered);
+                        System.out.println("Registration result: " + isRegistered);
+                        break;
+                        
+                    // Handle get all Product request    
+                    case "GET_ALL_PRODUCTS":
+                        List<Product> products = databaseManager.getAllProducts();
+                        serverOutput.writeObject(products);
+                        serverOutput.reset();
+                        break;
+                        
+                    // Handle add Product Request
                     case "ADD_PRODUCT":
                         Product product = (Product) serverInput.readObject();
                         boolean addResult = databaseManager.addProduct(product);
                         serverOutput.writeObject(addResult);
                         break;
 
-                    // Update Product Request    
+                    // Handle update Product Request    
                     case "UPDATE_PRODUCT":
                         Product updatedProduct = (Product) serverInput.readObject();
                         boolean updateResult = databaseManager.updateProduct(updatedProduct);
                         serverOutput.writeObject(updateResult);
                         break;
 
-                    // Remove Product Request
+                    // Handle remove Product Request
                     case "REMOVE_PRODUCT":
                         int productId = (int) serverInput.readObject();
                         boolean removeResult = databaseManager.removeProduct(productId);
                         serverOutput.writeObject(removeResult);
                         break;
-
-                    // Get All Products Request
-                    case "GET_ALL_PRODUCTS":
-                        List<Product> products = databaseManager.getAllProducts();
-                        serverOutput.writeObject(products);
-                        serverOutput.reset();
-                        break;
-
-                    // Add Delivery Request
+    
+                        
+                    // Handle add Delivery request        
                     case "ADD_DELIVERY":
                         Delivery delivery = (Delivery) serverInput.readObject();
                         boolean addDeliveryResult = databaseManager.addDelivery(delivery);
                         serverOutput.writeObject(addDeliveryResult);
                         break;
 
-                    // Update Delivery Request
+                    // Handle update Delivery Request
                     case "UPDATE_DELIVERY":
                         Delivery updatedDelivery = (Delivery) serverInput.readObject();
                         boolean updateDeliveryResult = databaseManager.updateDelivery(updatedDelivery);
                         serverOutput.writeObject(updateDeliveryResult);
                         break;
 
-                    // Remove Delivery Request
+                    // Handle remove Delivery Request
                     case "REMOVE_DELIVERY":
                         int deliveryId = (int) serverInput.readObject();
                         boolean removeDeliveryResult = databaseManager.removeDelivery(deliveryId);
                         serverOutput.writeObject(removeDeliveryResult);
                         break;
 
-                    // Get All Deliveries Request
+                    // Handle Get All Deliveries Request
                     case "GET_ALL_DELIVERIES":
                         List<Delivery> deliveries = databaseManager.getAllDeliveries();
                         serverOutput.writeObject(deliveries);
                         serverOutput.reset();
                         break;
 
-                    // Get Delivery Postcodes Request
+                    // Handle Get Delivery Postcodes Request
                     case "GET_DELIVERY_POSTCODES":
                         List<Integer> deliveryPostcodes = databaseManager.getDeliveryPostcodes();
                         serverOutput.writeObject(deliveryPostcodes);
                         serverOutput.reset();
                         break;
 
-                    // Get Delivery Cost Request
+                    // Handle Get Delivery Cost Request
                     case "GET_DELIVERY_COST":
                         int postcode = (int) serverInput.readObject();
                         double deliveryCost = databaseManager.getDeliveryCost(postcode);
                         serverOutput.writeObject(deliveryCost);
                         break;
 
-                    // Get All Customers Request
+                    // Handle Get All Customers Request
                     case "GET_ALL_CUSTOMERS":
                         List<Customer> customers = databaseManager.getAllCustomers();
                         serverOutput.writeObject(customers);
                         serverOutput.reset();
                         break;
 
-                    // Get All Orders Request
+                    // Handle Get All Orders Request
                     case "GET_ALL_ORDERS":
                         List<Order> orders = databaseManager.getAllOrders();
                         serverOutput.writeObject(orders);
                         serverOutput.reset();
                         break;
 
-                    // Get Order Lines Request
+                    // Handle Get Order Lines Request
                     case "GET_ORDER_LINES":
                         int orderId = (int) serverInput.readObject();
                         List<OrderLine> orderLines = databaseManager.getOrderLinesByOrderId(orderId);
@@ -253,7 +316,7 @@ class ServerConnection extends Thread
                         serverOutput.reset();
                         break;
                         
-                    // Get All Orders Request
+                    // Handle Get All Orders Request
                     case "ADD_ORDER":
                         Order order = (Order) serverInput.readObject();
                         order = databaseManager.addOrder(order);
@@ -262,7 +325,7 @@ class ServerConnection extends Thread
                         serverOutput.reset();
                         break;
                         
-                    // Get All Orders Request
+                    // Handle Get All Orders Request
                     case "ADD_ORDER_LINE":
                         OrderLine orderLine = (OrderLine) serverInput.readObject();
                         boolean addOrderLineResult = databaseManager.addOrderLine(orderLine);
@@ -275,8 +338,9 @@ class ServerConnection extends Thread
         }
         catch (Exception e)
         {
-            // Print the Stack Trace
             e.printStackTrace();
         }
     }
 }
+
+

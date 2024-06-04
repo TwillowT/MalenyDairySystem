@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 /*
@@ -18,14 +19,13 @@ import javafx.scene.control.TextField;
  */
 public class InitialViewController
 {
-
     // Declaration of Client object
     private Client client;
 
     @FXML
     private TextField emailInput;
     @FXML
-    private TextField passwordInput;
+    private PasswordField passwordInput;
 
     // Constructor for the InitialViewController
     public InitialViewController(Client client)
@@ -34,17 +34,37 @@ public class InitialViewController
     }
 
     @FXML
-    private void handleSignin()
-    {
-
+    private void handleSignin(ActionEvent event){
+        String email = emailInput.getText();
+        String password = passwordInput.getText();
+              
+        boolean authenticated = client.authenticateCustomer(email, password); // send encrypted password
+        
+        if(authenticated){ 
+            // Navigate to MainView
+            try{
+                MainViewController controller = new MainViewController(client);
+                Utilities.switchScene(event, "com/malenydairysystem/MainView.fxml", controller);
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }else{
+                showError("Incorrect email or password. Please try again.");
+        }        
+    }
+    
+    // Method to show alert 
+    private void showError(String message){
+        Alert alert = new Alert(Alert.AlertType.ERROR, message);
+        alert.showAndWait();
     }
 
     // Switch to the MainView
     @FXML
     private void handleTemporaryMainViewButton(ActionEvent event) throws IOException
     {
-        MainViewController controller = new MainViewController(client);
-        Utilities.switchScene(event, "com/malenydairysystem/MainView.fxml", controller);
+        //MainViewController controller = new MainViewController(client);
+       // Utilities.switchScene(event, "com/malenydairysystem/MainView.fxml", controller);
     }
 
     // Switch to the RegistrationView 

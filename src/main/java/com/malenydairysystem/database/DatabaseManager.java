@@ -1,9 +1,11 @@
 package com.malenydairysystem.database;
 
+
 import com.malenydairysystem.model.Customer;
 import com.malenydairysystem.model.Delivery;
 import com.malenydairysystem.model.Order;
 import com.malenydairysystem.model.OrderLine;
+import com.malenydairysystem.Utilities;
 import com.malenydairysystem.model.Product;
 
 import java.io.BufferedReader;
@@ -11,12 +13,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import java.sql.PreparedStatement;
 
 /*
     Students:       Joshua White (12196075), Joshua Gibson (S0263435), Ashley Hansen (S0213276), Tina Losin (10569238)
@@ -32,7 +35,12 @@ public class DatabaseManager
     private final String DB_PASSWORD;
     private final String DB_NAME;
 
-    // Product Table Prepared Statements
+    // Database Prepared Statements
+    PreparedStatement addCustomer;    
+    PreparedStatement addAdmin;
+    PreparedStatement authenticateCustomer;
+    PreparedStatement authenticateAdmin;
+
     PreparedStatement addProduct;
     PreparedStatement updateProduct;
     PreparedStatement deleteProduct;
@@ -50,12 +58,10 @@ public class DatabaseManager
 
     // Customer Table Prepared Statements
     PreparedStatement getAllCustomers;
-    PreparedStatement addCustomer;
-
+    
     // Admin Table Prepared Statements
     PreparedStatement getAllAdmins;
-    PreparedStatement addAdmin;
-
+  
     // Order Table Prepared Statements
     PreparedStatement getAllOrders;
     PreparedStatement addOrder;
@@ -87,6 +93,11 @@ public class DatabaseManager
         {
             // Create the Database Connection
             dbConnection = DriverManager.getConnection(DB_URL + DB_NAME, DB_USER, DB_PASSWORD);
+           addCustomer = dbConnection.prepareStatement("INSERT INTO customers (full_name, phone, email, password, delivery_address) VALUES (?,?,?,?,?)");
+           
+           // Initialize the Prepared Statements for Customer and Admin authetication
+           authenticateCustomer = dbConnection.prepareStatement("SELECT * FROM customers WHERE email = ? AND password = ?");
+           authenticateAdmin = dbConnection.prepareStatement("SELECT * FROM admins WHERE email = ? AND password = ?");
 
             // Initialize the Prepared Statements for the Product Database Table
             addProduct = dbConnection.prepareStatement("INSERT INTO products (product_name, unit, quantity, price, ingredients) VALUES (?, ?, ?, ?, ?)");
@@ -131,7 +142,7 @@ public class DatabaseManager
             // Print the Stack Trace
             e.printStackTrace();
         }
-    }
+    }                        
 
     // Create the Database
     public void createDatabase() throws SQLException
@@ -969,4 +980,63 @@ public class DatabaseManager
             return false;
         }
     }
-}
+
+    
+    // Method to insert a new Customer into the database
+    public boolean registerCustomer(String name, String phone, String email, String password, String address){
+        try(Connection dbConnection = DriverManager.getConnection( DB_URL + DB_NAME, DB_USER, DB_PASSWORD)) {
+            String sql =  "INSERT INTO customers (full_name, phone, email, password, delivery_address) VALUES (?,?,?,?,?)";
+            PreparedStatement addUser = dbConnection.prepareStatement(sql);
+            
+            // Debugging Statements
+            System.out.println("Inserting into DB - Name: " + name + ", Phone: " + phone + ", Email: " + email + ", Password: " + password + ", Address: " + address);
+            
+            String encryptedPassword = Utilities.encryptPassword(password);// Encrypt password before storing 
+            System.out.println("Encrypted Password (Register): " + encryptedPassword); // Debugging Statement
+               
+            addUser.setString(1, name);
+            addUser.setString(2, phone);
+            addUser.setString(3, email);
+            addUser.setString(4, encryptedPassword);
+            addUser.setString(5, address);   
+            
+            addUser.executeUpdate();
+            return true;
+                    
+        }catch (SQLException e){
+            e.printStackTrace();
+            return false;    
+        }
+    }    
+    
+    // Method to authenticate a customer
+    public boolean authenticateCustomer(String email, String password){
+        String encryptedPassword = Utilities.encryptPassword(password);
+        System.out.println("Authenticating customer with email: " + email + " and encrypted password: " + encryptedPassword);
+        
+        try(Connection dbConnection = DriverManager.getConnection( DB_URL + DB_NAME, DB_USER, DB_PASSWORD)) {
+            String sql =  "SELECT * FROM customers WHERE email = ? AND password = ?";
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(sql);
+            
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, encryptedPassword);
+            
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            if(resultSet.next()){
+                String storedPassword = resultSet.getString("password");
+                System.out.println("Stored encrypted password for customer: " + storedPassword);
+                System.out.println("Customer authenticated successfully.");
+                return true;
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        // if authentication fails
+        System.out.println("Authentication failed. No matching customer found.");
+        return false;
+    }
+        
+ }
+
+

@@ -105,11 +105,20 @@ public class OrderViewController {
 
         loadProducts(); // Load products into the system
         
+
         List<Integer> postcodes = client.getDeliveryPostcodes();
         for (Integer postcode : postcodes) {
             choicePostcode.getItems().add(postcode.toString());
         }
         choicePostcode.setValue(postcodes.get(0).toString());
+
+        //List<String> postcodes = client.getAllPostcodes();
+       // for (String postcode : postcodes) {
+        //    choicePostcode.getItems().add(postcode);
+       // }
+        //deliveryCosts = client.getAllDeliveryCosts();
+       // choicePostcode.setValue(postcodes.get(0));
+
     }
 
     // Method to fetch Products from the server 
@@ -174,11 +183,11 @@ public class OrderViewController {
             order.setOrderDate(new Date(millis));
             
             // Update Order
-            order = client.addOrder(order);
+            //order = client.addOrder(order);
             
             for (OrderLine od : orderLines) {
                 od.setOrderID(order.getOrderID());
-                client.addOrderLine(od);
+              //  client.addOrderLine(od);
             }
             
             clearData();
