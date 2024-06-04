@@ -466,12 +466,13 @@ public class Client
         return inputStream;
     }
     
+    // Method to authenticte a customer
     public boolean authenticateCustomer(String email, String password){
         try{
             System.out.println("Signing in with customer email: " + email); // Debugging statement
             byte[] encryptedPassword = encryptPassword(password);
             System.out.println("Encrypted password: " + Arrays.toString(encryptedPassword)); // Debugging statement
-            outputStream.writeObject("SIGN_IN");
+            outputStream.writeObject("SIGN_IN_CUSTOMER");
             outputStream.writeObject(email);
             outputStream.writeObject(encryptedPassword);
             
@@ -491,5 +492,32 @@ public class Client
             return false;
         }
 
+    }
+    
+    // Method to authenticate an admin
+    public boolean authenticateAdmin(String email, String password){
+        try{
+            System.out.println("Signing in with admin email: " + email); // Debugging statement
+            byte[] encryptedPassword = encryptPassword(password);
+            System.out.println("Encrypted password: " + Arrays.toString(encryptedPassword)); // Debugging statement
+            outputStream.writeObject("SIGN_IN_ADMIN");
+            outputStream.writeObject(email);
+            outputStream.writeObject(encryptedPassword);
+            
+            Object response = inputStream.readObject(); // 
+            
+            if(response instanceof Boolean){ 
+                boolean authenticated = (boolean) response;
+                System.out.println("Sign in response: " + authenticated); // Debugging statement
+                return authenticated;
+            }else{
+                return false;
+            }
+            
+            //return (String) inputStream.readObject();
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 }

@@ -188,6 +188,7 @@ class ServerConnection extends Thread
             {
                 // Read the Request Type
                 String requestType = (String) serverInput.readObject();
+                System.out.println("Received request type: " + requestType); // Debugging statement
 
                 // Switch Statement to Handle the Request
                 switch (requestType)
@@ -199,14 +200,33 @@ class ServerConnection extends Thread
                         serverOutput.writeObject(keyBytes);
                         break;
                         
-                    // Handle sign in request    
-                    case "SIGN_IN":                        
-                        String signInEmail = (String) serverInput.readObject();
-                        byte[] encryptedPassword = (byte[]) serverInput.readObject();
-                        String signInPassword = decryptPassword(encryptedPassword);
-                        boolean loginSuccess = databaseManager.authenticateCustomer(signInEmail, signInPassword);
-                        serverOutput.writeObject(loginSuccess);
-                        System.out.println("Login result for customer " + signInEmail + ": " + loginSuccess);
+                    // Handle customer sign in request    
+                    case "SIGN_IN_CUSTOMER":                        
+                        String signInCustomerEmail = (String) serverInput.readObject();
+                        byte[] encryptedCustomerPassword = (byte[]) serverInput.readObject();
+                        String signInPassword = decryptPassword(encryptedCustomerPassword);
+                        boolean loginCustomerSuccess = databaseManager.authenticateCustomer(signInCustomerEmail, signInPassword);
+                        serverOutput.writeObject(loginCustomerSuccess);
+                        System.out.println("Login result for customer " + signInCustomerEmail + ": " + loginCustomerSuccess);
+                        break;
+                        
+                    // Handle admin sign in request
+                    case "SIGN_IN_ADMIN":
+                        String signInAdminEmail = (String) serverInput.readObject();
+                        byte[] encryptedAdminPassword = (byte[]) serverInput.readObject();
+                        String signInAdminPassword = decryptPassword(encryptedAdminPassword);
+                        
+                                 // Add a direct comparison before hashing     
+                        if (!signInAdminPassword.equals("admin")) {         
+                            System.out.println("Decrypted password does not match the expected password.");     
+                        }
+                        
+                        System.out.println("Admin Email: " + signInAdminEmail); // Debugging statement     
+                        System.out.println("Decrypted Admin Password: " + signInAdminPassword); // Debugging statement
+                        
+                        boolean loginAdminSuccess = databaseManager.authenticateAdmin(signInAdminEmail, signInAdminPassword);
+                        serverOutput.writeObject(loginAdminSuccess);
+                        System.out.println("Login result for admin " + signInAdminEmail + ": " + loginAdminSuccess);                     
                         break;
                         
                     // Handle registration request    

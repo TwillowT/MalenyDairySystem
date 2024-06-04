@@ -464,13 +464,15 @@ public class DatabaseManager
             // Initialize the PreparedStatement
             String sql = "INSERT INTO admins (full_name, phone, email, username, password) VALUES (?, ?, ?, ?, ?)";
             addAdmin = dbConnection.prepareStatement(sql);
+            
+            String encryptedPassword = Utilities.encryptPassword("admin"); // Encrypt the password
 
             // Create the First Admin User
             addAdmin.setString(1, "Admin User");
             addAdmin.setString(2, "0407 123 456");
             addAdmin.setString(3, "admin@admin.com");
             addAdmin.setString(4, "admin");
-            addAdmin.setString(5, "admin");
+            addAdmin.setString(5, encryptedPassword);
 
             addAdmin.executeUpdate();
 
@@ -1036,7 +1038,43 @@ public class DatabaseManager
         System.out.println("Authentication failed. No matching customer found.");
         return false;
     }
+    
+    // Method to authenticate an admin
+    public boolean authenticateAdmin(String email, String password){
+        String encryptedPassword = Utilities.encryptPassword(password);
+        System.out.println("Authenticating admin with email: " + email + " and encrypted password: " + encryptedPassword);
         
+         try(Connection dbConnection = DriverManager.getConnection( DB_URL + DB_NAME, DB_USER, DB_PASSWORD)) {
+            String sql =  "SELECT * FROM admins WHERE email = ? AND password = ?";
+            System.out.println("Executing SQL: " + sql); // Debugging statement
+            PreparedStatement preparedStatement = dbConnection.prepareStatement(sql);
+            
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, encryptedPassword);
+            System.out.println("PreparedStatement: " + preparedStatement.toString()); // Debugging statement
+            
+            ResultSet resultSet = preparedStatement.executeQuery();
+            
+            if(resultSet.next()){
+                String storedPassword = resultSet.getString("password");
+                System.out.println("Stored encrypted password for admin: " + storedPassword);
+                System.out.println("Admin authenticated successfully.");
+                
+                if(storedPassword.equals(encryptedPassword)){
+                    System.out.println("Admin authenticated successfully."); 
+                    return true;
+                }else{
+                    System.out.println("Password mismatch.");
+                }
+            }    
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        // if authentication fails
+        System.out.println("Authentication failed. No matching admin found.");
+        return false;
+    }
+            
  }
 
 
