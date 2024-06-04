@@ -2,6 +2,9 @@ package com.malenydairysystem.controller;
 
 import com.malenydairysystem.Utilities;
 import com.malenydairysystem.client.Client;
+import com.malenydairysystem.model.Admin;
+import com.malenydairysystem.model.Customer;
+import com.malenydairysystem.model.User;
 
 import java.io.IOException;
 import javafx.event.ActionEvent;
@@ -19,31 +22,43 @@ public class MainViewController
 
     // Declaration for Client object
     private Client client;
-    
-    private String role;
+
+    private User user;
 
     @FXML
     private BorderPane contentArea;
-    
+
     @FXML
-    private Button loadOrderView; // Place Order button
+    private Button productButton;
     @FXML
-    private Button loadAdminView; // Admin button
+    private Button scheduleButton;
+    @FXML
+    private Button orderButton;
+    @FXML
+    private Button adminButton;
 
     // Constructor for MainViewController
-    public MainViewController(Client client)
+    public MainViewController(Client client, User user)
     {
         this.client = client;
-        //this.role = role;
+        this.user = user;
     }
-    
+
     @FXML
-    private void initialize(){
-        // hide buttons based on user type
-        if("admin".equals(role)){
-            loadOrderView.setVisible(false); // hide Place Order button from admins
-        } else if("customer".equals(role)){
-            loadAdminView.setVisible(false); // hide Admin button from customers
+    private void initialize()
+    {
+        // Hide buttons based on User Type
+        if (user instanceof Admin)
+        {
+            // Disabling buttons for Admin
+            productButton.setDisable(true);
+            scheduleButton.setDisable(true);
+            orderButton.setDisable(true);
+        }
+        else if (user instanceof Customer)
+        {
+            // Disabling buttons for Customer
+            adminButton.setDisable(true);
         }
     }
 
@@ -86,7 +101,6 @@ public class MainViewController
         InitialViewController controller = new InitialViewController(client);
         Utilities.switchScene(event, "com/malenydairysystem/InitialView.fxml", controller);
     }
-
 
     @FXML
     private void handleContentArea(ActionEvent event) throws IOException

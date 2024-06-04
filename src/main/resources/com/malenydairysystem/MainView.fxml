@@ -34,10 +34,10 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Button mnemonicParsing="false" onAction="#loadOrderView" prefHeight="30.0" prefWidth="120.0" text="Place Order" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                              <Button mnemonicParsing="false" onAction="#loadProductView" prefHeight="30.0" prefWidth="120.0" text="View Products" textAlignment="CENTER" GridPane.halignment="CENTER" />
-                              <Button mnemonicParsing="false" onAction="#loadAdminView" prefHeight="30.0" prefWidth="120.0" text="Admin" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                              <Button mnemonicParsing="false" onAction="#loadScheduleView" prefHeight="30.0" prefWidth="120.0" text="Delivery Schedule" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                              <Button fx:id="orderButton" mnemonicParsing="false" onAction="#loadOrderView" prefHeight="30.0" prefWidth="120.0" text="Place Order" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                              <Button fx:id="productButton" mnemonicParsing="false" onAction="#loadProductView" prefHeight="30.0" prefWidth="120.0" text="View Products" textAlignment="CENTER" GridPane.halignment="CENTER" />
+                              <Button fx:id="adminButton" mnemonicParsing="false" onAction="#loadAdminView" prefHeight="30.0" prefWidth="120.0" text="Admin" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                              <Button fx:id="scheduleButton" mnemonicParsing="false" onAction="#loadScheduleView" prefHeight="30.0" prefWidth="120.0" text="Delivery Schedule" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                               <Button fx:id="logoutButton" mnemonicParsing="false" onAction="#handleLogoutButton" prefHeight="30.0" prefWidth="120.0" text="Log Out" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
                            </children>
                         </GridPane>

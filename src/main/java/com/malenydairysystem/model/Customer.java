@@ -6,7 +6,8 @@ import java.io.Serializable;
     Students:       Joshua White (12196075), Joshua Gibson (S0263435), Ashley Hansen (S0213276), Tina Losin (10569238)
     Description:    The Customer Object class to manage Customer records in the Program.
  */
-public class Customer extends User implements Serializable {
+public class Customer extends User implements Serializable
+{
 
     private int customerID;
     private String fullName;
@@ -14,10 +15,12 @@ public class Customer extends User implements Serializable {
     private String email;
     private String deliveryAddress;
 
-    public Customer() {
+    public Customer()
+    {
     }
 
-    public Customer(int customerID, String fullName, String phoneNumber, String email, String deliveryAddress) {
+    public Customer(int customerID, String fullName, String phoneNumber, String email, String deliveryAddress)
+    {
         this.customerID = customerID;
         this.fullName = fullName;
         this.phoneNumber = phoneNumber;
@@ -25,7 +28,8 @@ public class Customer extends User implements Serializable {
         this.deliveryAddress = deliveryAddress;
     }
 
-    public Customer(int customerID, String fullName, String phoneNumber, String email, String deliveryAddress, String username, String password) {
+    public Customer(int customerID, String fullName, String phoneNumber, String email, String deliveryAddress, String username, String password)
+    {
         super(username, password);
         this.customerID = customerID;
         this.fullName = fullName;
@@ -34,68 +38,83 @@ public class Customer extends User implements Serializable {
         this.deliveryAddress = deliveryAddress;
     }
 
-    public int getCustomerID() {
+    public int getCustomerID()
+    {
         return customerID;
     }
 
-    public void setCustomerID(int customerID) {
+    public void setCustomerID(int customerID)
+    {
         this.customerID = customerID;
     }
 
-    public String getFullName() {
+    public String getFullName()
+    {
         return fullName;
     }
 
-    public void setFullName(String fullName) {
+    public void setFullName(String fullName)
+    {
         this.fullName = fullName;
     }
 
-    public String getPhoneNumber() {
+    public String getPhoneNumber()
+    {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(String phoneNumber)
+    {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getEmail() {
+    public String getEmail()
+    {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(String email)
+    {
         this.email = email;
     }
 
-    public String getDeliveryAddress() {
+    public String getDeliveryAddress()
+    {
         return deliveryAddress;
     }
 
-    public void setDeliveryAddress(String deliveryAddress) {
+    public void setDeliveryAddress(String deliveryAddress)
+    {
         this.deliveryAddress = deliveryAddress;
     }
 
     @Override
-    public String getUsername() {
+    public String getUsername()
+    {
         return username;
     }
 
     @Override
-    public void setUsername(String username) {
+    public void setUsername(String username)
+    {
         this.username = username;
     }
 
     @Override
-    public String getPassword() {
+    public String getPassword()
+    {
         return password;
     }
 
     @Override
-    public void setPassword(String password) {
+    public void setPassword(String password)
+    {
         this.password = password;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "Customer{" + "customerID=" + customerID + ", fullName=" + fullName + ", phoneNumber=" + phoneNumber + ", email=" + email + ", deliveryAddress=" + deliveryAddress + '}';
     }
 }

@@ -1,6 +1,7 @@
 package com.malenydairysystem.server;
 
 import com.malenydairysystem.database.DatabaseManager;
+import com.malenydairysystem.model.Admin;
 import com.malenydairysystem.model.Customer;
 import com.malenydairysystem.model.Delivery;
 import com.malenydairysystem.model.Order;
@@ -17,6 +18,7 @@ import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.List;
 import javax.crypto.Cipher;
 
@@ -88,7 +90,7 @@ public class Server
             // Insert the Customer Data from the CSV
             database.insertCustomer();
         }
-        
+
         try
         {
             // Create a new Server Socket Object
@@ -123,7 +125,7 @@ class ServerConnection extends Thread
 
     // DatabaseManager instance
     DatabaseManager databaseManager;
-    
+
     // RSA Keys
     private PublicKey publicKey;
     private PrivateKey privateKey;
@@ -141,7 +143,7 @@ class ServerConnection extends Thread
 
             // Connect to the Database
             this.databaseManager.connectDatabase();
-            
+
             // Generate RSA keys
             generateRSAKeys();
 
@@ -158,20 +160,25 @@ class ServerConnection extends Thread
             e.printStackTrace();
         }
     }
-    
-    private void generateRSAKeys(){
-        try{
+
+    private void generateRSAKeys()
+    {
+        try
+        {
             KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
             keyGen.initialize(2048);
             KeyPair keyPair = keyGen.generateKeyPair();
             this.publicKey = keyPair.getPublic();
             this.privateKey = keyPair.getPrivate();
-        }catch(Exception e){
+        }
+        catch (Exception e)
+        {
             e.printStackTrace();
         }
     }
-    
-    private String decryptPassword(byte[] encryptedPassword) throws Exception{
+
+    private String decryptPassword(byte[] encryptedPassword) throws Exception
+    {
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.DECRYPT_MODE, privateKey);
         byte[] decryptedBytes = cipher.doFinal(encryptedPassword);
@@ -188,7 +195,7 @@ class ServerConnection extends Thread
             {
                 // Read the Request Type
                 String requestType = (String) serverInput.readObject();
-                System.out.println("Received request type: " + requestType); // Debugging statement
+                System.out.println("Received request type: " + requestType);
 
                 // Switch Statement to Handle the Request
                 switch (requestType)
@@ -199,57 +206,64 @@ class ServerConnection extends Thread
                         byte[] keyBytes = publicKey.getEncoded();
                         serverOutput.writeObject(keyBytes);
                         break;
-                        
-                    // Handle customer sign in request    
-                    case "SIGN_IN_CUSTOMER":                        
-                        String signInCustomerEmail = (String) serverInput.readObject();
-                        byte[] encryptedCustomerPassword = (byte[]) serverInput.readObject();
-                        String signInPassword = decryptPassword(encryptedCustomerPassword);
-                        boolean loginCustomerSuccess = databaseManager.authenticateCustomer(signInCustomerEmail, signInPassword);
-                        serverOutput.writeObject(loginCustomerSuccess);
-                        System.out.println("Login result for customer " + signInCustomerEmail + ": " + loginCustomerSuccess);
-                        break;
-                        
-                    // Handle admin sign in request
-                    case "SIGN_IN_ADMIN":
-                        String signInAdminEmail = (String) serverInput.readObject();
-                        byte[] encryptedAdminPassword = (byte[]) serverInput.readObject();
-                        String signInAdminPassword = decryptPassword(encryptedAdminPassword);
-                        
-                                 // Add a direct comparison before hashing     
-                        if (!signInAdminPassword.equals("admin")) {         
-                            System.out.println("Decrypted password does not match the expected password.");     
+
+                    // Handle User Sign In
+                    case "SIGN_IN_USER":
+                        String userName = (String) serverInput.readObject();
+                        byte[] encryptedLoginPassword = (byte[]) serverInput.readObject();
+
+                        String userType = databaseManager.getUserType(userName);
+
+                        if (userType.equals("CUSTOMER"))
+                        {
+                            Customer customer = databaseManager.authenticateCustomer(userName);
+                            
+                            String storedPassword = customer.getPassword();
+                            String decryptedPassword = decryptPassword(encryptedLoginPassword);
+
+                            boolean loginSuccess = decryptedPassword.equals(storedPassword);
+                            if (loginSuccess)
+                            {
+                                serverOutput.writeObject(customer);
+                            }
                         }
-                        
-                        System.out.println("Admin Email: " + signInAdminEmail); // Debugging statement     
-                        System.out.println("Decrypted Admin Password: " + signInAdminPassword); // Debugging statement
-                        
-                        boolean loginAdminSuccess = databaseManager.authenticateAdmin(signInAdminEmail, signInAdminPassword);
-                        serverOutput.writeObject(loginAdminSuccess);
-                        System.out.println("Login result for admin " + signInAdminEmail + ": " + loginAdminSuccess);                     
+                        else if (userType.equals("ADMIN"))
+                        {
+                            Admin admin = databaseManager.authenticateAdmin(userName);
+
+                            String storedPassword = admin.getPassword();
+                            String decryptedPassword = decryptPassword(encryptedLoginPassword);
+
+                            boolean loginSuccess = decryptedPassword.equals(storedPassword);
+                            if (loginSuccess)
+                            {
+                                serverOutput.writeObject(admin);
+                            }
+                        }
                         break;
-                        
-                    // Handle registration request    
-                    case "REGISTER":
+
+                    // Handle add Customer Request
+                    case "ADD_CUSTOMER":
                         String name = (String) serverInput.readObject();
+                        String address = (String) serverInput.readObject(); 
                         String phone = (String) serverInput.readObject();
-                        String registerEmail = (String) serverInput.readObject();
-                        byte[] registerPasswordBytes = (byte[]) serverInput.readObject();
-                        String registerPassword = decryptPassword(registerPasswordBytes);
-                        String address = (String) serverInput.readObject();
-                        System.out.println("Server Received - Name: " + name + ", Phone: " + phone + ", Email: " + registerEmail + ", Password: " + registerPassword + ", Address: " + address);
-                        boolean isRegistered = databaseManager.registerCustomer(name, phone, registerEmail, registerPassword, address);
-                        serverOutput.writeObject(isRegistered);
-                        System.out.println("Registration result: " + isRegistered);
+                        String email = (String) serverInput.readObject();
+                        String username = (String) serverInput.readObject();
+                        byte[] encryptedPassword = (byte[]) serverInput.readObject();
+
+                        String password = decryptPassword(encryptedPassword);
+
+                        boolean addCustomerResult = databaseManager.addCustomer(name, address, phone, email, username, password);
+                        serverOutput.writeObject(addCustomerResult);
                         break;
-                        
+
                     // Handle get all Product request    
                     case "GET_ALL_PRODUCTS":
                         List<Product> products = databaseManager.getAllProducts();
                         serverOutput.writeObject(products);
                         serverOutput.reset();
                         break;
-                        
+
                     // Handle add Product Request
                     case "ADD_PRODUCT":
                         Product product = (Product) serverInput.readObject();
@@ -270,8 +284,7 @@ class ServerConnection extends Thread
                         boolean removeResult = databaseManager.removeProduct(productId);
                         serverOutput.writeObject(removeResult);
                         break;
-    
-                        
+
                     // Handle add Delivery request        
                     case "ADD_DELIVERY":
                         Delivery delivery = (Delivery) serverInput.readObject();
@@ -335,21 +348,21 @@ class ServerConnection extends Thread
                         serverOutput.writeObject(orderLines);
                         serverOutput.reset();
                         break;
-                        
+
                     // Handle Get All Orders Request
                     case "ADD_ORDER":
                         Order order = (Order) serverInput.readObject();
                         order = databaseManager.addOrder(order);
-                        
+
                         serverOutput.writeObject(order);
                         serverOutput.reset();
                         break;
-                        
+
                     // Handle Get All Orders Request
                     case "ADD_ORDER_LINE":
                         OrderLine orderLine = (OrderLine) serverInput.readObject();
                         boolean addOrderLineResult = databaseManager.addOrderLine(orderLine);
-                        
+
                         serverOutput.writeObject(addOrderLineResult);
                         serverOutput.reset();
                         break;
@@ -362,5 +375,3 @@ class ServerConnection extends Thread
         }
     }
 }
-
-

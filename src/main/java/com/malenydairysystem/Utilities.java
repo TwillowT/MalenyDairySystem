@@ -22,22 +22,6 @@ import javafx.stage.Stage;
  */
 public class Utilities
 {
-    
-    // Method to encrypt passwords using SHA-256
-    public static String encryptPassword(String password){
-        try{
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
-            StringBuilder sb = new StringBuilder();
-            for (byte b : hashedPassword){
-                sb.append(String.format("%02x", b));
-            }
-            return sb.toString();
-        }catch (NoSuchAlgorithmException e){
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     // Switch Scene Method
     public static void switchScene(ActionEvent event, String fxmlPath, Object controller) throws IOException

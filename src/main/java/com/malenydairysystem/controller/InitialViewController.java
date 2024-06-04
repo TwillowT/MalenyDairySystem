@@ -2,6 +2,7 @@ package com.malenydairysystem.controller;
 
 import com.malenydairysystem.Utilities;
 import com.malenydairysystem.client.Client;
+import com.malenydairysystem.model.User;
 
 import java.io.IOException;
 import javafx.application.Platform;
@@ -19,11 +20,13 @@ import javafx.scene.control.TextField;
  */
 public class InitialViewController
 {
+
     // Declaration of Client object
     private Client client;
 
+    // Declaration of FXML elements for Sign In
     @FXML
-    private TextField emailInput;
+    private TextField usernameInput;
     @FXML
     private PasswordField passwordInput;
 
@@ -34,37 +37,31 @@ public class InitialViewController
     }
 
     @FXML
-    private void handleSignin(ActionEvent event){
-        String email = emailInput.getText();
+    private void handleSignin(ActionEvent event)
+    {
+        String username = usernameInput.getText();
         String password = passwordInput.getText();
-              
-        boolean authenticated = client.authenticateCustomer(email, password); // send encrypted password
-        
-        if(authenticated){ 
-            // Navigate to MainView
-            try{
-                MainViewController controller = new MainViewController(client);
+
+        User authenticatedUser = client.authenticateUser(username, password);
+
+        if (authenticatedUser != null)
+        {
+            try
+            {
+                Utilities.showInformation("Successful Login. Welcome back!");
+
+                MainViewController controller = new MainViewController(client, authenticatedUser);
                 Utilities.switchScene(event, "com/malenydairysystem/MainView.fxml", controller);
-            }catch (IOException e){
+            }
+            catch (IOException e)
+            {
                 e.printStackTrace();
             }
-        }else{
-                showError("Incorrect email or password. Please try again.");
-        }        
-    }
-    
-    // Method to show alert 
-    private void showError(String message){
-        Alert alert = new Alert(Alert.AlertType.ERROR, message);
-        alert.showAndWait();
-    }
-
-    // Switch to the MainView
-    @FXML
-    private void handleTemporaryMainViewButton(ActionEvent event) throws IOException
-    {
-        //MainViewController controller = new MainViewController(client);
-       // Utilities.switchScene(event, "com/malenydairysystem/MainView.fxml", controller);
+        }
+        else
+        {
+            Utilities.showError("Incorrect email or password. Please try again.");
+        }
     }
 
     // Switch to the RegistrationView 
@@ -75,14 +72,18 @@ public class InitialViewController
         Utilities.switchScene(event, "com/malenydairysystem/RegistrationView.fxml", controller);
     }
 
+    // Exit the Application
     @FXML
     private void clickExit()
     {
+        // Confirmation Alert
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to Exit?");
         alert.showAndWait().ifPresent(response ->
         {
+            // Check if the User Clicked OK
             if (response == ButtonType.OK)
             {
+                // Exit the Application
                 Platform.exit();
             }
         });

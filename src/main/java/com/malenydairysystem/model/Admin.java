@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class Admin extends User implements Serializable
 {
 
-    private String staffID;
+    private int staffID;
     private String fullName;
     private String phone;
     private String email;
@@ -18,7 +18,7 @@ public class Admin extends User implements Serializable
     {
     }
 
-    public Admin(String staffID, String fullName, String phone, String email)
+    public Admin(int staffID, String fullName, String phone, String email)
     {
         this.staffID = staffID;
         this.fullName = fullName;
@@ -26,7 +26,7 @@ public class Admin extends User implements Serializable
         this.email = email;
     }
 
-    public Admin(String staffID, String fullName, String phone, String email, String username, String password)
+    public Admin(int staffID, String fullName, String phone, String email, String username, String password)
     {
         super(username, password);
         this.staffID = staffID;
@@ -35,12 +35,12 @@ public class Admin extends User implements Serializable
         this.email = email;
     }
 
-    public String getStaffID()
+    public int getStaffID()
     {
         return staffID;
     }
 
-    public void setStaffID(String staffID)
+    public void setStaffID(int staffID)
     {
         this.staffID = staffID;
     }

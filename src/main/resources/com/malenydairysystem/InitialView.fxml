@@ -16,14 +16,6 @@
 
 <AnchorPane prefHeight="650.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button layoutX="14.0" layoutY="599.0" mnemonicParsing="false" onAction="#handleTemporaryMainViewButton" prefHeight="30.0" prefWidth="146.0" text="Main View (Temporary)">
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <cursor>
-            <Cursor fx:constant="DEFAULT" />
-         </cursor>
-      </Button>
       <GridPane layoutX="261.0" layoutY="215.0" prefHeight="314.0" prefWidth="400.0">
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -54,12 +46,12 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </Button>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" GridPane.halignment="LEFT" GridPane.rowIndex="1">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" GridPane.halignment="LEFT" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <TextField fx:id="emailInput" GridPane.rowIndex="2" />
+            <TextField fx:id="usernameInput" GridPane.rowIndex="2" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Password: " GridPane.halignment="LEFT" GridPane.rowIndex="3">
                <font>
                   <Font name="System Bold" size="14.0" />
