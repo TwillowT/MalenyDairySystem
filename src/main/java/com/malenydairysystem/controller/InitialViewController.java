@@ -60,7 +60,7 @@ public class InitialViewController
         }
         else
         {
-            Utilities.showError("Incorrect email or password. Please try again.");
+            Utilities.showError("Incorrect username or password. Please try again.");
         }
     }
 

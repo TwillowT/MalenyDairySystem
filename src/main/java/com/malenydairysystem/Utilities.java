@@ -43,6 +43,8 @@ public class Utilities
         // Create a New Stage
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.setTitle("Maleny Diary to Home System");
         stage.show();
     }
 

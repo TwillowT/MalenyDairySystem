@@ -1,9 +1,11 @@
 package com.malenydairysystem.controller;
 
 import com.malenydairysystem.client.Client;
+import com.malenydairysystem.model.Customer;
 import com.malenydairysystem.model.Product;
 import com.malenydairysystem.model.Order;
 import com.malenydairysystem.model.OrderLine;
+import com.malenydairysystem.model.User;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.sql.Date;
@@ -29,6 +31,8 @@ public class OrderViewController {
 
     // Declaration for Client object
     private Client client;
+    
+    private Customer customer;
 
     // Variables
     private Order order;
@@ -68,8 +72,9 @@ public class OrderViewController {
     private ChoiceBox<String> choicePostcode;
 
     // Constructor for OrderViewController
-    public OrderViewController(Client client) {
+    public OrderViewController(Client client, User user) {
         this.client = client;
+        customer = (Customer) user;
     }
 
     // Method to initialize the table
@@ -175,7 +180,7 @@ public class OrderViewController {
             total = Double.parseDouble(df.format(total * 1.1)); // Add gst and round to 2 decimal places
             
             // Set order values
-            order.setCustomerID(1);
+            order.setCustomerID(customer.getCustomerID());
             order.setTotalPrice(total);
             
             // SQL Date Setup
@@ -183,11 +188,11 @@ public class OrderViewController {
             order.setOrderDate(new Date(millis));
             
             // Update Order
-            //order = client.addOrder(order);
+            order = client.addOrder(order);
             
             for (OrderLine od : orderLines) {
                 od.setOrderID(order.getOrderID());
-              //  client.addOrderLine(od);
+                client.addOrderLine(od);
             }
             
             clearData();
@@ -195,6 +200,7 @@ public class OrderViewController {
     }
     
     private void clearData() {
+        order = new Order();
         orderLines.clear();
         orderTable.getItems().setAll(orderLines);
     }

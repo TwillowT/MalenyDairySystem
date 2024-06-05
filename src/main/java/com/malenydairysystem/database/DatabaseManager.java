@@ -1021,7 +1021,7 @@ public class DatabaseManager
         int customerCount = 0;
         int adminCount = 0;
 
-        String customerType = "";
+        String customerType = "NONE";
 
         // Query the Admin Table and increment adminCOunt if the username is found
         try

@@ -82,7 +82,7 @@ public class MainViewController
     @FXML
     private void loadOrderView(ActionEvent event) throws IOException
     {
-        OrderViewController controller = new OrderViewController(client);
+        OrderViewController controller = new OrderViewController(client, user);
         Utilities.switchPane(contentArea, "com/malenydairysystem/OrderView.fxml", controller);
     }
 

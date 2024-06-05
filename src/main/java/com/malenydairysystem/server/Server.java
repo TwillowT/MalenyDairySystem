@@ -255,6 +255,8 @@ class ServerConnection extends Thread
                             } else {
                                 serverOutput.writeObject(null);
                             }
+                        } else {
+                            serverOutput.writeObject(null);
                         }
                         break;
 
