@@ -10,6 +10,8 @@ import com.malenydairysystem.model.Product;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.sql.PreparedStatement;
+import java.util.Base64;
 
 /*
     Students:       Joshua White (12196075), Joshua Gibson (S0263435), Ashley Hansen (S0213276), Tina Losin (10569238)
@@ -468,14 +471,14 @@ public class DatabaseManager
             addAdmin.setString(2, "0407 123 456");
             addAdmin.setString(3, "admin@admin.com");
             addAdmin.setString(4, "admin");
-            addAdmin.setString(5, "admin");
+            addAdmin.setString(5, hashPassword("admin"));
 
             addAdmin.executeUpdate();
 
             // Print the Data Insertion Success Message
             System.out.println("Data inserted Successfully for Admin User");
         }
-        catch (SQLException e)
+        catch (SQLException | NoSuchAlgorithmException e)
         {
             // Print the Data Insertion Error Message
             System.out.println("Data insertion Failed for Admin User");
@@ -517,7 +520,7 @@ public class DatabaseManager
             addCustomer.setString(2, "0407 123 456");
             addCustomer.setString(3, "customer@customer.com");
             addCustomer.setString(4, "customer");
-            addCustomer.setString(5, "customer");
+            addCustomer.setString(5, hashPassword("customer"));
             addCustomer.setString(6, "123 Customer Street, Brisbane, QLD 4550");
 
             addCustomer.executeUpdate();
@@ -525,7 +528,7 @@ public class DatabaseManager
             // Print the Data Insertion Success Message
             System.out.println("Data inserted Successfully for Customer User");
         }
-        catch (SQLException e)
+        catch (SQLException | NoSuchAlgorithmException e)
         {
             // Print the Data Insertion Error Message
             System.out.println("Data insertion Failed for Customer User");
@@ -546,6 +549,13 @@ public class DatabaseManager
             }
         }
     }
+    
+    // Method to hash password using SHA-256
+    private String hashPassword(String password) throws NoSuchAlgorithmException{
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        byte[] hashedPassword = md.digest(password.getBytes());
+        return Base64.getEncoder().encodeToString(hashedPassword);
+    }
 
     // Add a Customer and return a response
     public boolean addCustomer(String name, String address, String phone, String email, String username, String password)
@@ -553,11 +563,12 @@ public class DatabaseManager
         try
         {
             // Bind the Customer Details to the Prepared Statement
+            String hashedPassword = hashPassword(password);
             addCustomer.setString(1, name);
             addCustomer.setString(2, phone);
             addCustomer.setString(3, email);
             addCustomer.setString(4, username);
-            addCustomer.setString(5, password);
+            addCustomer.setString(5, hashedPassword);
             addCustomer.setString(6, address);
 
             // Execute the Prepared Statement
@@ -566,7 +577,7 @@ public class DatabaseManager
             // Return a Success Response
             return true;
         }
-        catch (SQLException e)
+        catch (SQLException | NoSuchAlgorithmException e)
         {
             // Print the Stack Trace and Return a Failure Response
             e.printStackTrace();

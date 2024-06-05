@@ -13,12 +13,16 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 import javax.crypto.Cipher;
 
@@ -184,6 +188,19 @@ class ServerConnection extends Thread
         byte[] decryptedBytes = cipher.doFinal(encryptedPassword);
         return new String(decryptedBytes, "UTF-8");
     }
+    
+    // Method to has password
+    private String hashPassword(String password) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
+        return Base64.getEncoder().encodeToString(hashedPassword);
+    }
+    
+     // Method to compare passwords during login     
+    private boolean checkPassword(String storedPassword, String providedPassword) throws NoSuchAlgorithmException {         
+        String hashedProvidedPassword = hashPassword(providedPassword);        
+        return storedPassword.equals(hashedProvidedPassword);     
+    }
 
     // Run Method
     public void run()
@@ -206,38 +223,37 @@ class ServerConnection extends Thread
                         byte[] keyBytes = publicKey.getEncoded();
                         serverOutput.writeObject(keyBytes);
                         break;
-
-                    // Handle User Sign In
+                        
+                        // Handle User Sign In
                     case "SIGN_IN_USER":
                         String userName = (String) serverInput.readObject();
                         byte[] encryptedLoginPassword = (byte[]) serverInput.readObject();
 
                         String userType = databaseManager.getUserType(userName);
 
-                        if (userType.equals("CUSTOMER"))
-                        {
+                        if (userType.equals("CUSTOMER")) {
                             Customer customer = databaseManager.authenticateCustomer(userName);
-                            
+
                             String storedPassword = customer.getPassword();
                             String decryptedPassword = decryptPassword(encryptedLoginPassword);
 
-                            boolean loginSuccess = decryptedPassword.equals(storedPassword);
-                            if (loginSuccess)
-                            {
+                            boolean loginSuccess = checkPassword(storedPassword, decryptedPassword);
+                            if (loginSuccess) {
                                 serverOutput.writeObject(customer);
+                            } else {
+                                serverOutput.writeObject(null); 
                             }
-                        }
-                        else if (userType.equals("ADMIN"))
-                        {
+                        } else if (userType.equals("ADMIN")) {
                             Admin admin = databaseManager.authenticateAdmin(userName);
 
                             String storedPassword = admin.getPassword();
                             String decryptedPassword = decryptPassword(encryptedLoginPassword);
 
-                            boolean loginSuccess = decryptedPassword.equals(storedPassword);
-                            if (loginSuccess)
-                            {
+                            boolean loginSuccess = checkPassword(storedPassword, decryptedPassword);
+                            if (loginSuccess) {
                                 serverOutput.writeObject(admin);
+                            } else {
+                                serverOutput.writeObject(null);
                             }
                         }
                         break;
