@@ -47,7 +47,7 @@
             </AnchorPane>
           <AnchorPane maxHeight="620.0" maxWidth="750.0" minHeight="620.0" minWidth="750.0" prefHeight="620.0" prefWidth="750.0">
                <children>
-                  <BorderPane fx:id="contentArea" layoutX="2.0" onDragDetected="#handleContentArea" prefHeight="620.0" prefWidth="750.0">
+                  <BorderPane fx:id="contentArea" layoutX="2.0" prefHeight="620.0" prefWidth="750.0">
                      <top>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" BorderPane.alignment="CENTER" />
                      </top></BorderPane>

@@ -9,6 +9,7 @@ import java.io.Serializable;
 public class Product implements Serializable
 {
 
+    // Variable Declarations for the Product Class
     private int productID;
     private String productName;
     private String unit;
@@ -16,10 +17,12 @@ public class Product implements Serializable
     private double price;
     private String ingredients;
 
+    // Default constructor
     public Product()
     {
     }
 
+    // Parameterised constructor
     public Product(int productID, String productName, String unit, int quantity, double price, String ingredients)
     {
         this.productID = productID;
@@ -30,6 +33,7 @@ public class Product implements Serializable
         this.ingredients = ingredients;
     }
 
+    // Getters and Setters
     public int getProductID()
     {
         return productID;
@@ -90,6 +94,7 @@ public class Product implements Serializable
         this.ingredients = ingredients;
     }
 
+    // toString Method
     @Override
     public String toString()
     {

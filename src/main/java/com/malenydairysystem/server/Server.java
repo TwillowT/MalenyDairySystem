@@ -21,7 +21,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import javax.crypto.Cipher;
@@ -34,18 +33,29 @@ import javax.crypto.Cipher;
 public class Server
 {
 
+    // Server Port
     private static final int SERVER_PORT = 5586;
 
     public static void main(String[] args) throws SQLException
     {
-        // Create the DatabaseUtility Object
+        // Create the Database Manager Object
         DatabaseManager database = new DatabaseManager();
+
+        // Output the Database Configuration
+        System.out.println(outputBreak());
+        System.out.println("Configuring Database");
+        System.out.println(outputBreak());
 
         // Create the Database
         database.createDatabase();
 
         // Create the Database Tables
         database.createTables();
+
+        // Output the Data Insertion
+        System.out.println(outputBreak());
+        System.out.println("Inserting Data into Database");
+        System.out.println(outputBreak());
 
         // Check if the Product Data has already been Inserted
         if (database.checkIfDataExists("products"))
@@ -99,6 +109,13 @@ public class Server
         {
             // Create a new Server Socket Object
             ServerSocket serverSocket = new ServerSocket(SERVER_PORT);
+
+            // Output the Server Information
+            System.out.println(outputBreak());
+            System.out.println("Starting Maleny Dairy System Server");
+            System.out.println(outputBreak());
+
+            // Output the Server Port
             System.out.println("Server Started and Listening on Port " + SERVER_PORT);
 
             while (true)
@@ -113,6 +130,12 @@ public class Server
             // Print the Stack Trace
             e.printStackTrace();
         }
+    }
+
+    // Print Link Break to Console
+    private static String outputBreak()
+    {
+        return ("========================================");
     }
 }
 
@@ -165,41 +188,52 @@ class ServerConnection extends Thread
         }
     }
 
+    // Method to Generate RSA Keys
     private void generateRSAKeys()
     {
         try
         {
+            // Generate RSA Keys
             KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
             keyGen.initialize(2048);
             KeyPair keyPair = keyGen.generateKeyPair();
+
+            // Set the Public and Private Keys
             this.publicKey = keyPair.getPublic();
             this.privateKey = keyPair.getPrivate();
         }
         catch (Exception e)
         {
+            // Print the Stack Trace
             e.printStackTrace();
         }
     }
 
+    // Method to Decrypt Password
     private String decryptPassword(byte[] encryptedPassword) throws Exception
     {
+        // Decrypt the Password using the Private Key
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.DECRYPT_MODE, privateKey);
         byte[] decryptedBytes = cipher.doFinal(encryptedPassword);
         return new String(decryptedBytes, "UTF-8");
     }
-    
-    // Method to has password
-    private String hashPassword(String password) throws NoSuchAlgorithmException {
+
+    // Method to Hash password
+    private String hashPassword(String password) throws NoSuchAlgorithmException
+    {
+        // Hash the Password using SHA-256
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
         return Base64.getEncoder().encodeToString(hashedPassword);
     }
-    
-     // Method to compare passwords during login     
-    private boolean checkPassword(String storedPassword, String providedPassword) throws NoSuchAlgorithmException {         
-        String hashedProvidedPassword = hashPassword(providedPassword);        
-        return storedPassword.equals(hashedProvidedPassword);     
+
+    // Method to compare passwords during Login     
+    private boolean checkPassword(String storedPassword, String providedPassword) throws NoSuchAlgorithmException
+    {
+        // Compare the Stored Password with the Provided Password
+        String hashedProvidedPassword = hashPassword(providedPassword);
+        return storedPassword.equals(hashedProvidedPassword);
     }
 
     // Run Method
@@ -223,39 +257,68 @@ class ServerConnection extends Thread
                         byte[] keyBytes = publicKey.getEncoded();
                         serverOutput.writeObject(keyBytes);
                         break;
-                        
-                        // Handle User Sign In
+
+                    // Handle User Sign In
                     case "SIGN_IN_USER":
                         String userName = (String) serverInput.readObject();
                         byte[] encryptedLoginPassword = (byte[]) serverInput.readObject();
 
+                        // Get the User Type
                         String userType = databaseManager.getUserType(userName);
 
-                        if (userType.equals("CUSTOMER")) {
+                        // Authenticate the User
+                        if (userType.equals("CUSTOMER"))
+                        {
+                            // Authenticate the Customer
                             Customer customer = databaseManager.authenticateCustomer(userName);
 
+                            // Get the Stored Password
                             String storedPassword = customer.getPassword();
+
+                            // Decrypt the Password
                             String decryptedPassword = decryptPassword(encryptedLoginPassword);
 
+                            // Check if the Passwords Match
                             boolean loginSuccess = checkPassword(storedPassword, decryptedPassword);
-                            if (loginSuccess) {
+                            if (loginSuccess)
+                            {
+                                // Send the Customer Object to the Client
                                 serverOutput.writeObject(customer);
-                            } else {
-                                serverOutput.writeObject(null); 
                             }
-                        } else if (userType.equals("ADMIN")) {
-                            Admin admin = databaseManager.authenticateAdmin(userName);
-
-                            String storedPassword = admin.getPassword();
-                            String decryptedPassword = decryptPassword(encryptedLoginPassword);
-
-                            boolean loginSuccess = checkPassword(storedPassword, decryptedPassword);
-                            if (loginSuccess) {
-                                serverOutput.writeObject(admin);
-                            } else {
+                            else
+                            {
+                                // Send a Null Object to the Client
                                 serverOutput.writeObject(null);
                             }
-                        } else {
+                        }
+                        // Authenticate the Admin
+                        else if (userType.equals("ADMIN"))
+                        {
+                            // Authenticate the Admin
+                            Admin admin = databaseManager.authenticateAdmin(userName);
+
+                            // Get the Stored Password
+                            String storedPassword = admin.getPassword();
+
+                            // Decrypt the Password
+                            String decryptedPassword = decryptPassword(encryptedLoginPassword);
+
+                            // Check if the Passwords Match
+                            boolean loginSuccess = checkPassword(storedPassword, decryptedPassword);
+                            if (loginSuccess)
+                            {
+                                // Send the Admin Object to the Client
+                                serverOutput.writeObject(admin);
+                            }
+                            else
+                            {
+                                // Send a Null Object to the Client
+                                serverOutput.writeObject(null);
+                            }
+                        }
+                        else
+                        {
+                            // Send a Null Object to the Client
                             serverOutput.writeObject(null);
                         }
                         break;
@@ -263,7 +326,7 @@ class ServerConnection extends Thread
                     // Handle add Customer Request
                     case "ADD_CUSTOMER":
                         String name = (String) serverInput.readObject();
-                        String address = (String) serverInput.readObject(); 
+                        String address = (String) serverInput.readObject();
                         String phone = (String) serverInput.readObject();
                         String email = (String) serverInput.readObject();
                         String username = (String) serverInput.readObject();
@@ -273,13 +336,6 @@ class ServerConnection extends Thread
 
                         boolean addCustomerResult = databaseManager.addCustomer(name, address, phone, email, username, password);
                         serverOutput.writeObject(addCustomerResult);
-                        break;
-
-                    // Handle get all Product request    
-                    case "GET_ALL_PRODUCTS":
-                        List<Product> products = databaseManager.getAllProducts();
-                        serverOutput.writeObject(products);
-                        serverOutput.reset();
                         break;
 
                     // Handle add Product Request
@@ -301,6 +357,11 @@ class ServerConnection extends Thread
                         int productId = (int) serverInput.readObject();
                         boolean removeResult = databaseManager.removeProduct(productId);
                         serverOutput.writeObject(removeResult);
+                        break;
+
+                    case "GET_ALL_PRODUCTS":
+                        List<Product> products = databaseManager.getAllProducts();
+                        serverOutput.writeObject(products);
                         break;
 
                     // Handle add Delivery request        
@@ -371,7 +432,6 @@ class ServerConnection extends Thread
                     case "ADD_ORDER":
                         Order order = (Order) serverInput.readObject();
                         order = databaseManager.addOrder(order);
-
                         serverOutput.writeObject(order);
                         serverOutput.reset();
                         break;
@@ -380,7 +440,6 @@ class ServerConnection extends Thread
                     case "ADD_ORDER_LINE":
                         OrderLine orderLine = (OrderLine) serverInput.readObject();
                         boolean addOrderLineResult = databaseManager.addOrderLine(orderLine);
-
                         serverOutput.writeObject(addOrderLineResult);
                         serverOutput.reset();
                         break;
@@ -389,6 +448,7 @@ class ServerConnection extends Thread
         }
         catch (Exception e)
         {
+            // Print the Stack Trace
             e.printStackTrace();
         }
     }

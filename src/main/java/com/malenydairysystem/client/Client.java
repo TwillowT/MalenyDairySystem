@@ -42,6 +42,12 @@ public class Client
         {
             // Connect to Server
             socket = new Socket(SERVER_ADDRESS, SERVER_PORT);
+
+            System.out.println(outputBreak());
+            System.out.println("Starting Client");
+            System.out.println(outputBreak());
+
+            // Output Connection Information
             System.out.println("Connected to Server on Port " + SERVER_PORT);
 
             // Initialise Object Input and Output Streams
@@ -515,5 +521,10 @@ public class Client
 
         // Return Result
         return result;
+    }
+
+    private static String outputBreak()
+    {
+        return ("========================================");
     }
 }

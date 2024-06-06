@@ -1,24 +1,25 @@
 package com.malenydairysystem.model;
 
-import java.io.Serializable;
-
 /*
     Students:       Joshua White (12196075), Joshua Gibson (S0263435), Ashley Hansen (S0213276), Tina Losin (10569238)
     Description:    The Customer Object class to manage Customer records in the Program.
  */
-public class Customer extends User implements Serializable
+public class Customer extends User
 {
 
+    // Variable Declarations for the Customer Class
     private int customerID;
     private String fullName;
     private String phoneNumber;
     private String email;
     private String deliveryAddress;
 
+    // Default constructor
     public Customer()
     {
     }
 
+    // Parameterised constructor
     public Customer(int customerID, String fullName, String phoneNumber, String email, String deliveryAddress)
     {
         this.customerID = customerID;
@@ -28,6 +29,7 @@ public class Customer extends User implements Serializable
         this.deliveryAddress = deliveryAddress;
     }
 
+    // Parameterised constructor
     public Customer(int customerID, String fullName, String phoneNumber, String email, String deliveryAddress, String username, String password)
     {
         super(username, password);
@@ -38,6 +40,7 @@ public class Customer extends User implements Serializable
         this.deliveryAddress = deliveryAddress;
     }
 
+    // Getters and Setters
     public int getCustomerID()
     {
         return customerID;
@@ -112,6 +115,7 @@ public class Customer extends User implements Serializable
         this.password = password;
     }
 
+    // toString Method
     @Override
     public String toString()
     {

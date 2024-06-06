@@ -11,16 +11,19 @@ import java.util.List;
 public class Order implements Serializable
 {
 
+    // Variable Declarations for the Order Class
     private int orderID;
     private int customerID;
     private List<OrderLine> lineItem;
     private double totalPrice;
     private Date orderDate;
 
+    // Default constructor
     public Order()
     {
     }
 
+    // Parameterised constructor
     public Order(int orderID, int customerID, double totalPrice, Date orderDate)
     {
         this.orderID = orderID;
@@ -29,6 +32,7 @@ public class Order implements Serializable
         this.orderDate = orderDate;
     }
 
+    // Parameterised constructor
     public Order(int orderID, int customerID, List<OrderLine> lineItem, double totalPrice, Date orderDate)
     {
         this.orderID = orderID;
@@ -38,6 +42,7 @@ public class Order implements Serializable
         this.orderDate = orderDate;
     }
 
+    // Getters and Setters
     public int getOrderID()
     {
         return orderID;
@@ -88,6 +93,7 @@ public class Order implements Serializable
         this.orderDate = orderDate;
     }
 
+    // toString Method
     @Override
     public String toString()
     {

@@ -9,15 +9,18 @@ import java.io.Serializable;
 public class Delivery implements Serializable
 {
 
+    // Variable Declarations for the Delivery Class
     private int deliveryID;
     private int postCode;
     private String deliveryDay;
     private double deliveryCost;
 
+    // Default constructor
     public Delivery()
     {
     }
 
+    // Parameterised constructor
     public Delivery(int deliveryID, int postCode, String deliveryDay, double deliveryCost)
     {
         this.deliveryID = deliveryID;
@@ -26,6 +29,7 @@ public class Delivery implements Serializable
         this.deliveryCost = deliveryCost;
     }
 
+    // Getters and Setters
     public int getDeliveryID()
     {
         return deliveryID;
@@ -66,6 +70,7 @@ public class Delivery implements Serializable
         this.deliveryCost = deliveryCost;
     }
 
+    // toString Method
     @Override
     public String toString()
     {

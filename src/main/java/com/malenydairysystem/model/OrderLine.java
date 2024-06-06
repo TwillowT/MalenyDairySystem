@@ -9,22 +9,25 @@ import java.text.DecimalFormat;
  */
 public class OrderLine implements Serializable
 {
-    // Delcare Variables
+
+    // Variable Declarations for the OrderLine Class
     private int orderID;
     private int productID;
     private int quantity;
     private double price;
     private double total;
-    
-    // Helper variables for diplaying
+
+    // Additional variables for the OrderLine Class
     private String productName;
     private double gst;
     private double totalGST;
 
+    // Default constructor
     public OrderLine()
     {
     }
 
+    // Parameterised constructor
     public OrderLine(int orderID, int productID, int quantity, double price, double total)
     {
         this.orderID = orderID;
@@ -35,6 +38,7 @@ public class OrderLine implements Serializable
         calculateTotal();
     }
 
+    // Parameterised constructor
     public int getOrderID()
     {
         return orderID;
@@ -82,34 +86,44 @@ public class OrderLine implements Serializable
         return total;
     }
 
-    public String getProductName() {
+    public String getProductName()
+    {
         return productName;
     }
 
-    public void setProductName(String productName) {
+    public void setProductName(String productName)
+    {
         this.productName = productName;
     }
 
-    public double getGst() {
+    public double getGst()
+    {
         return gst;
     }
 
-    public double getTotalGST() {
+    public double getTotalGST()
+    {
         return totalGST;
     }
-    
-    // Calculates the total and gst values
-    void calculateTotal() {
-        // Use decimal format to round to two decial places
+
+    // Calculates the total and GST Values
+    void calculateTotal()
+    {
+        // Use Decimal Format to round to Two Decial Places
         DecimalFormat df = new DecimalFormat("0.00");
+
+        // Calculate the Total and GST
         total = Double.parseDouble(df.format(quantity * price));
         gst = Double.parseDouble(df.format(total * 0.1));
+
+        // Calculate the Total with GST
         totalGST = Double.parseDouble(df.format(total + gst));
     }
 
+    // toString Method
     @Override
     public String toString()
     {
-        return "OrderLine{" + "orderID=" + orderID + ", productID=" + productID + ", quantity=" + quantity + ", price=" + price + ", total=" + total + '}';
+        return "Product ID=" + productID + ", Quantity=" + quantity + ", Price=" + price + ", Total=" + total;
     }
 }
