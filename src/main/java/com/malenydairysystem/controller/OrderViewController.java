@@ -235,17 +235,30 @@ public class OrderViewController
             long millis = System.currentTimeMillis();
             order.setOrderDate(new Date(millis));
 
-            // Update Order
-            order = client.addOrder(order);
+            // Show the Order Summary and allow the Customer to accept it
+            boolean acceptOrder = Utilities.showOrderSummary(order, orderLines, deliveryCost);
 
-            for (OrderLine od : orderLines)
+            // If the Customer accepts the Order
+            if (acceptOrder)
             {
-                od.setOrderID(order.getOrderID());
-                client.addOrderLine(od);
-            }
+                // Add the Order
+                order = client.addOrder(order);
 
-            // Show Information Alert
-            Utilities.showInformation("Order placed Successfully.");
+                // Add the Order Lines
+                for (OrderLine od : orderLines)
+                {
+                    od.setOrderID(order.getOrderID());
+                    client.addOrderLine(od);
+                }
+
+                    // Show Information Alert
+                    Utilities.showInformation("Order placed Successfully.");
+            }
+            else
+            {
+                // Show Error Alert
+                Utilities.showError("Your Order has not been placed.");
+            }
 
             clearData();
         }

@@ -2,6 +2,11 @@ package com.malenydairysystem;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
+
+import com.malenydairysystem.model.Order;
+import com.malenydairysystem.model.OrderLine;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -86,6 +91,44 @@ public class Utilities
         // Create an Alert of type Confirmation
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, warningText);
         alert.setHeaderText("Warning");
+        alert.showAndWait();
+
+        // Return true if the user clicks OK
+        return alert.getResult().getText().equals("OK");
+    }
+
+    // Show Order Summary Method
+    public static boolean showOrderSummary(Order order, List<OrderLine> orderLines, double deliveryCost)
+    {
+        // Create a StringBuilder to Store the Order Summary
+        StringBuilder sb = new StringBuilder();
+
+        // Append the Order Details
+        sb.append("Customer ID: \t\t").append(order.getCustomerID()).append("\n");
+        sb.append("Order Date: \t\t").append(order.getOrderDate()).append("\n\n");
+
+        // Append the Order Lines
+        sb.append("Items:\n");
+        for (OrderLine od : orderLines)
+        {
+            sb.append(od).append("\n");
+        }
+
+        // Append the GST
+        sb.append("\nGST: \t\t\t10%\n");
+
+        // Append the Delivery Cost
+        sb.append("Delivery Cost: \t\t$").append(deliveryCost).append("\n");
+
+        // Append the Total Price
+        sb.append("Total Price: \t\t$").append(order.getTotalPrice()).append("\n");
+
+        // Append Message to Confirm Order
+        sb.append("\nDo you wish to place this Order and Accept the Cost?");
+
+        // Create an Alert of type Confirmation
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, sb.toString());
+        alert.setHeaderText("Order Summary");
         alert.showAndWait();
 
         // Return true if the user clicks OK

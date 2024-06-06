@@ -124,6 +124,6 @@ public class OrderLine implements Serializable
     @Override
     public String toString()
     {
-        return "OrderLine{" + "orderID=" + orderID + ", productID=" + productID + ", quantity=" + quantity + ", price=" + price + ", total=" + total + '}';
+        return "Product ID=" + productID + ", Quantity=" + quantity + ", Price=" + price + ", Total=" + total;
     }
 }
