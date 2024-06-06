@@ -35,12 +35,12 @@
                            <children>
                               <TableView fx:id="productTable" prefHeight="590.0" prefWidth="750.0" GridPane.rowIndex="1">
                                  <columns>
-                                    <TableColumn fx:id="productIdColumn" prefWidth="59.0" text="ID" />
-                                    <TableColumn fx:id="productNameColumn" prefWidth="188.0" text="Name" />
-                                    <TableColumn fx:id="productQuantityColumn" prefWidth="72.0" text="Quantity" />
-                                    <TableColumn fx:id="productUnitColumn" prefWidth="81.0" text="Unit" />
-                                    <TableColumn fx:id="productPriceColumn" prefWidth="87.0" text="Unit Price" />
-                                    <TableColumn fx:id="productIngredientsColumn" prefWidth="222.0" text="Ingredients" />
+                                    <TableColumn fx:id="productIdColumn" prefWidth="59.0" resizable="false" reorderable="false" text="ID" />
+                                    <TableColumn fx:id="productNameColumn" prefWidth="188.0" resizable="false" reorderable="false" text="Name" />
+                                    <TableColumn fx:id="productQuantityColumn" prefWidth="72.0" resizable="false" reorderable="false" text="Quantity" />
+                                    <TableColumn fx:id="productUnitColumn" prefWidth="81.0" resizable="false" reorderable="false" text="Unit" />
+                                    <TableColumn fx:id="productPriceColumn" prefWidth="87.0" resizable="false" reorderable="false" text="Unit Price" />
+                                    <TableColumn fx:id="productIngredientsColumn" prefWidth="222.0" resizable="false" reorderable="false" text="Ingredients" />
                                  </columns>
                                  <GridPane.margin>
                                     <Insets />
@@ -130,10 +130,10 @@
                            <children>
                               <TableView fx:id="deliveryTable" prefHeight="338.0" prefWidth="710.0" GridPane.rowIndex="1">
                                  <columns>
-                                    <TableColumn fx:id="deliveryIdColumn" prefWidth="59.0" text="ID" />
-                                    <TableColumn fx:id="deliveryPostcodeColumn" prefWidth="188.0" text="Postcode" />
-                                    <TableColumn fx:id="deliveryDayColumn" minWidth="0.0" prefWidth="256.0" text="Delivery Day" />
-                                    <TableColumn fx:id="deliveryCostColumn" minWidth="0.0" prefWidth="206.0" text="Delivery Cost" />
+                                    <TableColumn fx:id="deliveryIdColumn" prefWidth="59.0" resizable="false" reorderable="false" text="ID" />
+                                    <TableColumn fx:id="deliveryPostcodeColumn" prefWidth="188.0" resizable="false" reorderable="false" text="Postcode" />
+                                    <TableColumn fx:id="deliveryDayColumn" minWidth="0.0" prefWidth="256.0" resizable="false" reorderable="false" text="Delivery Day" />
+                                    <TableColumn fx:id="deliveryCostColumn" minWidth="0.0" prefWidth="206.0" resizable="false" reorderable="false" text="Delivery Cost" />
                                  </columns>
                               </TableView>
                               <GridPane maxHeight="-Infinity" prefHeight="202.0" prefWidth="648.0" GridPane.rowIndex="2">
@@ -217,11 +217,11 @@
                            <children>
                               <TableView fx:id="customerTable" prefHeight="439.0" prefWidth="710.0" GridPane.rowIndex="1">
                                  <columns>
-                                    <TableColumn fx:id="customerIdColumn" prefWidth="59.0" text="ID" />
-                                    <TableColumn fx:id="customerNameColumn" prefWidth="108.0" text="Name" />
-                                    <TableColumn fx:id="customerPhoneColumn" prefWidth="101.0" text="Phone" />
-                                    <TableColumn fx:id="customerEmailColumn" prefWidth="201.0" text="Email" />
-                                    <TableColumn fx:id="customerAddressColumn" prefWidth="239.0" text="Address" />
+                                    <TableColumn fx:id="customerIdColumn" prefWidth="59.0" resizable="false" reorderable="false" text="ID" />
+                                    <TableColumn fx:id="customerNameColumn" prefWidth="108.0" resizable="false" reorderable="false" text="Name" />
+                                    <TableColumn fx:id="customerPhoneColumn" prefWidth="101.0" resizable="false" reorderable="false" text="Phone" />
+                                    <TableColumn fx:id="customerEmailColumn" prefWidth="201.0" resizable="false" reorderable="false" text="Email" />
+                                    <TableColumn fx:id="customerAddressColumn" prefWidth="239.0" resizable="false" reorderable="false" text="Address" />
                                  </columns>
                                  <GridPane.margin>
                                     <Insets bottom="20.0" />
@@ -286,10 +286,10 @@
                            <children>
                               <TableView fx:id="orderTable" prefHeight="74.0" prefWidth="710.0" GridPane.rowIndex="1">
                                  <columns>
-                                    <TableColumn fx:id="orderIdColumn" prefWidth="69.0" text="Order ID" />
-                                    <TableColumn fx:id="orderCustomerColumn" prefWidth="267.0" text="Customer ID" />
-                                    <TableColumn fx:id="orderTotalColumn" prefWidth="201.0" text="Total Price" />
-                                    <TableColumn fx:id="orderDateColumn" prefWidth="172.0" text="Order Date" />
+                                    <TableColumn fx:id="orderIdColumn" prefWidth="69.0" resizable="false" reorderable="false" text="Order ID" />
+                                    <TableColumn fx:id="orderCustomerColumn" prefWidth="267.0" resizable="false" reorderable="false" text="Customer ID" />
+                                    <TableColumn fx:id="orderTotalColumn" prefWidth="201.0" resizable="false" reorderable="false" text="Total Price" />
+                                    <TableColumn fx:id="orderDateColumn" prefWidth="172.0" resizable="false" reorderable="false" text="Order Date" />
                                  </columns>
                                  <GridPane.margin>
                                     <Insets bottom="20.0" />
@@ -331,11 +331,11 @@
                               </GridPane>
                               <TableView fx:id="orderLineTable" prefHeight="0.0" prefWidth="710.0" GridPane.rowIndex="2">
                                  <columns>
-                                    <TableColumn fx:id="orderLineIdColumn" prefWidth="69.0" text="Order ID" />
-                                    <TableColumn fx:id="orderLineProductColumn" prefWidth="161.0" text="Product ID" />
-                                    <TableColumn fx:id="orderLineQuantityColumn" prefWidth="150.0" text="Quantity" />
-                                    <TableColumn fx:id="orderLinePriceColumn" prefWidth="160.0" text="Price" />
-                                    <TableColumn fx:id="orderLineTotalColumn" prefWidth="168.0" text="Total" />
+                                    <TableColumn fx:id="orderLineIdColumn" resizable="false" reorderable="false" prefWidth="69.0" text="Order ID" />
+                                    <TableColumn fx:id="orderLineProductColumn" resizable="false" reorderable="false" prefWidth="161.0" text="Product ID" />
+                                    <TableColumn fx:id="orderLineQuantityColumn" resizable="false" reorderable="false" prefWidth="150.0" text="Quantity" />
+                                    <TableColumn fx:id="orderLinePriceColumn" resizable="false" reorderable="false" prefWidth="160.0" text="Price" />
+                                    <TableColumn fx:id="orderLineTotalColumn" resizable="false" reorderable="false" prefWidth="168.0" text="Total" />
                                  </columns>
                                  <GridPane.margin>
                                     <Insets bottom="20.0" />
