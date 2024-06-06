@@ -14,8 +14,7 @@ import javafx.scene.layout.BorderPane;
 
 /*
     Students:       Joshua White (12196075), Joshua Gibson (S0263435), Ashley Hansen (S0213276), Tina Losin (10569238)
-    Description:    Manages the main application window, serving as the primary interface for navigation between different 
-                    sections of the system.
+    Description:    Manage the Main View in the application for users to navigate to different views.
  */
 public class MainViewController
 {
@@ -23,11 +22,12 @@ public class MainViewController
     // Declaration for Client object
     private Client client;
 
+    // Declaration for User object
     private User user;
 
+    // Declaration for FXML elements
     @FXML
     private BorderPane contentArea;
-
     @FXML
     private Button productButton;
     @FXML
@@ -40,10 +40,14 @@ public class MainViewController
     // Constructor for MainViewController
     public MainViewController(Client client, User user)
     {
+        // Set the Client Object
         this.client = client;
+
+        // Set the User Object
         this.user = user;
     }
 
+    // Initialisation Method
     @FXML
     private void initialize()
     {
@@ -54,11 +58,35 @@ public class MainViewController
             productButton.setDisable(true);
             scheduleButton.setDisable(true);
             orderButton.setDisable(true);
+
+            // Loading the AdminView
+            try
+            {
+                // Load the AdminView
+                loadAdminView(new ActionEvent());
+            }
+            catch (IOException e)
+            {
+                // Print the stack trace
+                e.printStackTrace();
+            }
         }
         else if (user instanceof Customer)
         {
             // Disabling buttons for Customer
             adminButton.setDisable(true);
+
+            // Loading the ProductView
+            try
+            {
+                // Load the ProductView
+                loadProductView(new ActionEvent());
+            }
+            catch (IOException e)
+            {
+                // Print the stack trace
+                e.printStackTrace();
+            }
         }
     }
 
@@ -66,6 +94,7 @@ public class MainViewController
     @FXML
     private void loadProductView(ActionEvent event) throws IOException
     {
+        // Switch to the ProductView
         ProductViewController controller = new ProductViewController(client);
         Utilities.switchPane(contentArea, "com/malenydairysystem/ProductView.fxml", controller);
     }
@@ -74,6 +103,7 @@ public class MainViewController
     @FXML
     private void loadScheduleView(ActionEvent event) throws IOException
     {
+        // Switch to the ScheduleView
         ScheduleViewController controller = new ScheduleViewController(client);
         Utilities.switchPane(contentArea, "com/malenydairysystem/ScheduleView.fxml", controller);
     }
@@ -82,6 +112,7 @@ public class MainViewController
     @FXML
     private void loadOrderView(ActionEvent event) throws IOException
     {
+        // Switch to the OrderView
         OrderViewController controller = new OrderViewController(client, user);
         Utilities.switchPane(contentArea, "com/malenydairysystem/OrderView.fxml", controller);
     }
@@ -90,6 +121,7 @@ public class MainViewController
     @FXML
     private void loadAdminView(ActionEvent event) throws IOException
     {
+        // Switch to the AdminView
         AdminViewController controller = new AdminViewController(client);
         Utilities.switchPane(contentArea, "com/malenydairysystem/AdminView.fxml", controller);
     }
@@ -98,13 +130,8 @@ public class MainViewController
     @FXML
     private void handleLogoutButton(ActionEvent event) throws IOException
     {
+        // Switch to the InitialView
         InitialViewController controller = new InitialViewController(client);
         Utilities.switchScene(event, "com/malenydairysystem/InitialView.fxml", controller);
-    }
-
-    @FXML
-    private void handleContentArea(ActionEvent event) throws IOException
-    {
-
     }
 }

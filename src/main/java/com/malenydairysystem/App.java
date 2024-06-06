@@ -51,7 +51,7 @@ public class App extends Application
     // Main Method
     public static void main(String[] args)
     {
-        //
+        // Launch the Application
         launch();
     }
 }

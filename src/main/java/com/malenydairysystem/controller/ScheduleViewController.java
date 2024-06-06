@@ -15,6 +15,7 @@ public class ScheduleViewController
     // Constructor for ProductViewController
     public ScheduleViewController(Client client)
     {
+        // Set the Client Object
         this.client = client;
     }
 }

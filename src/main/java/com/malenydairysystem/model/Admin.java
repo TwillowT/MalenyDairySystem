@@ -1,23 +1,24 @@
 package com.malenydairysystem.model;
 
-import java.io.Serializable;
-
 /*
     Students:       Joshua White (12196075), Joshua Gibson (S0263435), Ashley Hansen (S0213276), Tina Losin (10569238)
     Description:    The Admin Object class to manage Admin records in the Program.
  */
-public class Admin extends User implements Serializable
+public class Admin extends User
 {
 
+    // Variable Declarations for the Admin Class
     private int staffID;
     private String fullName;
     private String phone;
     private String email;
 
+    // Default constructor
     public Admin()
     {
     }
 
+    // Parameterised constructor
     public Admin(int staffID, String fullName, String phone, String email)
     {
         this.staffID = staffID;
@@ -26,6 +27,7 @@ public class Admin extends User implements Serializable
         this.email = email;
     }
 
+    // Parameterised constructor
     public Admin(int staffID, String fullName, String phone, String email, String username, String password)
     {
         super(username, password);
@@ -35,6 +37,7 @@ public class Admin extends User implements Serializable
         this.email = email;
     }
 
+    // Getters and Setters
     public int getStaffID()
     {
         return staffID;
@@ -75,26 +78,31 @@ public class Admin extends User implements Serializable
         this.email = email;
     }
 
+    @Override
     public String getUsername()
     {
         return username;
     }
 
+    @Override
     public void setUsername(String username)
     {
         this.username = username;
     }
 
+    @Override
     public String getPassword()
     {
         return password;
     }
 
+    @Override
     public void setPassword(String password)
     {
         this.password = password;
     }
 
+    // toString Method
     @Override
     public String toString()
     {

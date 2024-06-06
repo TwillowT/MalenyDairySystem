@@ -549,9 +549,10 @@ public class DatabaseManager
             }
         }
     }
-    
+
     // Method to hash password using SHA-256
-    private String hashPassword(String password) throws NoSuchAlgorithmException{
+    private String hashPassword(String password) throws NoSuchAlgorithmException
+    {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         byte[] hashedPassword = md.digest(password.getBytes());
         return Base64.getEncoder().encodeToString(hashedPassword);

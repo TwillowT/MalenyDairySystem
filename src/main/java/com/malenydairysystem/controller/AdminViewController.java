@@ -20,8 +20,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 /*
     Students:       Joshua White (12196075), Joshua Gibson (S0263435), Ashley Hansen (S0213276), Tina Losin (10569238)
-    Description:    Manages the functions of the Admin GUI of the program, passing data to the client, server and database
-                    and processing responses.
+    Description:    Manage the Admin View in the application for Admins to manage Products, Deliveries, Customers, Orders and Order Lines.
  */
 public class AdminViewController
 {

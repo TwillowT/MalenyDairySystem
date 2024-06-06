@@ -2,7 +2,6 @@ package com.malenydairysystem.controller;
 
 import com.malenydairysystem.Utilities;
 import com.malenydairysystem.client.Client;
-import com.malenydairysystem.model.Customer;
 
 import java.io.IOException;
 import javafx.application.Platform;
@@ -15,8 +14,7 @@ import javafx.scene.control.TextField;
 
 /*
     Students:       Joshua White (12196075), Joshua Gibson (S0263435), Ashley Hansen (S0213276), Tina Losin (10569238)
-    Description:    Manages the registration process, including collecting user data and interacting with the server to 
-                    register new users.
+    Description:    Manage the Registration View in the application for users to register.
  */
 public class RegistrationViewController
 {
@@ -143,27 +141,4 @@ public class RegistrationViewController
             }
         });
     }
-
-    // Validation methods
-    /*
-    private boolean validateFullName(String name)
-    {
-        return name.matches("[a-zA-Z\\-\\s]+") && name.trim().split("\\s+").length >= 2; // check if the name input contains only letters or "-"
-    }
-
-    private boolean validateAddress(String address)
-    {
-        return address.matches("[a-zA-Z0-9\\-\\s]+"); // check if the address input only contains letters, numbers and "-"
-    }
-
-    private boolean validatePhone(String phone)
-    {
-        return phone.matches("[0-9\\-\\+]+"); // check if the phone input only contains letters, "-" or "+"
-    }
-
-    private boolean validateEmail(String email)
-    {
-        return email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$"); // check if the email input valid
-    }
-     */
 }

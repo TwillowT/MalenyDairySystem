@@ -12,34 +12,37 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 /*
     Students:       Joshua White (12196075), Joshua Gibson (S0263435), Ashley Hansen (S0213276), Tina Losin (10569238)
-    Description:    Manages product interactions in the application.
+    Description:    Manage the Product View in the application for users to view Products.
  */
 public class ProductViewController
 {
+
     // Declaration for Client object
     private Client client;
-    
+
+    // FXML References for Product Table
     @FXML
-    private TableView<Product> productTable; // Table to display products 
+    private TableView<Product> productTable;
     @FXML
-    private TableColumn<Product, Integer> idColumn; // Column to display product ID
+    private TableColumn<Product, Integer> idColumn;
     @FXML
-    private TableColumn<Product, String> nameColumn; // Column to display name
+    private TableColumn<Product, String> nameColumn;
     @FXML
-    private TableColumn<Product, Integer> quantityColumn; // Column to display quantity
+    private TableColumn<Product, Integer> quantityColumn;
     @FXML
-    private TableColumn<Product, String> unitColumn; // Column to display unit
+    private TableColumn<Product, String> unitColumn;
     @FXML
-    private TableColumn<Product, Double> unitPriceColumn; // Column to display unit price
+    private TableColumn<Product, Double> unitPriceColumn;
     @FXML
-    private TableColumn<Product, String> ingredientsColumn; // Column to display ingredients
+    private TableColumn<Product, String> ingredientsColumn;
 
     // Constructor for ProductViewController
     public ProductViewController(Client client)
     {
+        // Set the Client Object
         this.client = client;
     }
-    
+
     // Method to initialize the table
     @FXML
     public void initialize()
@@ -51,16 +54,22 @@ public class ProductViewController
         unitColumn.setCellValueFactory(new PropertyValueFactory<>("unit"));
         unitPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         ingredientsColumn.setCellValueFactory(new PropertyValueFactory<>("ingredients"));
-        
-       loadProducts(); // Load products into the table
+
+        // Load products into the table
+        loadProducts();
     }
-    
+
     // Method to fetch Products from the server 
-    private void loadProducts(){
-        List<Product> products = client.getAllProducts(); // Retieve list of products from the client
-        System.out.println("Products retrieved from database: " + products.size()); // Print number of product retrieved 
-        productTable.getItems().setAll(products); // Set the itesm in the product table to retrieved products       
-    }  
-    
-    
+    private void loadProducts()
+    {
+        // Retieve list of products from the client
+        List<Product> products = client.getAllProducts();
+
+        // Print number of product retrieved 
+        System.out.println("Products retrieved from database: " + products.size());
+
+        // Set the itesm in the product table to retrieved products
+        productTable.getItems().setAll(products);       
+    }
+
 }
