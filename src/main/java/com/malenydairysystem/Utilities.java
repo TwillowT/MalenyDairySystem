@@ -1,5 +1,6 @@
 package com.malenydairysystem;
 
+// Imports
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -19,8 +20,7 @@ import javafx.stage.Stage;
 
 /*
     Students:       Joshua White (12196075), Joshua Gibson (S0263435), Ashley Hansen (S0213276), Tina Losin (10569238)
-    Description:    Utilities Class to allow the Program to call repeated actions, such as changing a scene or changing
-                    a pane in the GUI.
+    Description:    Provides utility methods for GUI actions such as changing scenes, changing panes, and displaying alerts.  
  */
 public class Utilities
 {

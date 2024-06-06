@@ -1,5 +1,6 @@
 package com.malenydairysystem.controller;
 
+// Imports
 import java.sql.Date;
 import java.util.List;
 
@@ -20,15 +21,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 /*
     Students:       Joshua White (12196075), Joshua Gibson (S0263435), Ashley Hansen (S0213276), Tina Losin (10569238)
-    Description:    Manage the Admin View in the application for Admins to manage Products, Deliveries, Customers, Orders and Order Lines.
+    Description:    Manages the Admin View in the application for Admins to manage Products, Deliveries, Customers, Orders and Order Lines.
  */
 public class AdminViewController
 {
 
     // Declaration of Client object
-    private Client client;
+    private Client client;// Manages communication with server-side application
 
-    // Declaratiion of FXML Elements for Product
+    // UI components for product details
     @FXML
     private TextField productName;
     @FXML
@@ -40,7 +41,7 @@ public class AdminViewController
     @FXML
     private TextField productIngredients;
 
-    // Declaration of FXML Elements for Product Table
+    // UI components for product table display
     @FXML
     private TableView<Product> productTable;
     @FXML
@@ -56,7 +57,7 @@ public class AdminViewController
     @FXML
     private TableColumn<Product, String> productIngredientsColumn;
 
-    // Declaration of FXML Elements for Delivery
+    // UI components for delivery management
     @FXML
     private ComboBox<Integer> deliveryPostcode;
     @FXML
@@ -64,7 +65,7 @@ public class AdminViewController
     @FXML
     private TextField deliveryCost;
 
-    // Declaration of FXML Elements for Delivery Table
+    // UI components for delivery table display
     @FXML
     private TableView<Delivery> deliveryTable;
     @FXML
@@ -76,7 +77,7 @@ public class AdminViewController
     @FXML
     private TableColumn<Delivery, Double> deliveryCostColumn;
 
-    // Declaration of FXML Elements for Customer Table
+    // UI components for customer table display
     @FXML
     private TableView<Customer> customerTable;
     @FXML
@@ -90,7 +91,7 @@ public class AdminViewController
     @FXML
     private TableColumn<Customer, String> customerAddressColumn;
 
-    // Declaration of FXML Elements for Order Table
+    // UI components for order and order line management
     @FXML
     private TableView<Order> orderTable;
     @FXML
@@ -100,9 +101,7 @@ public class AdminViewController
     @FXML
     private TableColumn<Order, Double> orderTotalColumn;
     @FXML
-    private TableColumn<Order, Date> orderDateColumn;
-
-    // Declaration of FXML Elements for OrderLine Table
+    private TableColumn<Order, Date> orderDateColumn;    
     @FXML
     private TableView<OrderLine> orderLineTable;
     @FXML
@@ -116,13 +115,14 @@ public class AdminViewController
     @FXML
     private TableColumn<OrderLine, Double> orderLineTotalColumn;
 
-    // Constructor for the AdminViewController
+    // Constructor initializes client
     public AdminViewController(Client client)
     {
         // Set the Client Object
         this.client = client;
     }
 
+    // Initializes table column bindings and event listeners
     @FXML
     public void initialize()
     {
@@ -160,7 +160,7 @@ public class AdminViewController
         orderLinePriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         orderLineTotalColumn.setCellValueFactory(new PropertyValueFactory<>("total"));
 
-        // Add a Listener to the Product Table
+        // Add a listener to the product table to update form fields when a product is selected
         productTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->
         {
             // Check if the Selection is not Null
@@ -176,11 +176,11 @@ public class AdminViewController
             }
         });
 
-        // Intialize the Delivery Postcode ComboBox
+        // Populate delivery postcode combobox with available postcodes
         List<Integer> postcodes = client.getDeliveryPostcodes();
         deliveryPostcode.getItems().setAll(postcodes);
 
-        // Intialize the Delivery Day ComboBox
+        // Populate delivery day combobox with days of the week to update form fields when a delivery is selected
         deliveryDay.getItems().addAll("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday");
 
         // Add a Listener to the Delivery Table
@@ -197,7 +197,7 @@ public class AdminViewController
             }
         });
 
-        // Add a Listener to the Delivery Postcode ComboBox
+        // Add a Listener to the Delivery Postcode ComboBox to update delivery cost when postcode changes
         deliveryPostcode.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->
         {
             // Check if the Selection is not Null
@@ -208,7 +208,7 @@ public class AdminViewController
             }
         });
 
-        // Add a Listener to the Order Table
+        // Add a Listener to the Order Table to trigger viewing all order lines for the selected order
         orderTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) ->
         {
             // Check if the Selection is not Null
@@ -255,7 +255,7 @@ public class AdminViewController
         // Check if the Product Ingredients is Empty
         else if (productIngredients.getText().isEmpty())
         {
-            // 
+             // Display an error message if the Product Ingredients field is empty
             Utilities.showError("Product Ingredients is required.");
             return;
         }
@@ -327,7 +327,7 @@ public class AdminViewController
         // Check if the Product Ingredients is Empty
         else if (productIngredients.getText().isEmpty())
         {
-            // 
+            // Show an Error Message 
             Utilities.showError("Product Ingredients is required.");
             return;
         }
@@ -351,7 +351,7 @@ public class AdminViewController
             Utilities.showInformation("Product Updated Successfully.");
             clearProductFields();
         }
-        //
+        // Else display an error message if the result is false
         else
         {
             // Show that the Product was not updated Successfully

@@ -1,5 +1,6 @@
 package com.malenydairysystem.controller;
 
+// Imports
 import com.malenydairysystem.Utilities;
 import com.malenydairysystem.client.Client;
 import com.malenydairysystem.model.Customer;
@@ -38,11 +39,11 @@ public class OrderViewController
     private Customer customer;
 
     // Variables
-    private Order order;
-    private List<Product> products;
-    private List<OrderLine> orderLines;
+    private Order order;// Order object to manage current order
+    private List<Product> products;// List of products available for order
+    private List<OrderLine> orderLines; // List of current order lines
 
-    // FXML References
+    // Table to display products
     @FXML
     private TableView<Product> productTable;
     @FXML
@@ -56,7 +57,7 @@ public class OrderViewController
     @FXML
     private TableColumn<Product, String> ingredientsProductColumn;
 
-    // FXML References
+    // Table to display order lines
     @FXML
     private TableView<OrderLine> orderTable;
     @FXML
@@ -72,7 +73,7 @@ public class OrderViewController
     @FXML
     private TableColumn<OrderLine, Double> totalGSTOrderColumn;
 
-    // FXML References
+    // Dropdown for selecting delivery postcode
     @FXML
     private ChoiceBox<String> choicePostcode;
 
@@ -82,11 +83,11 @@ public class OrderViewController
         // Set the Client Object
         this.client = client;
 
-        // Set the Customer Object
+        // Cast User to Customer
         customer = (Customer) user;
     }
 
-    // Method to initialize the table
+    // Initializes the controller, setting up table columns and data
     @FXML
     public void initialize()
     {
@@ -210,7 +211,7 @@ public class OrderViewController
         }
     }
 
-    // Method to handle the Place Order button
+    // Handles click on the Place Order button, finalising the order process
     @FXML
     private void btnPlaceOrderOnClick(ActionEvent event)
     {

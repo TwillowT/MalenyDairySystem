@@ -1,5 +1,6 @@
 package com.malenydairysystem.controller;
 
+// Imports
 import com.malenydairysystem.Utilities;
 import com.malenydairysystem.client.Client;
 import com.malenydairysystem.model.User;
@@ -40,7 +41,7 @@ public class InitialViewController
     @FXML
     private void handleSignin(ActionEvent event)
     {
-        // Get the Username and Password
+        // Get input 
         String username = usernameInput.getText();
         String password = passwordInput.getText();
 
@@ -81,7 +82,7 @@ public class InitialViewController
         Utilities.switchScene(event, "com/malenydairysystem/RegistrationView.fxml", controller);
     }
 
-    // Exit the Application
+    // Handles application exit
     @FXML
     private void clickExit()
     {
@@ -92,7 +93,7 @@ public class InitialViewController
             // Check if the User Clicked OK
             if (response == ButtonType.OK)
             {
-                // Exit the Application
+                // Exit the Application if confirmed
                 Platform.exit();
             }
         });

@@ -38,7 +38,7 @@ public class OrderLine implements Serializable
         calculateTotal();
     }
 
-    // Parameterised constructor
+    // Getters and setters
     public int getOrderID()
     {
         return orderID;

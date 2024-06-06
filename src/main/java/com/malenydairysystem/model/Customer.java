@@ -2,7 +2,7 @@ package com.malenydairysystem.model;
 
 /*
     Students:       Joshua White (12196075), Joshua Gibson (S0263435), Ashley Hansen (S0213276), Tina Losin (10569238)
-    Description:    The Customer Object class to manage Customer records in the Program.
+    Description:    The Customer Object class to manage Customer records in the program, extending the User clsas.
  */
 public class Customer extends User
 {
@@ -29,7 +29,7 @@ public class Customer extends User
         this.deliveryAddress = deliveryAddress;
     }
 
-    // Parameterised constructor
+    // Extended constructor including username and password from the User class
     public Customer(int customerID, String fullName, String phoneNumber, String email, String deliveryAddress, String username, String password)
     {
         super(username, password);

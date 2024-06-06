@@ -32,7 +32,7 @@ public class Order implements Serializable
         this.orderDate = orderDate;
     }
 
-    // Parameterised constructor
+    // Parameterised constructor 
     public Order(int orderID, int customerID, List<OrderLine> lineItem, double totalPrice, Date orderDate)
     {
         this.orderID = orderID;

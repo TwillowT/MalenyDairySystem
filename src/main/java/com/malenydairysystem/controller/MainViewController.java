@@ -1,5 +1,6 @@
 package com.malenydairysystem.controller;
 
+// Imports
 import com.malenydairysystem.Utilities;
 import com.malenydairysystem.client.Client;
 import com.malenydairysystem.model.Admin;
@@ -7,14 +8,17 @@ import com.malenydairysystem.model.Customer;
 import com.malenydairysystem.model.User;
 
 import java.io.IOException;
+import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.BorderPane;
 
 /*
     Students:       Joshua White (12196075), Joshua Gibson (S0263435), Ashley Hansen (S0213276), Tina Losin (10569238)
-    Description:    Manage the Main View in the application for users to navigate to different views.
+    Description:    Manages main application view and navigation based on user roles.
  */
 public class MainViewController
 {
@@ -27,15 +31,15 @@ public class MainViewController
 
     // Declaration for FXML elements
     @FXML
-    private BorderPane contentArea;
+    private BorderPane contentArea;// Main content area of the UI
     @FXML
-    private Button productButton;
+    private Button productButton; // Button to navigate to product view
     @FXML
-    private Button scheduleButton;
+    private Button scheduleButton;// Button to navigate to schedule view
     @FXML
-    private Button orderButton;
+    private Button orderButton;// Button to navigate to order view
     @FXML
-    private Button adminButton;
+    private Button adminButton;// Button to navigate to admin view
 
     // Constructor for MainViewController
     public MainViewController(Client client, User user)
@@ -47,7 +51,7 @@ public class MainViewController
         this.user = user;
     }
 
-    // Initialisation Method
+    // Initializes the controller
     @FXML
     private void initialize()
     {
@@ -130,8 +134,22 @@ public class MainViewController
     @FXML
     private void handleLogoutButton(ActionEvent event) throws IOException
     {
-        // Switch to the InitialView
-        InitialViewController controller = new InitialViewController(client);
-        Utilities.switchScene(event, "com/malenydairysystem/InitialView.fxml", controller);
+        // Create an alert dialog
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Log Out Confirmation");
+        alert.setHeaderText("Are you sure you want to log out?");
+        alert.setContentText("Logging out will end your session.");
+        
+        //Show the alert and wait for user response
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.isPresent() && result.get()==ButtonType.OK){
+            // Switch to the InitialView if user confirms
+            InitialViewController controller = new InitialViewController(client);
+            Utilities.switchScene(event, "com/malenydairysystem/InitialView.fxml", controller);
+        }else{
+            // User canclled logout
+            alert.close();
+        }
+        
     }
 }

@@ -1,5 +1,6 @@
 package com.malenydairysystem.controller;
 
+// Imports
 import com.malenydairysystem.Utilities;
 import com.malenydairysystem.client.Client;
 
@@ -14,7 +15,7 @@ import javafx.scene.control.TextField;
 
 /*
     Students:       Joshua White (12196075), Joshua Gibson (S0263435), Ashley Hansen (S0213276), Tina Losin (10569238)
-    Description:    Manage the Registration View in the application for users to register.
+    Description:    Manage the Registration View in the application for users to register a new account.
  */
 public class RegistrationViewController
 {
@@ -57,36 +58,42 @@ public class RegistrationViewController
         // Check if the Customer Name is Empty
         if (name.isEmpty())
         {
+            // Show error alert
             Utilities.showError("Please enter your Full Name.");
             return;
         }
         // Check if the Customer Address is Empty
         else if (address.isEmpty())
         {
+            // Show error alert
             Utilities.showError("Please enter your Address.");
             return;
         }
         // Check if the Customer Phone Number is Empty
         else if (phone.isEmpty())
         {
+            // Show error alert
             Utilities.showError("Please enter your Phone Number.");
             return;
         }
         // Check if the Customer Email is Empty
         else if (email.isEmpty())
         {
+            // Show error alert
             Utilities.showError("Please enter your Email.");
             return;
         }
         // Check if the Customer Username is Empty
         else if (username.isEmpty())
         {
+            // Show error alert
             Utilities.showError("Please enter your Username.");
             return;
         }
         // Check if the Customer Password is Empty
         else if (password.isEmpty())
         {
+            // Show error alert
             Utilities.showError("Please enter your Password.");
             return;
         }

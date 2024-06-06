@@ -1,23 +1,23 @@
 package com.malenydairysystem.controller;
 
+// Imports
 import com.malenydairysystem.model.Delivery;
 import com.malenydairysystem.client.Client;
 import java.util.List;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 /*
     Students:       Joshua White (12196075), Joshua Gibson (S0263435), Ashley Hansen (S0213276), Tina Losin (10569238)
-    Description:    Manages delivery schedule interactions in the application.
+    Description:    Manages delivery schedule interactions in the application, displaying and managing delivery details.
  */
 public class ScheduleViewController {
 
-    // Declaration for Client object
+    // Declaration for Client object for server communication
     private Client client;
-    // Declaration of FXML Elements for Delivery Table
+    // UI components for displaying deliveries
     @FXML
     private TableView<Delivery> deliveryTable;
     @FXML
@@ -29,6 +29,7 @@ public class ScheduleViewController {
     @FXML
     private TableColumn<Delivery, Double> deliveryCostColumn;
 
+    // Initializes the controller
     public void initialize() {
         // Intialize the Delivery Table Columns
         deliveryIdColumn.setCellValueFactory(new PropertyValueFactory<>("deliveryID"));
@@ -37,11 +38,12 @@ public class ScheduleViewController {
         deliveryCostColumn.setCellValueFactory(new PropertyValueFactory<>("deliveryCost"));
     }
 
-    // Constructor for ProductViewController
+    // Constructor initializes the client used for database operations
     public ScheduleViewController(Client client) {
         this.client = client;
     }
 
+    //Fetches and displays all deliveries from the database
     @FXML
     private void handleViewCustomerDeliveries() {
         // Clear the Delivery Table
@@ -55,6 +57,7 @@ public class ScheduleViewController {
 
     }
 
+    // Clears all entries from the delivery table
     public void clearCustomerDeliveryTable() {
         // Clear the Delivery Table of all Deliveries
         deliveryTable.getItems().clear();

@@ -1,5 +1,6 @@
 package com.malenydairysystem.database;
 
+// Imports
 import com.malenydairysystem.model.Admin;
 import com.malenydairysystem.model.Customer;
 import com.malenydairysystem.model.Delivery;
@@ -135,7 +136,7 @@ public class DatabaseManager
             // Misc Prepared Statements
             lastIncrement = dbConnection.prepareStatement("SELECT LAST_INSERT_ID()");
         }
-        catch (SQLException e)
+        catch (SQLException e)// Handle exceptions
         {
             // Print the Database Connection Error Message
             System.out.println("Database connection failed...");
@@ -169,7 +170,7 @@ public class DatabaseManager
             // Print the Database Creation Success Message
             System.out.println("Database created Successfully...");
         }
-        catch (SQLException e)
+        catch (SQLException e)// Handle exceptions
         {
             // Print the Database Creation Error Message
             System.out.println("Database creation Failed...");
@@ -297,7 +298,7 @@ public class DatabaseManager
             // Print the Table Creation Success Message
             System.out.println("Tables created Successfully...");
         }
-        catch (SQLException e)
+        catch (SQLException e)// Handle exceptions
         {
             // Print the Table Creation Error Message
             System.out.println("Tables creation Failed...");
@@ -347,7 +348,7 @@ public class DatabaseManager
             // Return the Result
             return count > 0;
         }
-        catch (SQLException e)
+        catch (SQLException e)// Handle exceptions
         {
             // Print the Data Check Error Message
             System.out.println("Data check Failed...");
@@ -429,7 +430,7 @@ public class DatabaseManager
             // Print the Data Insertion Success Message
             System.out.println("Data inserted Successfully from " + filename);
         }
-        catch (SQLException | IOException e)
+        catch (SQLException | IOException e)// Handle exceptions
         {
             // Print the Data Insertion Error Message
             System.out.println("Data insertion Failed from " + filename);
@@ -478,7 +479,7 @@ public class DatabaseManager
             // Print the Data Insertion Success Message
             System.out.println("Data inserted Successfully for Admin User");
         }
-        catch (SQLException | NoSuchAlgorithmException e)
+        catch (SQLException | NoSuchAlgorithmException e)// Handle exceptions
         {
             // Print the Data Insertion Error Message
             System.out.println("Data insertion Failed for Admin User");
@@ -503,8 +504,8 @@ public class DatabaseManager
     // Insert the initial Customer User for Testing the System
     public void insertCustomer() throws SQLException
     {
-        Connection dbConnection = null;
-        PreparedStatement addCustomer = null;
+        Connection dbConnection = null; // Holds databse connection
+        PreparedStatement addCustomer = null;// Prepares SQL for customer addition
 
         try
         {
@@ -528,7 +529,7 @@ public class DatabaseManager
             // Print the Data Insertion Success Message
             System.out.println("Data inserted Successfully for Customer User");
         }
-        catch (SQLException | NoSuchAlgorithmException e)
+        catch (SQLException | NoSuchAlgorithmException e)// Handle exceptions
         {
             // Print the Data Insertion Error Message
             System.out.println("Data insertion Failed for Customer User");
@@ -578,7 +579,7 @@ public class DatabaseManager
             // Return a Success Response
             return true;
         }
-        catch (SQLException | NoSuchAlgorithmException e)
+        catch (SQLException | NoSuchAlgorithmException e)// Handle exceptions
         {
             // Print the Stack Trace and Return a Failure Response
             e.printStackTrace();
@@ -604,7 +605,7 @@ public class DatabaseManager
             //  Return a Success Response
             return true;
         }
-        catch (SQLException e)
+        catch (SQLException e)// Handle exceptions
         {
             // Print the Stack Trace and Return a Failure Response
             e.printStackTrace();
@@ -631,7 +632,7 @@ public class DatabaseManager
             // Return a Success Response
             return true;
         }
-        catch (SQLException e)
+        catch (SQLException e)// Handle exceptions
         {
             // Print the Stack Trace and Return a Failure Response
             e.printStackTrace();
@@ -653,7 +654,7 @@ public class DatabaseManager
             // Return a Success Response
             return true;
         }
-        catch (SQLException e)
+        catch (SQLException e)// Handle exceptions
         {
             // Print the Stack Trace and Return a Failure Response
             e.printStackTrace();
@@ -688,7 +689,7 @@ public class DatabaseManager
                 products.add(product);
             }
         }
-        catch (SQLException e)
+        catch (SQLException e)// Handle exceptions
         {
             e.printStackTrace();
         }
@@ -713,7 +714,7 @@ public class DatabaseManager
             // Return a Success Response
             return true;
         }
-        catch (SQLException e)
+        catch (SQLException e)// Handle exceptions
         {
             // Print the Stack Trace and Return a Failure Response
             e.printStackTrace();
@@ -738,7 +739,7 @@ public class DatabaseManager
             // Return a Success Response
             return true;
         }
-        catch (SQLException e)
+        catch (SQLException e)// Handle exceptions
         {
             // Print the Stack Trace and Return a Failure Response
             e.printStackTrace();
@@ -760,7 +761,7 @@ public class DatabaseManager
             // Return a Success Response
             return true;
         }
-        catch (SQLException e)
+        catch (SQLException e)// Handle exceptions
         {
             // Print the Stack Trace and Return a Failure Response
             e.printStackTrace();
@@ -793,9 +794,9 @@ public class DatabaseManager
                 deliveries.add(delivery);
             }
         }
-        catch (SQLException e)
+        catch (SQLException e)// Handle exceptions
         {
-            e.printStackTrace();
+            e.printStackTrace();// Print the Stack Trace
         }
 
         // Return the Delivery List
@@ -819,9 +820,9 @@ public class DatabaseManager
                 deliveryPostcodes.add(rs.getInt("postcode"));
             }
         }
-        catch (SQLException e)
+        catch (SQLException e)// Handle exceptions
         {
-            e.printStackTrace();
+            e.printStackTrace();// Print the Stack Trace
         }
 
         // Return the Delivery Postcode List
@@ -848,9 +849,9 @@ public class DatabaseManager
                 deliveryCost = rs.getDouble("delivery_cost");
             }
         }
-        catch (SQLException e)
+        catch (SQLException e)// Handle exceptions
         {
-            e.printStackTrace();
+            e.printStackTrace();// Print the Stack Trace
         }
 
         // Return the Delivery Cost
@@ -883,9 +884,9 @@ public class DatabaseManager
                 customers.add(customer);
             }
         }
-        catch (SQLException e)
+        catch (SQLException e)// Handle exceptions
         {
-            e.printStackTrace();
+            e.printStackTrace();// Print the Stack Trace
         }
 
         // Return the Customer List
@@ -917,9 +918,9 @@ public class DatabaseManager
                 orders.add(order);
             }
         }
-        catch (SQLException e)
+        catch (SQLException e)// Handle exceptions
         {
-            e.printStackTrace();
+            e.printStackTrace();// Print the Stack Trace
         }
 
         // Return the Order List
@@ -946,9 +947,9 @@ public class DatabaseManager
             returnOrder.setOrderID(rs.getInt(1));
             rs.close();
         }
-        catch (SQLException e)
+        catch (SQLException e)// Handle exceptions
         {
-            e.printStackTrace();
+            e.printStackTrace();// Print the Stack Trace
         }
         return returnOrder;
     }
@@ -982,9 +983,9 @@ public class DatabaseManager
                 orderLines.add(orderLine);
             }
         }
-        catch (SQLException e)
+        catch (SQLException e)// Handle exceptions
         {
-            e.printStackTrace();
+            e.printStackTrace();// Print the Stack Trace
         }
 
         // Return the Order Line List
@@ -1009,10 +1010,10 @@ public class DatabaseManager
             //  Return a Success Response
             return true;
         }
-        catch (SQLException e)
+        catch (SQLException e)// Handle exceptions
         {
             // Print the Stack Trace and Return a Failure Response
-            e.printStackTrace();
+            e.printStackTrace();// Print the Stack Trace
             return false;
         }
     }
@@ -1036,9 +1037,9 @@ public class DatabaseManager
                 }
             }
         }
-        catch (SQLException e)
+        catch (SQLException e)// Handle exceptions
         {
-            e.printStackTrace();
+            e.printStackTrace();// Print the Stack Trace
         }
 
         // Query the Customer Table and increment customerCount if the username is found
@@ -1055,7 +1056,7 @@ public class DatabaseManager
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            e.printStackTrace();// Print the Stack Trace
         }
 
         // Return the user type based on the counts
@@ -1099,9 +1100,9 @@ public class DatabaseManager
                 customer = new Customer(customerID, fullName, phoneNumber, email, deliveryAddress, customerUsername, password);
             }
         }
-        catch (SQLException e)
+        catch (SQLException e)// Handle exceptions
         {
-            e.printStackTrace();
+            e.printStackTrace();// Print the Stack Trace
         }
 
         // Return the Customer object
@@ -1135,9 +1136,9 @@ public class DatabaseManager
                 admin = new Admin(adminID, fullName, phoneNumber, email, adminUsername, password);
             }
         }
-        catch (SQLException e)
+        catch (SQLException e) // Handle exceptions
         {
-            e.printStackTrace();
+            e.printStackTrace();// Print the Stack Trace
         }
 
         // Return the Admin object

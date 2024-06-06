@@ -1,5 +1,6 @@
 package com.malenydairysystem;
 
+// Imports
 import com.malenydairysystem.client.Client;
 import com.malenydairysystem.controller.InitialViewController;
 
@@ -48,7 +49,7 @@ public class App extends Application
         stage.show();
     }
 
-    // Main Method
+    // Main Method to launch the application
     public static void main(String[] args)
     {
         // Launch the Application

@@ -27,12 +27,10 @@ import javax.crypto.Cipher;
 
 /*
     Students:       Joshua White (12196075), Joshua Gibson (S0263435), Ashley Hansen (S0213276), Tina Losin (10569238)
-    Description:    Handles all Server side operations for the program, receiving requests from the client and processing
-                    them, and returning results to program controllers.
+    Description:    Handles all server operation, processing client requests and coordinating response with program controllers.
  */
 public class Server
 {
-
     // Server Port
     private static final int SERVER_PORT = 5586;
 
@@ -125,17 +123,17 @@ public class Server
                 new ServerConnection(clientSocket);
             }
         }
-        catch (IOException e)
+        catch (IOException e)// Handle exceptions
         {
             // Print the Stack Trace
-            e.printStackTrace();
+            e.printStackTrace(); 
         }
     }
 
     // Print Link Break to Console
     private static String outputBreak()
     {
-        return ("========================================");
+        return ("========================================"); // Print line break
     }
 }
 
@@ -181,7 +179,7 @@ class ServerConnection extends Thread
             // Start the Thread
             this.start();
         }
-        catch (IOException e)
+        catch (IOException e)// Handle exceptions
         {
             // Print the Stack Trace
             e.printStackTrace();
@@ -194,15 +192,15 @@ class ServerConnection extends Thread
         try
         {
             // Generate RSA Keys
-            KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
-            keyGen.initialize(2048);
-            KeyPair keyPair = keyGen.generateKeyPair();
+            KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");// Initialize key pair generator for RSA algorithm
+            keyGen.initialize(2048);// Set key size to 2048 bits
+            KeyPair keyPair = keyGen.generateKeyPair();// Generate key pair
 
             // Set the Public and Private Keys
             this.publicKey = keyPair.getPublic();
             this.privateKey = keyPair.getPrivate();
         }
-        catch (Exception e)
+        catch (Exception e)// Handle exceptions
         {
             // Print the Stack Trace
             e.printStackTrace();
@@ -213,10 +211,10 @@ class ServerConnection extends Thread
     private String decryptPassword(byte[] encryptedPassword) throws Exception
     {
         // Decrypt the Password using the Private Key
-        Cipher cipher = Cipher.getInstance("RSA");
-        cipher.init(Cipher.DECRYPT_MODE, privateKey);
-        byte[] decryptedBytes = cipher.doFinal(encryptedPassword);
-        return new String(decryptedBytes, "UTF-8");
+        Cipher cipher = Cipher.getInstance("RSA");// Initialise cipher for RSA to decrypt password
+        cipher.init(Cipher.DECRYPT_MODE, privateKey);// Initialise cipher for RSA to decrypt password
+        byte[] decryptedBytes = cipher.doFinal(encryptedPassword);// Perform decryption and store result
+        return new String(decryptedBytes, "UTF-8");// Convert decrypted bytes to string
     }
 
     // Method to Hash password
@@ -224,8 +222,8 @@ class ServerConnection extends Thread
     {
         // Hash the Password using SHA-256
         MessageDigest md = MessageDigest.getInstance("SHA-256");
-        byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));
-        return Base64.getEncoder().encodeToString(hashedPassword);
+        byte[] hashedPassword = md.digest(password.getBytes(StandardCharsets.UTF_8));// Hash password and store result
+        return Base64.getEncoder().encodeToString(hashedPassword);// Convert hash bytes to base64 string
     }
 
     // Method to compare passwords during Login     
@@ -325,16 +323,17 @@ class ServerConnection extends Thread
 
                     // Handle add Customer Request
                     case "ADD_CUSTOMER":
+                        // Read customer details from client
                         String name = (String) serverInput.readObject();
                         String address = (String) serverInput.readObject();
                         String phone = (String) serverInput.readObject();
                         String email = (String) serverInput.readObject();
                         String username = (String) serverInput.readObject();
                         byte[] encryptedPassword = (byte[]) serverInput.readObject();
-
+                        // Decrypt password and add customer to database
                         String password = decryptPassword(encryptedPassword);
-
                         boolean addCustomerResult = databaseManager.addCustomer(name, address, phone, email, username, password);
+                        // Send operation result to client
                         serverOutput.writeObject(addCustomerResult);
                         break;
 
@@ -446,7 +445,7 @@ class ServerConnection extends Thread
                 }
             }
         }
-        catch (Exception e)
+        catch (Exception e)// Handle exception
         {
             // Print the Stack Trace
             e.printStackTrace();

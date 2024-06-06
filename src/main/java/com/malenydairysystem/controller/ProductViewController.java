@@ -1,10 +1,9 @@
 package com.malenydairysystem.controller;
 
+// Imports
 import java.util.List;
-
 import com.malenydairysystem.client.Client;
 import com.malenydairysystem.model.Product;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;

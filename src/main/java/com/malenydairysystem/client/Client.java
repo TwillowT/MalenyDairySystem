@@ -1,5 +1,6 @@
 package com.malenydairysystem.client;
 
+// Imports
 import com.malenydairysystem.model.Customer;
 import com.malenydairysystem.model.Delivery;
 import com.malenydairysystem.model.Order;
@@ -19,7 +20,7 @@ import javax.crypto.Cipher;
 /*
     Students:       Joshua White (12196075), Joshua Gibson (S0263435), Ashley Hansen (S0213276), Tina Losin (10569238)
     Description:    Manages the Client connection to the Server for the Program. Passess requests to the Server for processing
-                    and retrieval of information from the Database.
+                    and retrieval of information from the Database. 
  */
 public class Client
 {
@@ -58,7 +59,7 @@ public class Client
             requestServerPublicKey();
 
         }
-        catch (Exception e)
+        catch (Exception e)// Handle exceptions
         {
             // Print Stack Trace if Connection Fails
             e.printStackTrace();
@@ -82,7 +83,7 @@ public class Client
             serverPublicKey = keyFactory.generatePublic(keySpec);
 
         }
-        catch (Exception e)
+        catch (Exception e)// Handle exceptions
         {
             e.printStackTrace();
         }
@@ -130,7 +131,7 @@ public class Client
                 return null;
             }
         }
-        catch (Exception e)
+        catch (Exception e)// Handle exceptions
         {
             e.printStackTrace();
             return null;
@@ -158,7 +159,7 @@ public class Client
             // Retrieve Result from Server
             result = (boolean) inputStream.readObject();
         }
-        catch (Exception e)
+        catch (Exception e)// Handle exceptions
         {
             e.printStackTrace();
         }
@@ -182,7 +183,7 @@ public class Client
             // Retrieve Result from Server
             result = (boolean) inputStream.readObject();
         }
-        catch (Exception e)
+        catch (Exception e)// Handle exceptions
         {
             e.printStackTrace();
         }
@@ -206,7 +207,7 @@ public class Client
             // Retrieve Result from Server
             result = (boolean) inputStream.readObject();
         }
-        catch (Exception e)
+        catch (Exception e)// Handle exceptions
         {
             e.printStackTrace();
         }
@@ -230,9 +231,9 @@ public class Client
             // Retrieve Result from Server
             result = (boolean) inputStream.readObject();
         }
-        catch (Exception e)
+        catch (Exception e)// Handle exceptions
         {
-            e.printStackTrace();
+            e.printStackTrace();// Print to console
         }
 
         // Return Result
@@ -254,9 +255,9 @@ public class Client
             products = (List<Product>) inputStream.readObject();
 
         }
-        catch (Exception e)
+        catch (Exception e)// Handle exceptions
         {
-            e.printStackTrace();
+            e.printStackTrace();// Print to console
         }
 
         // Return List of Products
@@ -278,9 +279,9 @@ public class Client
             // Retrieve Result from Server
             result = (boolean) inputStream.readObject();
         }
-        catch (Exception e)
+        catch (Exception e)// Handle exceptions
         {
-            e.printStackTrace();
+            e.printStackTrace();// Print to console
         }
 
         // Return Result
@@ -302,9 +303,9 @@ public class Client
             // Retrieve Result from Server
             result = (boolean) inputStream.readObject();
         }
-        catch (Exception e)
+        catch (Exception e)// Handle exceptions
         {
-            e.printStackTrace();
+            e.printStackTrace();// Print to console
         }
 
         // Return Result
@@ -326,9 +327,9 @@ public class Client
             // Retrieve Result from Server
             result = (boolean) inputStream.readObject();
         }
-        catch (Exception e)
+        catch (Exception e)// Handle exceptions
         {
-            e.printStackTrace();
+            e.printStackTrace();// Print to console
         }
 
         // Return Result
@@ -350,9 +351,9 @@ public class Client
             deliveries = (List<Delivery>) inputStream.readObject();
 
         }
-        catch (Exception e)
+        catch (Exception e)// Handle exceptions
         {
-            e.printStackTrace();
+            e.printStackTrace();// Print to console
         }
 
         // Return List of Deliveries
@@ -374,9 +375,9 @@ public class Client
             customers = (List<Customer>) inputStream.readObject();
 
         }
-        catch (Exception e)
+        catch (Exception e)// Handle exceptions
         {
-            e.printStackTrace();
+            e.printStackTrace();// Print to console
         }
 
         // Return List of Customers
@@ -398,9 +399,9 @@ public class Client
             orders = (List<Order>) inputStream.readObject();
 
         }
-        catch (Exception e)
+        catch (Exception e)// Handle exceptions
         {
-            e.printStackTrace();
+            e.printStackTrace();// Print to console
         }
 
         // Return List of Orders
@@ -422,9 +423,9 @@ public class Client
             // Retrieve List of Order Lines from Server
             orderLines = (List<OrderLine>) inputStream.readObject();
         }
-        catch (Exception e)
+        catch (Exception e)// Handle exceptions
         {
-            e.printStackTrace();
+            e.printStackTrace();// Print to console
         }
 
         // Return List of Order Lines
@@ -445,9 +446,9 @@ public class Client
             // Retrieve List of Postcodes from Server
             postcodes = (List<Integer>) inputStream.readObject();
         }
-        catch (Exception e)
+        catch (Exception e)// Handle exceptions
         {
-            e.printStackTrace();
+            e.printStackTrace();// Print to console
         }
 
         // Return List of Postcodes
@@ -469,9 +470,9 @@ public class Client
             // Retrieve Cost from Server
             cost = (Double) inputStream.readObject();
         }
-        catch (Exception e)
+        catch (Exception e)// Handle exceptions
         {
-            e.printStackTrace();
+            e.printStackTrace();// Print to console
         }
 
         // Return Cost
@@ -491,9 +492,9 @@ public class Client
 
             returnOrder = (Order) inputStream.readObject();
         }
-        catch (Exception e)
+        catch (Exception e)// Handle exceptions
         {
-            e.printStackTrace();
+            e.printStackTrace();// Print to console
         }
 
         return returnOrder;
@@ -514,9 +515,9 @@ public class Client
             // Retrieve Result from Server
             result = (boolean) inputStream.readObject();
         }
-        catch (Exception e)
+        catch (Exception e) // Handle exceptions
         {
-            e.printStackTrace();
+            e.printStackTrace(); // Print to console
         }
 
         // Return Result
@@ -525,6 +526,6 @@ public class Client
 
     private static String outputBreak()
     {
-        return ("========================================");
+        return ("========================================");// Return line break
     }
 }
