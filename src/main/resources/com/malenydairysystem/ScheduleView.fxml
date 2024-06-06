@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -11,6 +12,7 @@
 
 <AnchorPane id="AnchorPane" maxHeight="620.0" maxWidth="750.0" minHeight="620.0" minWidth="750.0" prefHeight="620.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
+      <Button fx:id="viewDeliveryScheduleButton" layoutX="305.0" layoutY="545.0" mnemonicParsing="false" onAction="#handleViewCustomerDeliveries" text="View Delivery Schedule" />
       <Label alignment="CENTER" prefHeight="90.0" prefWidth="750.0" text="Delivery Schedule">
          <font>
             <Font name="System Bold" size="20.0" />
@@ -26,12 +28,12 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
       </GridPane>
-      <TableView layoutX="20.0" layoutY="90.0" prefHeight="490.0" prefWidth="710.0">
+      <TableView fx:id="deliveryTable" layoutX="20.0" layoutY="90.0" prefHeight="434.0" prefWidth="710.0">
          <columns>
-            <TableColumn fx:id="deliveryIdColumn" prefWidth="59.0" resizable="false" reorderable="false" text="ID" />
-            <TableColumn fx:id="deliveryPostcodeColumn" prefWidth="188.0" resizable="false" reorderable="false" text="Postcode" />
-            <TableColumn fx:id="deliveryDayColumn" minWidth="0.0" prefWidth="256.0" resizable="false" reorderable="false" text="Delivery Day" />
-            <TableColumn fx:id="deliveryCostColumn" minWidth="0.0" prefWidth="206.0" resizable="false" reorderable="false" text="Delivery Cost" />
+            <TableColumn fx:id="deliveryIdColumn" prefWidth="59.0" reorderable="false" resizable="false" text="ID" />
+            <TableColumn fx:id="deliveryPostcodeColumn" prefWidth="188.0" reorderable="false" resizable="false" text="Postcode" />
+            <TableColumn fx:id="deliveryDayColumn" minWidth="0.0" prefWidth="256.0" reorderable="false" resizable="false" text="Delivery Day" />
+            <TableColumn fx:id="deliveryCostColumn" minWidth="0.0" prefWidth="206.0" reorderable="false" resizable="false" text="Delivery Cost" />
          </columns>
       </TableView>
       <Label layoutX="104.0" layoutY="586.0" text="Your delivery will arrive between 8am-5pm on the day allocated to your postcode.">
