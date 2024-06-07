@@ -45,7 +45,7 @@ public class App extends Application
         // Set the Stage
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.setTitle("Maleny Diary to Home System");
+        stage.setTitle("Maleny Dairy to Home System");
         stage.show();
     }
 

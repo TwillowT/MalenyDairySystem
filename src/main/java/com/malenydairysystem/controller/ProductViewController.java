@@ -64,11 +64,7 @@ public class ProductViewController
         // Retieve list of products from the client
         List<Product> products = client.getAllProducts();
 
-        // Print number of product retrieved 
-        System.out.println("Products retrieved from database: " + products.size());
-
         // Set the itesm in the product table to retrieved products
         productTable.getItems().setAll(products);       
     }
-
 }

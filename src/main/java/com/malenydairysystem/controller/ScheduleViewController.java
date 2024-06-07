@@ -13,11 +13,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
     Students:       Joshua White (12196075), Joshua Gibson (S0263435), Ashley Hansen (S0213276), Tina Losin (10569238)
     Description:    Manages delivery schedule interactions in the application, displaying and managing delivery details.
  */
-public class ScheduleViewController {
+public class ScheduleViewController
+{
 
-    // Declaration for Client object for server communication
+    // Declaration for Client object
     private Client client;
-    // UI components for displaying deliveries
+
+    // FXML References for Delivery Table
     @FXML
     private TableView<Delivery> deliveryTable;
     @FXML
@@ -29,37 +31,32 @@ public class ScheduleViewController {
     @FXML
     private TableColumn<Delivery, Double> deliveryCostColumn;
 
-    // Initializes the controller
-    public void initialize() {
+    // Constructor for ScheduleViewController
+    public ScheduleViewController(Client client)
+    {
+        this.client = client;
+    }
+
+    // Initializes the Controller
+    public void initialize()
+    {
         // Intialize the Delivery Table Columns
         deliveryIdColumn.setCellValueFactory(new PropertyValueFactory<>("deliveryID"));
         deliveryPostcodeColumn.setCellValueFactory(new PropertyValueFactory<>("postCode"));
         deliveryDayColumn.setCellValueFactory(new PropertyValueFactory<>("deliveryDay"));
         deliveryCostColumn.setCellValueFactory(new PropertyValueFactory<>("deliveryCost"));
-    }
 
-    // Constructor initializes the client used for database operations
-    public ScheduleViewController(Client client) {
-        this.client = client;
+        // Load Deliveries into the Table
+        loadDeliveries();
     }
 
     //Fetches and displays all deliveries from the database
-    @FXML
-    private void handleViewCustomerDeliveries() {
-        // Clear the Delivery Table
-        clearCustomerDeliveryTable();
-
+    private void loadDeliveries()
+    {
         // Get all Deliveries from the Database
         List<Delivery> deliveries = client.getAllDeliveries();
 
         // Set the Delivery Table with the Deliveries
         deliveryTable.getItems().setAll(deliveries);
-
-    }
-
-    // Clears all entries from the delivery table
-    public void clearCustomerDeliveryTable() {
-        // Clear the Delivery Table of all Deliveries
-        deliveryTable.getItems().clear();
     }
 }
